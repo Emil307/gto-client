@@ -3,6 +3,7 @@ import { login, loginDto, logout, registration, registrationDto } from "../api";
 import { getCookie, setCookie } from "cookies-next";
 import axios from "axios";
 import userState from "@/src/entities/user";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -22,7 +23,7 @@ class AuthState {
     this.email = email;
   }
 
-  async login(data: loginDto) {
+  async login(data: loginDto, router: AppRouterInstance) {
     try {
       const response = await login(data);
       localStorage.setItem("token", response.data.access_token);
@@ -30,6 +31,7 @@ class AuthState {
       setCookie("refresh", response.data.refresh_token);
 
       userState.setUser(response.data.user);
+      router.replace("/");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }

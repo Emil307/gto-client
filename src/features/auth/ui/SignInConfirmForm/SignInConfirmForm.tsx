@@ -28,11 +28,10 @@ export const SignInConfirmForm: React.FC = observer(() => {
   useEffect(() => {
     const subscription = watch((value) => {
       if (value.code?.length === 4) {
-        authState
-          .login({ email: authState.email, code: Number(value.code) })
-          .then(() => {
-            router.replace("/");
-          });
+        authState.login(
+          { email: authState.email, code: Number(value.code) },
+          router
+        );
       }
     });
     return () => subscription.unsubscribe();
