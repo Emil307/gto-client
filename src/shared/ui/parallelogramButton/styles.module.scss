@@ -1,0 +1,31 @@
+.root,
+.root:active {
+  width: 80%;
+  height: 3rem;
+  transform: skew(-45deg);
+  background: var(--main-red);
+  border-radius: 0;
+  font-family: var(--font-ttsquare);
+
+  & disabled,
+  &[data-disabled],
+  & disabled:hover,
+  &[data-disabled]:hover {
+    background-color: var(--disabled-bg);
+    color: var(--disabled-text);
+  }
+}
+
+.root:hover {
+  background: var(--main-red);
+}
+
+.inner {
+  transform: skew(45deg);
+}
+.label {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}

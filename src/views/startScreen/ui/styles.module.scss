@@ -1,0 +1,38 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  padding: 3rem 1rem;
+  background-image: url(../../../../public/img/start-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.img {
+  margin-bottom: 12%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.reg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  width: 100%;
+
+  font-family: var(--font-ttsquare);
+  text-align: center;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}

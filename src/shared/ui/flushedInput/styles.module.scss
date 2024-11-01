@@ -1,0 +1,37 @@
+.root {
+  position: relative;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.input {
+  height: 3rem;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom-width: 1px;
+  border-color: var(--border-color);
+  border-radius: 0;
+  padding-left: 0;
+  background: none;
+
+  font-size: 1rem;
+  color: #fff;
+}
+
+.input::placeholder {
+  font-family: "Roboto", sans-serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  color: var(--main-gray);
+}
+
+.label {
+  font-family: "Rubik", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
