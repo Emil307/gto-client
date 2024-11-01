@@ -31,7 +31,7 @@ class AuthState {
       setCookie("refresh", response.data.refresh_token);
 
       userState.setUser(response.data.user);
-      router.replace("/");
+      router.replace("/profile");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }
