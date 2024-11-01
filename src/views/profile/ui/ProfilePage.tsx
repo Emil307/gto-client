@@ -1,3 +1,9 @@
+import { Header } from "@/src/widgets/header";
+
 export default function Page() {
-  return <>profile page</>;
+  return (
+    <>
+      <Header title="Профиль" />
+    </>
+  );
 }
