@@ -1,13 +1,18 @@
 import React from "react";
+import styles from "../styles/styles.module.scss";
 
 export const Home: React.FC = () => {
   return (
     <div>
-      {" "}
-      <h1>Привет, Даша</h1>
-      <p>
-        То, что не убивает нас – делает нас сильнее –испытай себя уже сегодня!
-      </p>
+      <div className={styles.offer}>
+        <h1 className={styles.title}>
+          Привет, <span>Даша</span>
+        </h1>
+        <p className={styles.quote}>
+          То, что не убивает нас – делает нас сильнее – испытай себя уже
+          сегодня!
+        </p>
+      </div>
     </div>
   );
 };

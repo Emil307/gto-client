@@ -1,0 +1,25 @@
+.offer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.title {
+  font-family: "ttsquare";
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.title > span {
+  color: rgba(255, 255, 255, 1);
+}
+
+.quote {
+  font-family: Rubik;
+  font-size: 1rem;
+  line-height: 1.2;
+  color: #fff;
+  opacity: 0.5;
+}
