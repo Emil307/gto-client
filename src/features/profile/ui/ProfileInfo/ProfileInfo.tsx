@@ -10,7 +10,7 @@ export const ProfileInfo: React.FC = () => {
   const router = useRouter();
 
   function handleEditInfo() {
-    router.replace("/lk/profile/edit");
+    router.replace("/profile/edit");
   }
 
   return (
