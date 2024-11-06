@@ -65,8 +65,8 @@ class AuthState {
 
   async checkAuth() {
     try {
-      const response = await axios.post(`${API}/token-refresh/`, {
-        refresh: getCookie("refresh"),
+      const response = await axios.post(`${API}/api/users/token-refresh/`, {
+        refresh_token: getCookie("refresh"),
       });
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
