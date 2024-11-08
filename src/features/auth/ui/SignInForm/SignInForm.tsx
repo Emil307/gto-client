@@ -6,7 +6,6 @@ import styles from "../../styles/styles.module.scss";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import authState from "@/src/entities/auth/store/authState";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
 
 interface IFormFileds {
@@ -25,8 +24,7 @@ export const SignInForm = () => {
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     requestEmailVerificationCode(data.email)
       .then(() => {
-        authState.setEmail(data.email);
-        router.push("/auth/signInConfirm");
+        router.push(`/auth/signInConfirm?email=${data.email}`);
       })
       .catch((e) => {
         console.log(e);

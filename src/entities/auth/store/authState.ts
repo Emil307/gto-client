@@ -9,7 +9,6 @@ const API = process.env.NEXT_PUBLIC_API_URL;
 
 class AuthState {
   isAuth: boolean = false;
-  email: string = "";
 
   constructor() {
     makeAutoObservable(this);
@@ -17,10 +16,6 @@ class AuthState {
 
   setIsAuth(value: boolean) {
     this.isAuth = value;
-  }
-
-  setEmail(email: string) {
-    this.email = email;
   }
 
   async login(data: loginDto, router: AppRouterInstance) {

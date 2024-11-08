@@ -6,15 +6,14 @@ import styles from "../../styles/styles.module.scss";
 import { useForm } from "react-hook-form";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import authState from "@/src/entities/auth/store/authState";
-import { useRouter } from "next/navigation";
-import { observer } from "mobx-react-lite";
+import { useRouter, useSearchParams } from "next/navigation";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
 
 interface IFormFileds {
   code: string;
 }
 
-export const SignInConfirmForm: React.FC = observer(() => {
+export const SignInConfirmForm: React.FC = () => {
   const {
     register,
     watch,
@@ -24,21 +23,21 @@ export const SignInConfirmForm: React.FC = observer(() => {
   const [timeToRequestNewCode, setTimeToRequestNewCode] = useState(15);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const email = String(searchParams.get("email"));
 
   useEffect(() => {
     const subscription = watch((value) => {
       if (value.code?.length === 4) {
-        authState.login(
-          { email: authState.email, code: Number(value.code) },
-          router
-        );
+        authState.login({ email: email, code: Number(value.code) }, router);
       }
     });
     return () => subscription.unsubscribe();
   }, [watch]);
 
   function handleGetNewCode() {
-    requestEmailVerificationCode(authState.email)
+    requestEmailVerificationCode(email)
       .then(() => {
         setTimeToRequestNewCode(15);
       })
@@ -84,4 +83,4 @@ export const SignInConfirmForm: React.FC = observer(() => {
       </div>
     </form>
   );
-});
+};
