@@ -57,3 +57,30 @@
   color: #fff;
   text-decoration: underline;
 }
+
+.root {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+}
+
+.pinInput {
+  width: 100%;
+  height: 72px;
+}
+
+.input {
+  display: flex;
+  width: 100%;
+  height: 72px;
+  border: none;
+  background: none;
+  border-radius: 0;
+  border-bottom: 1px solid #fff;
+
+  font-family: ttsquare;
+  font-size: 2rem;
+  color: #fff;
+}

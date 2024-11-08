@@ -53,6 +53,11 @@ export const SignInConfirmForm: React.FC = () => {
           onChange={setCode}
           placeholder=""
           type="number"
+          classNames={{
+            root: styles.root,
+            pinInput: styles.pinInput,
+            input: styles.input,
+          }}
         />
       </div>
       <div className={styles.bottom}>
