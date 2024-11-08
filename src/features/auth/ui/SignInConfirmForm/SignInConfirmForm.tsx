@@ -1,25 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import styles from "../../styles/styles.module.scss";
-import { useForm } from "react-hook-form";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import authState from "@/src/entities/auth/store/authState";
 import { useRouter, useSearchParams } from "next/navigation";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
-
-interface IFormFileds {
-  code: string;
-}
+import { PinInput } from "@mantine/core";
 
 export const SignInConfirmForm: React.FC = () => {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useForm<IFormFileds>();
-
+  const [code, setCode] = useState("");
   const [timeToRequestNewCode, setTimeToRequestNewCode] = useState(15);
 
   const router = useRouter();
@@ -28,13 +18,11 @@ export const SignInConfirmForm: React.FC = () => {
   const email = String(searchParams.get("email"));
 
   useEffect(() => {
-    const subscription = watch((value) => {
-      if (value.code?.length === 4) {
-        authState.login({ email: email, code: Number(value.code) }, router);
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+    if (code.length === 4) {
+      authState.login({ email: email, code: Number(code) }, router);
+    }
+    console.log(code);
+  }, [code]);
 
   function handleGetNewCode() {
     requestEmailVerificationCode(email)
@@ -61,13 +49,11 @@ export const SignInConfirmForm: React.FC = () => {
   return (
     <form className={styles.form}>
       <div className={styles.inputs}>
-        <FlushedInput
-          id="code"
-          register={register}
-          required
-          name="code"
-          isInvalid={Boolean(errors.code)}
-          label="Код в письме"
+        <PinInput
+          value={code}
+          onChange={setCode}
+          placeholder=""
+          type="number"
         />
       </div>
       <div className={styles.bottom}>
