@@ -35,8 +35,7 @@ export const SignUpForm = () => {
     };
 
     authState.registration(newUser).then(() => {
-      authState.setEmail(data.email);
-      router.replace("/auth/signInConfirm");
+      router.replace(`/auth/signInConfirm?email=${data.email}`);
     });
   };
 

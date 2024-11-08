@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SignInConfirmForm } from "@/src/features/auth/ui/SignInConfirmForm";
+import { SignInConfirmForm } from "@/src/features/auth";
 import styles from "../../styles/styles.module.scss";
 import { useSearchParams } from "next/navigation";
 
