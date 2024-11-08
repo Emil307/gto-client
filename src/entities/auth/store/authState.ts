@@ -7,8 +7,12 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.share
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
+type Step = "info" | "privacy";
+
 class AuthState {
   isAuth: boolean = false;
+  registerDto: registrationDto | null = null;
+  step: Step = "info";
 
   constructor() {
     makeAutoObservable(this);
@@ -16,6 +20,14 @@ class AuthState {
 
   setIsAuth(value: boolean) {
     this.isAuth = value;
+  }
+
+  setStep(step: Step) {
+    this.step = step;
+  }
+
+  setRegisterDto(registerDto: registrationDto) {
+    this.registerDto = registerDto;
   }
 
   async login(data: loginDto, router: AppRouterInstance) {

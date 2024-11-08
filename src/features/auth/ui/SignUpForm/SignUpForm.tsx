@@ -6,7 +6,6 @@ import styles from "../../styles/styles.module.scss";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authState from "@/src/entities/auth/store/authState";
-import { useRouter } from "next/navigation";
 
 interface IFormFileds {
   name: string;
@@ -22,8 +21,6 @@ export const SignUpForm = () => {
     formState: { errors },
   } = useForm<IFormFileds>();
 
-  const router = useRouter();
-
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     const newUser = {
       name: data.name,
@@ -34,9 +31,8 @@ export const SignUpForm = () => {
       sex: "male",
     };
 
-    authState.registration(newUser).then(() => {
-      router.replace(`/auth/signInConfirm?email=${data.email}`);
-    });
+    authState.setRegisterDto(newUser);
+    authState.setStep("privacy");
   };
 
   return (
