@@ -21,7 +21,6 @@ export const SignInConfirmForm: React.FC = () => {
     if (code.length === 4) {
       authState.login({ email: email, code: Number(code) }, router);
     }
-    console.log(code);
   }, [code]);
 
   function handleGetNewCode() {
