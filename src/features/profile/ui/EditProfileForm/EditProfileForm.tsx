@@ -78,7 +78,6 @@ export const EditProfileForm: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      {" "}
       <div className={styles.inputs}>
         <FlushedInput
           id="surname"
