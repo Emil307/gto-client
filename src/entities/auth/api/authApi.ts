@@ -23,5 +23,5 @@ export async function requestEmailVerificationCode(
 }
 
 export async function logout() {
-  return await $api.post("/api/users/logout/");
+  return await $api.get("/api/users/logout/");
 }

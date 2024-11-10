@@ -57,7 +57,7 @@ class AuthState {
     }
   }
 
-  async logout() {
+  async logout(router: AppRouterInstance) {
     try {
       await logout();
       localStorage.removeItem("token");
@@ -65,6 +65,8 @@ class AuthState {
       this.setIsAuth(false);
 
       userState.setUser(null);
+
+      router.replace("/start");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }
