@@ -66,21 +66,22 @@ class AuthState {
 
       userState.setUser(null);
 
-      router.replace("/start");
+      router.replace("/");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }
   }
 
-  async checkAuth() {
+  async checkAuth(router: AppRouterInstance) {
     try {
       const response = await axios.post(`${API}/api/users/token-refresh/`, {
         refresh_token: getCookie("refresh"),
       });
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
-
       userState.setUser(response.data.user);
+
+      router.replace("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }
