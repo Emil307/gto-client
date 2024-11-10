@@ -109,7 +109,6 @@ export const EditProfileForm: React.FC = () => {
             type="text"
           />
         </div>
-        {/* <FlushedSelect data={["Мужской", "Женский", "Не выбран"]} label="Пол" /> */}
         <FlushedInput
           id="age"
           register={register}
