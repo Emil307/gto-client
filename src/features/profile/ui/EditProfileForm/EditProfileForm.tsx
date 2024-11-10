@@ -72,8 +72,6 @@ export const EditProfileForm: React.FC = () => {
     }
   }, [selectedRegion]);
 
-  console.log(selectedRegion);
-
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     console.log(data);
   };
