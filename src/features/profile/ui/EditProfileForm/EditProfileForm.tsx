@@ -6,21 +6,25 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "../../styles/styles.module.scss";
 import { FlushedSelect } from "@/src/shared/ui/FlushedSelect";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import { getCities, getRegions } from "@/src/entities/profile";
+import {
+  getMe,
+  getCities,
+  getRegions,
+  editProfile,
+} from "@/src/entities/profile";
+import userState from "@/src/entities/user";
+import { observer } from "mobx-react-lite";
 
 interface IFormFileds {
   name: string;
   surname: string;
   patronymic: string;
-  gender: string;
-  sex: number;
-  birthDate: string;
   region: string;
   city: string;
   age: string;
 }
 
-export const EditProfileForm: React.FC = () => {
+export const EditProfileForm: React.FC = observer(() => {
   const {
     register,
     handleSubmit,
@@ -29,8 +33,27 @@ export const EditProfileForm: React.FC = () => {
 
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
-  const [selectedRegion, setSelectedRegion] = useState<string | null>("");
-  const [selectedCity, setSelectedCity] = useState<string | null>("");
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(
+    userState.user?.region as string
+  );
+  const [selectedCity, setSelectedCity] = useState<string | null>(
+    userState.user?.city as string
+  );
+
+  useEffect(() => {
+    getMe()
+      .then((res) => {
+        userState.setUser(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    setSelectedRegion(String(userState.user?.region));
+    setSelectedCity(String(userState.user?.city));
+  }, [userState.user]);
 
   useEffect(() => {
     getRegions()
@@ -52,7 +75,7 @@ export const EditProfileForm: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (selectedRegion) {
+    if (selectedRegion && selectedRegion !== "undefined") {
       getCities(selectedRegion)
         .then((res) => {
           const searchedCities: any = [];
@@ -73,8 +96,19 @@ export const EditProfileForm: React.FC = () => {
   }, [selectedRegion]);
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
-    console.log(data);
+    data.region = String(selectedRegion);
+    data.city = String(selectedCity);
+
+    editProfile(data)
+      .then((res) => {
+        userState.setUser(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
+
+  console.log(userState.user?.region);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -87,6 +121,7 @@ export const EditProfileForm: React.FC = () => {
           label="Фамилия"
           placeholder="Иванов"
           type="text"
+          defaultValue={userState.user?.surname}
         />
         <div className={styles.inputsRow}>
           <FlushedInput
@@ -97,6 +132,7 @@ export const EditProfileForm: React.FC = () => {
             label="Имя"
             placeholder="Иван"
             type="text"
+            defaultValue={userState.user?.name}
           />
           <FlushedInput
             id="patronymic"
@@ -106,6 +142,7 @@ export const EditProfileForm: React.FC = () => {
             label="Отчество"
             placeholder="Иванович"
             type="text"
+            defaultValue={userState.user?.patronymic}
           />
         </div>
         <FlushedInput
@@ -116,6 +153,7 @@ export const EditProfileForm: React.FC = () => {
           label="Возраст"
           placeholder="18"
           type="text"
+          defaultValue={userState.user?.age ? userState.user?.age : "Не указан"}
         />
         <FlushedSelect
           data={regions}
@@ -130,7 +168,7 @@ export const EditProfileForm: React.FC = () => {
           onChange={setSelectedCity}
         />
       </div>
-      <ParallelogramButton>Сохранить</ParallelogramButton>
+      <ParallelogramButton type="submit">Сохранить</ParallelogramButton>
     </form>
   );
-};
+});

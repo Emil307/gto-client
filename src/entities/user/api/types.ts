@@ -9,6 +9,7 @@ export interface IUser {
   region?: string;
   city?: string;
   createdAt: string;
+  age: number;
 }
 
 export interface efitProfileDto {
