@@ -125,13 +125,13 @@ export const EditProfileForm: React.FC = () => {
           data={regions}
           label="Регион"
           value={selectedRegion}
-          onChange={() => setSelectedRegion}
+          onChange={setSelectedRegion}
         />
         <FlushedSelect
           data={cities}
           label="Город"
           value={selectedCity}
-          onChange={() => setSelectedCity}
+          onChange={setSelectedCity}
         />
       </div>
       <ParallelogramButton>Сохранить</ParallelogramButton>

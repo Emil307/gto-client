@@ -1,11 +1,11 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Select, SelectProps } from "@mantine/core";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 
 interface IFlushedInputProps extends SelectProps {
   value: string | null;
-  onChange: () => void;
+  onChange: Dispatch<SetStateAction<string | null>>;
 }
 
 export const FlushedSelect: React.FC<IFlushedInputProps> = ({
