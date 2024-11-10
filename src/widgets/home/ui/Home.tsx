@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../styles/styles.module.scss";
+import { Event } from "@/src/features/events";
 
 export const Home: React.FC = () => {
   return (
@@ -13,6 +14,7 @@ export const Home: React.FC = () => {
           сегодня!
         </p>
       </div>
+      <Event />
     </div>
   );
 };
