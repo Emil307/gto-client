@@ -6,6 +6,7 @@ import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import styles from "./styles.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import authState from "@/src/entities/auth/store/authState";
 
 export default function StartScreen() {
   const router = useRouter();
@@ -13,6 +14,8 @@ export default function StartScreen() {
   function handleRedirectToSignIn() {
     router.push("/auth/signIn");
   }
+
+  authState.checkAuth(router);
 
   return (
     <div className={styles.page}>

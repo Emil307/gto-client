@@ -5,6 +5,7 @@ import "../styles";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "../../../theme";
 import { roboto, rubik, TTSquare } from "../styles/fonts";
+import { ModalsProvider } from "@mantine/modals";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,7 +29,9 @@ export function RootLayout({
       <body
         className={`${roboto.variable} ${rubik.variable} ${TTSquare.variable} antialiased`}
       >
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <ModalsProvider>{children}</ModalsProvider>
+        </MantineProvider>
       </body>
     </html>
   );

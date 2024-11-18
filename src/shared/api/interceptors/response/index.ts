@@ -1,9 +1,11 @@
 import axios from "axios";
-import $api from "../../default";
+import { $api } from "../../default";
 import { getCookie } from "cookies-next";
 
 export const refreshRequest = async (error: any) => {
   const originalRequest = error.config;
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
 
   if (error.response.status == 401 && error.config && !error.config._isRetry) {
     originalRequest._isRetry = true;

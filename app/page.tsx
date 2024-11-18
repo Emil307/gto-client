@@ -1,1 +1,1 @@
-export { HomePage as default } from "@/src/views/home";
+export { StartScreen as default } from "@/src/views/startScreen";

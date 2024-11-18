@@ -3,12 +3,16 @@ import { login, loginDto, logout, registration, registrationDto } from "../api";
 import { getCookie, setCookie } from "cookies-next";
 import axios from "axios";
 import userState from "@/src/entities/user";
+import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
+type Step = "info" | "privacy";
+
 class AuthState {
   isAuth: boolean = false;
-  email: string = "";
+  registerDto: registrationDto | null = null;
+  step: Step = "info";
 
   constructor() {
     makeAutoObservable(this);
@@ -18,11 +22,15 @@ class AuthState {
     this.isAuth = value;
   }
 
-  setEmail(email: string) {
-    this.email = email;
+  setStep(step: Step) {
+    this.step = step;
   }
 
-  async login(data: loginDto) {
+  setRegisterDto(registerDto: registrationDto) {
+    this.registerDto = registerDto;
+  }
+
+  async login(data: loginDto, router: AppRouterInstance) {
     try {
       const response = await login(data);
       localStorage.setItem("token", response.data.access_token);
@@ -30,6 +38,7 @@ class AuthState {
       setCookie("refresh", response.data.refresh_token);
 
       userState.setUser(response.data.user);
+      router.replace("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }
@@ -48,7 +57,7 @@ class AuthState {
     }
   }
 
-  async logout() {
+  async logout(router: AppRouterInstance) {
     try {
       await logout();
       localStorage.removeItem("token");
@@ -56,20 +65,23 @@ class AuthState {
       this.setIsAuth(false);
 
       userState.setUser(null);
+
+      router.replace("/");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }
   }
 
-  async checkAuth() {
+  async checkAuth(router: AppRouterInstance) {
     try {
-      const response = await axios.post(`${API}/token-refresh/`, {
-        refresh: getCookie("refresh"),
+      const response = await axios.post(`${API}/api/users/token-refresh/`, {
+        refresh_token: getCookie("refresh"),
       });
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
-
       userState.setUser(response.data.user);
+
+      router.replace("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
     }

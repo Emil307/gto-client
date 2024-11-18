@@ -27,6 +27,16 @@ export const FlushedInput: React.FC<
           {...props}
         />
       )}
+      {!register && (
+        <TextInput
+          classNames={{
+            root: styles.root,
+            input: styles.input,
+            label: styles.label,
+          }}
+          {...props}
+        />
+      )}
     </>
   );
 };

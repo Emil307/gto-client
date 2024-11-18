@@ -1,45 +1,30 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import styles from "../../styles/styles.module.scss";
-import { useForm } from "react-hook-form";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import authState from "@/src/entities/auth/store/authState";
-import { useRouter } from "next/navigation";
-import { observer } from "mobx-react-lite";
+import { useRouter, useSearchParams } from "next/navigation";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
+import { PinInput } from "@mantine/core";
 
-interface IFormFileds {
-  code: string;
-}
-
-export const SignInConfirmForm: React.FC = observer(() => {
-  const {
-    register,
-    watch,
-    formState: { errors },
-  } = useForm<IFormFileds>();
-
+export const SignInConfirmForm: React.FC = () => {
+  const [code, setCode] = useState("");
   const [timeToRequestNewCode, setTimeToRequestNewCode] = useState(15);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const email = String(searchParams.get("email"));
 
   useEffect(() => {
-    const subscription = watch((value) => {
-      if (value.code?.length === 4) {
-        authState
-          .login({ email: authState.email, code: Number(value.code) })
-          .then(() => {
-            router.replace("/");
-          });
-      }
-    });
-    return () => subscription.unsubscribe();
-  }, [watch]);
+    if (code.length === 4) {
+      authState.login({ email: email, code: Number(code) }, router);
+    }
+  }, [code]);
 
   function handleGetNewCode() {
-    requestEmailVerificationCode(authState.email)
+    requestEmailVerificationCode(email)
       .then(() => {
         setTimeToRequestNewCode(15);
       })
@@ -63,13 +48,16 @@ export const SignInConfirmForm: React.FC = observer(() => {
   return (
     <form className={styles.form}>
       <div className={styles.inputs}>
-        <FlushedInput
-          id="code"
-          register={register}
-          required
-          name="code"
-          isInvalid={Boolean(errors.code)}
-          label="Код в письме"
+        <PinInput
+          value={code}
+          onChange={setCode}
+          placeholder=""
+          type="number"
+          classNames={{
+            root: styles.root,
+            pinInput: styles.pinInput,
+            input: styles.input,
+          }}
         />
       </div>
       <div className={styles.bottom}>
@@ -85,4 +73,4 @@ export const SignInConfirmForm: React.FC = observer(() => {
       </div>
     </form>
   );
-});
+};

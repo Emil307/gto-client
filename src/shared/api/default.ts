@@ -28,8 +28,8 @@ $api.interceptors.response.use(
     ) {
       originalRequest._isRetry = true;
       try {
-        const response = await axios.post(`${API}/token-refresh/`, {
-          refresh: getCookie("refresh"),
+        const response = await axios.post(`${API}/api/users/token-refresh/`, {
+          refresh_token: getCookie("refresh"),
         });
         localStorage.setItem("token", response.data.access);
         return $api.request(originalRequest);

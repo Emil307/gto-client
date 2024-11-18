@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 274px;
+  padding: 1rem;
+  background-image: url(../../../../public/img/event-bg.jpg);
+  background-size: cover;
+  background-position: 100%;
+  background-repeat: no-repeat;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.dates {
+  font-family: ttsquare;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 120%;
+
+  width: fit-content;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.125rem;
+  border: 1px solid #fff;
+}
+
+.title {
+  font-family: ttsquare;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 110%;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
