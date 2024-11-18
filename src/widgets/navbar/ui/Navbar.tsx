@@ -15,7 +15,7 @@ export const Navbar: React.FC = () => {
         />
         <span>Главная</span>
       </Link>
-      <Link href="/lk/request" className={styles.request}>
+      <Link href="/request" className={styles.request}>
         <div className={styles.link}>
           <Image src="/icons/plus.svg" width={24} height={24} alt="Заявка" />
           <span>Заявка</span>
