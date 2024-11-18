@@ -1,1 +1,1 @@
-export { AuthLayout as default } from "@/src/app/layouts/auth";
+export { RequestLayout as default } from "@/src/app/layouts/request";
