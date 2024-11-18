@@ -4,6 +4,7 @@ import React from "react";
 import { SignInConfirmForm } from "@/src/features/auth";
 import styles from "../../styles/styles.module.scss";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 export const SignInConfirm = () => {
   const searchParams = useSearchParams();
@@ -17,7 +18,9 @@ export const SignInConfirm = () => {
           Отправили письмо с кодом для подтверждения на {" "}
           <span className={styles.bold}>{email}</span>
         </p>
-        <SignInConfirmForm />
+        <Suspense>
+          <SignInConfirmForm />
+        </Suspense>
       </div>
     </div>
   );
