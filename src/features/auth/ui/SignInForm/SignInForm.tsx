@@ -51,7 +51,7 @@ export const SignInForm = () => {
           label="Ваш e-mail"
         />
       </div>
-      <ParallelogramButton type="submit">
+      <ParallelogramButton type="submit" disabled={isLoading}>
         {isLoading ? <Loader /> : <>Получить код</>}
       </ParallelogramButton>
     </form>
