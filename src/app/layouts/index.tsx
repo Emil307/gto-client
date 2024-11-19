@@ -25,7 +25,7 @@ export function RootLayout({
           name="viewport"
           content="minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, width=device-width, user-scalable=0"
         />
-        <meta name="theme-color" content="#f7f7ed" />
+        <meta name="theme-color" content="#000430" />
       </head>
       <body
         className={`${roboto.variable} ${rubik.variable} ${TTSquare.variable} antialiased`}

@@ -42,6 +42,7 @@ export const Header: React.FC<IHeaderProps> = ({ title, confirmClose }) => {
           src="/icons/arrow-left.svg"
           width={24}
           height={24}
+          priority={true}
           alt="go back"
         />
       </button>
