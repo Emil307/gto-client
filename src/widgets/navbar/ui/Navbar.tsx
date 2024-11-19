@@ -12,18 +12,31 @@ export const Navbar: React.FC = () => {
           width={24}
           height={24}
           alt="Главная страница"
+          priority={true}
         />
         <span>Главная</span>
       </Link>
       <Link href="/request" className={styles.request}>
         <div className={styles.link}>
-          <Image src="/icons/plus.svg" width={24} height={24} alt="Заявка" />
+          <Image
+            src="/icons/plus.svg"
+            priority={true}
+            width={24}
+            height={24}
+            alt="Заявка"
+          />
           <span>Заявка</span>
         </div>
       </Link>
       <Link href="/profile" className={styles.link} style={{ opacity: 0.5 }}>
         {" "}
-        <Image src="/icons/profile.svg" width={24} height={24} alt="Профиль" />
+        <Image
+          src="/icons/profile.svg"
+          priority={true}
+          width={24}
+          height={24}
+          alt="Профиль"
+        />
         <span>Профиль</span>
       </Link>
     </div>
