@@ -7,6 +7,7 @@ import authState from "@/src/entities/auth/store/authState";
 import { useRouter, useSearchParams } from "next/navigation";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
 import { PinInput } from "@mantine/core";
+import { Loader } from "@/src/shared";
 
 export const SignInConfirmForm: React.FC = () => {
   const [code, setCode] = useState("");
@@ -70,7 +71,7 @@ export const SignInConfirmForm: React.FC = () => {
           disabled={Boolean(timeToRequestNewCode) || isLoading}
           onClick={handleGetNewCode}
         >
-          <>Запросить снова</>
+          {isLoading ? <Loader /> : <>Запросить снова</>}
         </ParallelogramButton>
         {timeToRequestNewCode > 0 && (
           <span className={styles.timer}>{timeToRequestNewCode} c</span>
