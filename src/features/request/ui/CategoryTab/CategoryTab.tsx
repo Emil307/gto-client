@@ -38,7 +38,13 @@ export const CatagoryTab = observer(() => {
   return (
     <div className={styles.categoryTab}>
       <div className={styles.ageCategory}>
-        <Image src="/icons/info.svg" width={24} height={24} alt="info" />
+        <Image
+          priority={true}
+          src="/icons/info.svg"
+          width={24}
+          height={24}
+          alt="info"
+        />
         <p>Ваша возрастная категория: 18-34</p>
       </div>
       <div className={styles.categories}>

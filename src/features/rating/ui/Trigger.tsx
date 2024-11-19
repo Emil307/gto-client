@@ -7,6 +7,7 @@ export const Trigger: React.FC = () => {
   return (
     <Link href="/lk/rating" className={styles.container}>
       <Image
+        priority={true}
         src="/icons/cup.svg"
         width={24}
         height={24}

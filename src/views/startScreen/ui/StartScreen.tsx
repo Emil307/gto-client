@@ -25,6 +25,7 @@ export default function StartScreen() {
         width={354}
         height={480}
         alt="gto"
+        priority={true}
       />
       <div className={styles.buttons}>
         <ParallelogramButton onClick={handleRedirectToSignIn}>

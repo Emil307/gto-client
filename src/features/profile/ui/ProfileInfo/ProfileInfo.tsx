@@ -17,6 +17,7 @@ export const ProfileInfo: React.FC = () => {
     <div className={styles.container}>
       <div className={styles.params}>
         <Image
+          priority={true}
           src="/img/avatar.png"
           width={124}
           height={124}

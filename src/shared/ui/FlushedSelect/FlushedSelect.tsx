@@ -29,6 +29,7 @@ export const FlushedSelect: React.FC<IFlushedInputProps> = ({
           width={24}
           height={24}
           alt="open"
+          priority={true}
         />
       }
     />

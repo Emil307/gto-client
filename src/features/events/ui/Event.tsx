@@ -7,6 +7,7 @@ export const Event: React.FC = () => {
   return (
     <div className={styles.container}>
       <Image
+        priority={true}
         src="/icons/event-logo.svg"
         width={100}
         height={24}
