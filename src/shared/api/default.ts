@@ -31,7 +31,7 @@ $api.interceptors.response.use(
         const response = await axios.post(`${API}/api/users/token-refresh/`, {
           refresh_token: getCookie("refresh"),
         });
-        localStorage.setItem("token", response.data.access);
+        localStorage.setItem("token", response.data.access_token);
         return $api.request(originalRequest);
       } catch (e: any) {
         console.log(e?.response?.data?.message || "Неизвестная ошибка");

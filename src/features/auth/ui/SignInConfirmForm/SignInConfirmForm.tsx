@@ -11,6 +11,7 @@ import { PinInput } from "@mantine/core";
 export const SignInConfirmForm: React.FC = () => {
   const [code, setCode] = useState("");
   const [timeToRequestNewCode, setTimeToRequestNewCode] = useState(15);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -24,12 +25,16 @@ export const SignInConfirmForm: React.FC = () => {
   }, [code]);
 
   function handleGetNewCode() {
+    setIsLoading(true);
     requestEmailVerificationCode(email)
       .then(() => {
         setTimeToRequestNewCode(15);
       })
       .catch((e) => {
         console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -62,10 +67,10 @@ export const SignInConfirmForm: React.FC = () => {
       </div>
       <div className={styles.bottom}>
         <ParallelogramButton
-          disabled={Boolean(timeToRequestNewCode)}
+          disabled={Boolean(timeToRequestNewCode) || isLoading}
           onClick={handleGetNewCode}
         >
-          Запросить снова
+          <>Запросить снова</>
         </ParallelogramButton>
         {timeToRequestNewCode > 0 && (
           <span className={styles.timer}>{timeToRequestNewCode} c</span>
