@@ -14,6 +14,7 @@ import {
 } from "@/src/entities/profile";
 import userState from "@/src/entities/user";
 import { observer } from "mobx-react-lite";
+import { Loader } from "@/src/shared";
 
 interface IFormFileds {
   name: string;
@@ -31,6 +32,7 @@ export const EditProfileForm: React.FC = observer(() => {
     formState: { errors },
   } = useForm<IFormFileds>();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(
@@ -56,6 +58,7 @@ export const EditProfileForm: React.FC = observer(() => {
   }, [userState.user]);
 
   useEffect(() => {
+    setIsLoading(true);
     getRegions()
       .then((res) => {
         const searchedRegions: any = [];
@@ -71,11 +74,15 @@ export const EditProfileForm: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
     if (selectedRegion && selectedRegion !== "undefined") {
+      setSelectedCity(null);
       getCities(selectedRegion)
         .then((res) => {
           const searchedCities: any = [];
@@ -107,8 +114,6 @@ export const EditProfileForm: React.FC = observer(() => {
         console.log(e);
       });
   };
-
-  console.log(userState.user?.region);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -151,9 +156,9 @@ export const EditProfileForm: React.FC = observer(() => {
           name="age"
           isInvalid={Boolean(errors.age)}
           label="Возраст"
-          placeholder="18"
+          placeholder="Не указан"
           type="text"
-          defaultValue={userState.user?.age ? userState.user?.age : "Не указан"}
+          defaultValue={userState.user?.age ? userState.user?.age : ""}
         />
         <FlushedSelect
           data={regions}
@@ -168,7 +173,9 @@ export const EditProfileForm: React.FC = observer(() => {
           onChange={setSelectedCity}
         />
       </div>
-      <ParallelogramButton type="submit">Сохранить</ParallelogramButton>
+      <ParallelogramButton type="submit" disabled={isLoading}>
+        {isLoading ? <Loader /> : <>Сохранить</>}
+      </ParallelogramButton>
     </form>
   );
 });
