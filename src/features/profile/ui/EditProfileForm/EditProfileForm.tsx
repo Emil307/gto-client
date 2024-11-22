@@ -82,7 +82,10 @@ export const EditProfileForm: React.FC = observer(() => {
 
   useEffect(() => {
     if (selectedRegion && selectedRegion !== "undefined") {
-      setSelectedCity(null);
+      if (userState.user?.city !== selectedCity) {
+        setSelectedCity(null);
+      }
+
       getCities(selectedRegion)
         .then((res) => {
           const searchedCities: any = [];
@@ -108,6 +111,7 @@ export const EditProfileForm: React.FC = observer(() => {
 
     editProfile(data)
       .then((res) => {
+        console.log("log");
         userState.setUser(res.data);
       })
       .catch((e) => {
