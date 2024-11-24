@@ -12,7 +12,7 @@ import {
   getRegions,
   editProfile,
 } from "@/src/entities/profile";
-import userState from "@/src/entities/user";
+import userState, { IUser } from "@/src/entities/user";
 import { observer } from "mobx-react-lite";
 import { Loader } from "@/src/shared";
 
@@ -32,6 +32,7 @@ export const EditProfileForm: React.FC = observer(() => {
     formState: { errors },
   } = useForm<IFormFileds>();
 
+  const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
@@ -43,9 +44,15 @@ export const EditProfileForm: React.FC = observer(() => {
   );
 
   useEffect(() => {
+    if (userState.user) {
+      setUser(userState.user);
+      return;
+    }
+
     getMe()
       .then((res) => {
         userState.setUser(res.data);
+        setUser(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -129,7 +136,7 @@ export const EditProfileForm: React.FC = observer(() => {
           label="Фамилия"
           placeholder="Иванов"
           type="text"
-          defaultValue={userState.user?.surname}
+          defaultValue={user?.surname}
         />
         <div className={styles.inputsRow}>
           <FlushedInput
@@ -140,7 +147,7 @@ export const EditProfileForm: React.FC = observer(() => {
             label="Имя"
             placeholder="Иван"
             type="text"
-            defaultValue={userState.user?.name}
+            defaultValue={user?.name}
           />
           <FlushedInput
             id="patronymic"
@@ -150,7 +157,7 @@ export const EditProfileForm: React.FC = observer(() => {
             label="Отчество"
             placeholder="Иванович"
             type="text"
-            defaultValue={userState.user?.patronymic}
+            defaultValue={user?.patronymic}
           />
         </div>
         <FlushedInput
@@ -161,7 +168,7 @@ export const EditProfileForm: React.FC = observer(() => {
           label="Возраст"
           placeholder="Не указан"
           type="text"
-          defaultValue={userState.user?.age ? userState.user?.age : ""}
+          defaultValue={user?.age ? user?.age : ""}
         />
         <FlushedSelect
           data={regions}
