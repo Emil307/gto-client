@@ -30,7 +30,7 @@ const categories = [
   },
 ];
 
-export const CatagoryTab = observer(() => {
+export const CategoryTab = observer(() => {
   function handleSelectCategory(value: string) {
     requestState.setCategory(value);
   }

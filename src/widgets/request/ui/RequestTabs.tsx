@@ -3,7 +3,7 @@
 import React from "react";
 import { Tabs } from "@mantine/core";
 import styles from "../styles/styles.module.scss";
-import { CatagoryTab, InfoTab, VideoTab } from "@/src/features/request";
+import { CategoryTab, InfoTab, VideoTab } from "@/src/features/request";
 
 export const RequestTabs: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ export const RequestTabs: React.FC = () => {
       </Tabs.Panel>
 
       <Tabs.Panel value="category">
-        <CatagoryTab />
+        <CategoryTab />
       </Tabs.Panel>
 
       <Tabs.Panel value="video">
