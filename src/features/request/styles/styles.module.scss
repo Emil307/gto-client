@@ -102,3 +102,25 @@
   background-image: linear-gradient(rgba(0, 4, 48, 0) 0%, #000430 50% 100%);
   padding: 1.5rem 0;
 }
+
+.videoTab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: calc(100vh - 16rem);
+}
+
+.videoTabSquare {
+  width: 12rem;
+  height: 12rem;
+  margin: 3rem auto 0;
+  border: 2px dashed var(--border-color);
+}
+
+.videoTabBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
