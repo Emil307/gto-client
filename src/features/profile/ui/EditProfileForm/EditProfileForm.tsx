@@ -111,7 +111,6 @@ export const EditProfileForm: React.FC = observer(() => {
 
     editProfile(data)
       .then((res) => {
-        console.log("log");
         userState.setUser(res.data);
       })
       .catch((e) => {
