@@ -12,9 +12,7 @@ export const VideoTab = () => {
     <div className={styles.videoTab}>
       <div className={styles.videoTabSquare}></div>
       <div className={styles.videoTabBottom}>
-        <ParallelogramButton
-          onClick={() => router.replace("/request/record-video")}
-        >
+        <ParallelogramButton onClick={() => router.replace("/recordVideo")}>
           Снять видео
         </ParallelogramButton>
         <p className={styles.credits}>

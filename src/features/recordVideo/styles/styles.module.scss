@@ -1,0 +1,8 @@
+.video {
+  width: 100%;
+  height: calc(100vh - 7rem);
+}
+
+.video::-webkit-media-controls {
+  display: none;
+}
