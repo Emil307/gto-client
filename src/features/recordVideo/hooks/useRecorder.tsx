@@ -2,6 +2,7 @@
 
 import { RefObject, useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
+// import axios from "axios";
 
 type StatusType = "idle" | "recording" | "paused";
 
@@ -53,10 +54,11 @@ const useRecorder = () => {
       mediaRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
           chunks.push(e.data);
+          console.log(e.data);
         }
       };
 
-      mediaRecorder.onstop = () => {
+      mediaRecorder.onstop = async () => {
         if (videoRef.current) {
           videoRef.current.pause();
         }
@@ -66,6 +68,29 @@ const useRecorder = () => {
 
         const blobURL = URL.createObjectURL(blob);
         setBlobUrl(blobURL);
+
+        const formData = new FormData();
+        formData.append("file", blob, "chunk.webm");
+        formData.append("upload_id", "1");
+        formData.append("chunk_number", "1");
+        formData.append("total_chunks", "1");
+        formData.append("application_id", "1");
+
+        // const API = process.env.NEXT_PUBLIC_API_URL;
+
+        // const access = localStorage.getItem("token");
+
+        // const response = await axios({
+        //   url: `${API}/api/application/chunk/upload`,
+        //   method: "POST",
+        //   headers: {
+        //     Authorization: `Bearer ${access}`,
+        //     "Content-Type": "multipart/form-data; boundary=something",
+        //   },
+        //   data: formData,
+        // });
+
+        // console.log("Ответ сервера:", response.data);
 
         if (videoRef.current) {
           videoRef.current.srcObject = null;

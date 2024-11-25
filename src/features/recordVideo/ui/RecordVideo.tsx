@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import useRecorder from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import requestState from "@/src/entities/request/store/requestState";
+// import { useRouter } from "next/navigation";
+// import requestState from "@/src/entities/request/store/requestState";
 
 export const RecordVideo = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { status, videoRef, startRecording, stopRecording } = useRecorder();
   const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
 
@@ -34,9 +34,9 @@ export const RecordVideo = () => {
 
   function handleStopRecording() {
     stopRecording();
-    router.replace("/request");
-    requestState.setCategory("video");
-    requestState.setVideoStatus("watch");
+    // router.replace("/request");
+    // requestState.setCategory("video");
+    // requestState.setVideoStatus("watch");
   }
 
   return (
