@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import styles from "../../styles/styles.module.scss";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
@@ -17,11 +17,20 @@ export const SignInForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<IFormFileds>();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const { unsubscribe } = watch(() => {
+      setError(null);
+    });
+    return () => unsubscribe();
+  }, [watch]);
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     setIsLoading(true);
@@ -29,8 +38,10 @@ export const SignInForm = () => {
       .then(() => {
         router.push(`/auth/signInConfirm?email=${data.email}`);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        if (error.status === 404) {
+          setError("Пользователь с таким E-mail не найден");
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -45,13 +56,16 @@ export const SignInForm = () => {
           register={register}
           required
           name="email"
-          isInvalid={Boolean(errors.email)}
           type="E-mail"
           placeholder="example@gmail.com"
           label="Ваш e-mail"
+          error={errors.email?.message || error}
         />
       </div>
-      <ParallelogramButton type="submit" disabled={isLoading}>
+      <ParallelogramButton
+        type="submit"
+        disabled={isLoading || Boolean(errors.email) || Boolean(error)}
+      >
         {isLoading ? <Loader /> : <>Получить код</>}
       </ParallelogramButton>
     </form>

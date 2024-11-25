@@ -4,13 +4,13 @@ import styles from "./styles.module.scss";
 
 interface ReactHookFormInputProps
   extends Omit<React.ComponentProps<"input">, "ref"> {
-  isInvalid?: boolean;
   register?: any;
+  error?: React.ReactNode;
 }
 
 export const FlushedInput: React.FC<
   TextInputProps & ReactHookFormInputProps
-> = ({ name, register, isInvalid, required, ...props }) => {
+> = ({ name, register, required, error, ...props }) => {
   return (
     <>
       {register && (
@@ -19,11 +19,12 @@ export const FlushedInput: React.FC<
             root: styles.root,
             input: styles.input,
             label: styles.label,
+            error: styles.error,
           }}
           {...register(name, {
             required: required,
           })}
-          error={isInvalid}
+          error={error}
           {...props}
         />
       )}
