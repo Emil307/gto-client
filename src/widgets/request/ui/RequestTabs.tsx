@@ -10,11 +10,36 @@ export const RequestTabs: React.FC = observer(() => {
   return (
     <div className={styles.container}>
       <div className={styles.tabs}>
-        <button onClick={() => requestState.setCategory("info")}>Данные</button>
-        <button onClick={() => requestState.setCategory("category")}>
+        <button
+          onClick={() => requestState.setCategory("info")}
+          className={styles.tabsButton}
+          style={{
+            opacity: requestState.category === "info" ? "1" : "0.5",
+            borderBottom: "1px solid #fff",
+          }}
+        >
+          Данные
+        </button>
+        <button
+          onClick={() => requestState.setCategory("category")}
+          className={styles.tabsButton}
+          style={{
+            opacity: requestState.category === "category" ? "1" : "0.5",
+            borderBottom: "1px solid #fff",
+          }}
+        >
           Категория
         </button>
-        <button onClick={() => requestState.setCategory("video")}>Видео</button>
+        <button
+          onClick={() => requestState.setCategory("video")}
+          className={styles.tabsButton}
+          style={{
+            opacity: requestState.category === "video" ? "1" : "0.5",
+            borderBottom: "1px solid #fff",
+          }}
+        >
+          Видео
+        </button>
       </div>
 
       {requestState.category === "info" && <InfoTab />}
