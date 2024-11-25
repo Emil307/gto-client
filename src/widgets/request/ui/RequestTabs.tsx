@@ -15,7 +15,6 @@ export const RequestTabs: React.FC = observer(() => {
           className={styles.tabsButton}
           style={{
             opacity: requestState.category === "info" ? "1" : "0.5",
-            borderBottom: "1px solid #fff",
           }}
         >
           Данные
@@ -25,7 +24,6 @@ export const RequestTabs: React.FC = observer(() => {
           className={styles.tabsButton}
           style={{
             opacity: requestState.category === "category" ? "1" : "0.5",
-            borderBottom: "1px solid #fff",
           }}
         >
           Категория
@@ -35,7 +33,6 @@ export const RequestTabs: React.FC = observer(() => {
           className={styles.tabsButton}
           style={{
             opacity: requestState.category === "video" ? "1" : "0.5",
-            borderBottom: "1px solid #fff",
           }}
         >
           Видео
