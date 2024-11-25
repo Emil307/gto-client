@@ -7,3 +7,7 @@ export async function editProfile(
 ): Promise<AxiosResponse<IUser>> {
   return await $api.post("/api/users/me/", data);
 }
+
+export async function getMe(): Promise<AxiosResponse<IUser>> {
+  return await $api.get("/api/users/me/");
+}

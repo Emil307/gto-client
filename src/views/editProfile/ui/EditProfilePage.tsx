@@ -4,7 +4,7 @@ import { EditProfile } from "@/src/widgets/profile";
 export default function EditProfilePage() {
   return (
     <>
-      <Header title="Редактирование Профиля" confirmClose={false} />
+      <Header title="Изменение Профиля" confirmClose={false} />
       <EditProfile />
     </>
   );

@@ -1,0 +1,19 @@
+.page {
+  position: relative;
+  min-height: 100vh;
+  height: fit-content;
+  padding-bottom: 0;
+  background-color: var(--main-bg);
+}
+
+.back {
+  position: absolute;
+  top: 2rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  z-index: 2;
+}

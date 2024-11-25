@@ -1,30 +1,47 @@
 "use client";
 
 import React from "react";
-import { Tabs } from "@mantine/core";
 import styles from "../styles/styles.module.scss";
-import { CatagoryTab, InfoTab, VideoTab } from "@/src/features/request";
+import { CategoryTab, InfoTab, VideoTab } from "@/src/features/request";
+import { observer } from "mobx-react-lite";
+import requestState from "@/src/entities/request/store/requestState";
 
-export const RequestTabs: React.FC = () => {
+export const RequestTabs: React.FC = observer(() => {
   return (
-    <Tabs defaultValue="info" classNames={styles}>
-      <Tabs.List justify="center">
-        <Tabs.Tab value="info">Данные</Tabs.Tab>
-        <Tabs.Tab value="category">Категория</Tabs.Tab>
-        <Tabs.Tab value="video">Видео</Tabs.Tab>
-      </Tabs.List>
+    <div className={styles.container}>
+      <div className={styles.tabs}>
+        <button
+          onClick={() => requestState.setActiveTab("info")}
+          className={styles.tabsButton}
+          style={{
+            opacity: requestState.activeTab === "info" ? "1" : "0.5",
+          }}
+        >
+          Данные
+        </button>
+        <button
+          onClick={() => requestState.setActiveTab("category")}
+          className={styles.tabsButton}
+          style={{
+            opacity: requestState.activeTab === "category" ? "1" : "0.5",
+          }}
+        >
+          Категория
+        </button>
+        <button
+          onClick={() => requestState.setActiveTab("video")}
+          className={styles.tabsButton}
+          style={{
+            opacity: requestState.activeTab === "video" ? "1" : "0.5",
+          }}
+        >
+          Видео
+        </button>
+      </div>
 
-      <Tabs.Panel value="info">
-        <InfoTab />
-      </Tabs.Panel>
-
-      <Tabs.Panel value="category">
-        <CatagoryTab />
-      </Tabs.Panel>
-
-      <Tabs.Panel value="video">
-        <VideoTab />
-      </Tabs.Panel>
-    </Tabs>
+      {requestState.activeTab === "info" && <InfoTab />}
+      {requestState.activeTab === "category" && <CategoryTab />}
+      {requestState.activeTab === "video" && <VideoTab />}
+    </div>
   );
-};
+});

@@ -12,8 +12,9 @@ import {
   getRegions,
   editProfile,
 } from "@/src/entities/profile";
-import userState from "@/src/entities/user";
+import userState, { IUser } from "@/src/entities/user";
 import { observer } from "mobx-react-lite";
+import { Loader } from "@/src/shared";
 
 interface IFormFileds {
   name: string;
@@ -31,6 +32,8 @@ export const EditProfileForm: React.FC = observer(() => {
     formState: { errors },
   } = useForm<IFormFileds>();
 
+  const [user, setUser] = useState<IUser | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(
@@ -41,9 +44,15 @@ export const EditProfileForm: React.FC = observer(() => {
   );
 
   useEffect(() => {
+    if (userState.user) {
+      setUser(userState.user);
+      return;
+    }
+
     getMe()
       .then((res) => {
         userState.setUser(res.data);
+        setUser(res.data);
       })
       .catch((e) => {
         console.log(e);
@@ -56,6 +65,7 @@ export const EditProfileForm: React.FC = observer(() => {
   }, [userState.user]);
 
   useEffect(() => {
+    setIsLoading(true);
     getRegions()
       .then((res) => {
         const searchedRegions: any = [];
@@ -71,11 +81,18 @@ export const EditProfileForm: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
   useEffect(() => {
     if (selectedRegion && selectedRegion !== "undefined") {
+      if (userState.user?.city !== selectedCity) {
+        setSelectedCity(null);
+      }
+
       getCities(selectedRegion)
         .then((res) => {
           const searchedCities: any = [];
@@ -108,8 +125,6 @@ export const EditProfileForm: React.FC = observer(() => {
       });
   };
 
-  console.log(userState.user?.region);
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.inputs}>
@@ -121,7 +136,7 @@ export const EditProfileForm: React.FC = observer(() => {
           label="Фамилия"
           placeholder="Иванов"
           type="text"
-          defaultValue={userState.user?.surname}
+          defaultValue={user?.surname}
         />
         <div className={styles.inputsRow}>
           <FlushedInput
@@ -132,7 +147,7 @@ export const EditProfileForm: React.FC = observer(() => {
             label="Имя"
             placeholder="Иван"
             type="text"
-            defaultValue={userState.user?.name}
+            defaultValue={user?.name}
           />
           <FlushedInput
             id="patronymic"
@@ -142,7 +157,7 @@ export const EditProfileForm: React.FC = observer(() => {
             label="Отчество"
             placeholder="Иванович"
             type="text"
-            defaultValue={userState.user?.patronymic}
+            defaultValue={user?.patronymic}
           />
         </div>
         <FlushedInput
@@ -151,9 +166,9 @@ export const EditProfileForm: React.FC = observer(() => {
           name="age"
           isInvalid={Boolean(errors.age)}
           label="Возраст"
-          placeholder="18"
+          placeholder="Не указан"
           type="text"
-          defaultValue={userState.user?.age ? userState.user?.age : "Не указан"}
+          defaultValue={user?.age ? user?.age : ""}
         />
         <FlushedSelect
           data={regions}
@@ -168,7 +183,9 @@ export const EditProfileForm: React.FC = observer(() => {
           onChange={setSelectedCity}
         />
       </div>
-      <ParallelogramButton type="submit">Сохранить</ParallelogramButton>
+      <ParallelogramButton type="submit" disabled={isLoading}>
+        {isLoading ? <Loader /> : <>Сохранить</>}
+      </ParallelogramButton>
     </form>
   );
 });
