@@ -1,18 +1,23 @@
 import { makeAutoObservable } from "mobx";
 
-type TCategory = "info" | "category" | "video";
+type TTab = "info" | "category" | "video";
 type TVideoStatus = "record" | "watch";
 
 class RequestState {
-  category: TCategory = "info";
+  activeTab: TTab = "info";
+  category: string = "";
   videoStatus: TVideoStatus = "record";
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  setCategory(value: TCategory) {
-    this.category = value;
+  setActiveTab(value: TTab) {
+    this.activeTab = value;
+  }
+
+  setCategory(category: string) {
+    this.category = category;
   }
 
   setVideoStatus(status: TVideoStatus) {

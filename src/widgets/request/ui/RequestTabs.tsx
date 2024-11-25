@@ -11,37 +11,37 @@ export const RequestTabs: React.FC = observer(() => {
     <div className={styles.container}>
       <div className={styles.tabs}>
         <button
-          onClick={() => requestState.setCategory("info")}
+          onClick={() => requestState.setActiveTab("info")}
           className={styles.tabsButton}
           style={{
-            opacity: requestState.category === "info" ? "1" : "0.5",
+            opacity: requestState.activeTab === "info" ? "1" : "0.5",
           }}
         >
           Данные
         </button>
         <button
-          onClick={() => requestState.setCategory("category")}
+          onClick={() => requestState.setActiveTab("category")}
           className={styles.tabsButton}
           style={{
-            opacity: requestState.category === "category" ? "1" : "0.5",
+            opacity: requestState.activeTab === "category" ? "1" : "0.5",
           }}
         >
           Категория
         </button>
         <button
-          onClick={() => requestState.setCategory("video")}
+          onClick={() => requestState.setActiveTab("video")}
           className={styles.tabsButton}
           style={{
-            opacity: requestState.category === "video" ? "1" : "0.5",
+            opacity: requestState.activeTab === "video" ? "1" : "0.5",
           }}
         >
           Видео
         </button>
       </div>
 
-      {requestState.category === "info" && <InfoTab />}
-      {requestState.category === "category" && <CategoryTab />}
-      {requestState.category === "video" && <VideoTab />}
+      {requestState.activeTab === "info" && <InfoTab />}
+      {requestState.activeTab === "category" && <CategoryTab />}
+      {requestState.activeTab === "video" && <VideoTab />}
     </div>
   );
 });
