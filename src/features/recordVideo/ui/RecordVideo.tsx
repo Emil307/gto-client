@@ -5,6 +5,7 @@ import useRecorder from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import requestState from "@/src/entities/request/store/requestState";
 
 export const RecordVideo = () => {
   const router = useRouter();
@@ -34,6 +35,8 @@ export const RecordVideo = () => {
   function handleStopRecording() {
     stopRecording();
     router.replace("/request");
+    requestState.setCategory("video");
+    requestState.setVideoStatus("watch");
   }
 
   return (
