@@ -1,12 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useRecorder from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export const RecordVideo = () => {
-  const { status, videoRef, startRecording, stopRecording, downloadRecording } =
-    useRecorder();
+  const router = useRouter();
+  const { status, videoRef, startRecording, stopRecording } = useRecorder();
+  const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
+
+  function handleStartLater() {
+    setTimeout(() => {
+      startRecording();
+    }, 3000);
+
+    setTimeToStartRecording(3);
+  }
+
+  function second() {
+    setTimeout(() => {
+      setTimeToStartRecording(timeToStartRecording - 1);
+    }, 1000);
+  }
+
+  useEffect(() => {
+    if (timeToStartRecording > 0) {
+      second();
+    }
+  }, [timeToStartRecording]);
+
+  function handleStopRecording() {
+    stopRecording();
+    router.replace("/request");
+  }
 
   return (
     <div>
@@ -15,9 +43,38 @@ export const RecordVideo = () => {
         ref={videoRef}
         className={styles.video}
       />
-      {status === "idle" && <button onClick={startRecording}>Start</button>}
-      {status !== "idle" && <button onClick={stopRecording}>Stop</button>}
-      <button onClick={downloadRecording}>Download</button>
+      {timeToStartRecording ? (
+        <div className={styles.timer}>{timeToStartRecording}</div>
+      ) : (
+        <></>
+      )}
+      <div className={styles.buttons}>
+        <div className={styles.rotate}></div>
+        {status === "idle" && (
+          <div className={styles.recordWrapper}>
+            <button onClick={startRecording} className={styles.start}>
+              <div className={styles.startInner}></div>
+            </button>
+            <p>Начать запись</p>
+          </div>
+        )}
+        {status !== "idle" && (
+          <div className={styles.recordWrapper}>
+            <button onClick={handleStopRecording} className={styles.stop}>
+              <div className={styles.stopInner}></div>
+            </button>
+            <p>Остановить видео</p>
+          </div>
+        )}
+        <button
+          className={styles.startLater}
+          onClick={handleStartLater}
+          disabled={status !== "idle"}
+        >
+          <Image src="/icons/timer.svg" width={24} height={24} alt="timer" />
+          <>3 сек</>
+        </button>
+      </div>
     </div>
   );
 };

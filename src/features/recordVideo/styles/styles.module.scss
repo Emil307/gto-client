@@ -6,3 +6,74 @@
 .video::-webkit-media-controls {
   display: none;
 }
+
+.timer {
+  position: absolute;
+  top: calc(50vh - 192px);
+  left: calc(50vw - 72px);
+  font-family: Roboto;
+  font-size: 16rem;
+  line-height: 120%;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 7rem;
+  width: 100%;
+  max-width: calc(100vw - 3rem);
+  margin: 0 auto;
+}
+
+.rotate {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recordWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.start,
+.stop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  padding: 2px;
+  border: 0.25rem solid #fff;
+}
+
+.startInner {
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-red);
+  border-radius: 50%;
+}
+
+.stopInner {
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: var(--main-red);
+  border-radius: 6px;
+}
+
+.startLater {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
