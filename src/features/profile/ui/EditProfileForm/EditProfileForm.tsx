@@ -26,11 +26,7 @@ interface IFormFileds {
 }
 
 export const EditProfileForm: React.FC = observer(() => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormFileds>();
+  const { register, handleSubmit } = useForm<IFormFileds>();
 
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -132,7 +128,6 @@ export const EditProfileForm: React.FC = observer(() => {
           id="surname"
           register={register}
           name="surname"
-          isInvalid={Boolean(errors.surname)}
           label="Фамилия"
           placeholder="Иванов"
           type="text"
@@ -143,7 +138,6 @@ export const EditProfileForm: React.FC = observer(() => {
             id="name"
             register={register}
             name="name"
-            isInvalid={Boolean(errors.name)}
             label="Имя"
             placeholder="Иван"
             type="text"
@@ -153,7 +147,6 @@ export const EditProfileForm: React.FC = observer(() => {
             id="patronymic"
             register={register}
             name="patronymic"
-            isInvalid={Boolean(errors.patronymic)}
             label="Отчество"
             placeholder="Иванович"
             type="text"
@@ -164,7 +157,6 @@ export const EditProfileForm: React.FC = observer(() => {
           id="age"
           register={register}
           name="age"
-          isInvalid={Boolean(errors.age)}
           label="Возраст"
           placeholder="Не указан"
           type="text"
