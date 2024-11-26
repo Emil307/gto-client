@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
 .inputs {
@@ -83,4 +83,12 @@
   font-family: ttsquare;
   font-size: 2rem;
   color: #fff;
+}
+
+.error {
+  font-family: Rubik;
+  font-size: 0.875rem;
+  line-height: 110%;
+  text-align: left;
+  color: var(--main-red);
 }

@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import styles from "../../styles/styles.module.scss";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authState from "@/src/entities/auth/store/authState";
+import { validate } from "@/src/entities/auth";
 
 interface IFormFileds {
   name: string;
@@ -20,6 +21,7 @@ export const SignUpForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormFileds>();
+  const [error, setError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     const newUser = {
@@ -31,8 +33,20 @@ export const SignUpForm = () => {
       sex: "male",
     };
 
-    authState.setRegisterDto(newUser);
-    authState.setStep("privacy");
+    validate(newUser)
+      .then(() => {
+        authState.setRegisterDto(newUser);
+        authState.setStep("privacy");
+      })
+      .catch((error) => {
+        if (!error.response) {
+          setError("Ошибка сервера");
+        } else if (!error.response.data) {
+          setError("Неизвестная ошибка");
+        } else {
+          setError(error.response.data.message);
+        }
+      });
   };
 
   return (
@@ -43,7 +57,6 @@ export const SignUpForm = () => {
           register={register}
           required
           name="surname"
-          isInvalid={Boolean(errors.surname)}
           label="Фамилия"
           placeholder="Иванов"
           type="text"
@@ -54,7 +67,6 @@ export const SignUpForm = () => {
             register={register}
             required
             name="name"
-            isInvalid={Boolean(errors.name)}
             label="Имя"
             placeholder="Иван"
             type="text"
@@ -62,9 +74,7 @@ export const SignUpForm = () => {
           <FlushedInput
             id="patronymic"
             register={register}
-            required
             name="patronymic"
-            isInvalid={Boolean(errors.patronymic)}
             label="Отчество"
             placeholder="Иванович"
             type="text"
@@ -75,11 +85,11 @@ export const SignUpForm = () => {
           register={register}
           required
           name="email"
-          isInvalid={Boolean(errors.email)}
           label="E-mail"
           placeholder="example@gmail.com"
           type="E-mail"
         />
+        {error && <span className={styles.error}>{error}</span>}
       </div>
       <ParallelogramButton type="submit">Создать аккаунт</ParallelogramButton>
     </form>
