@@ -14,6 +14,10 @@ export async function registration(
   return await $api.post("/api/users/register/", data);
 }
 
+export async function validate(data: registrationDto): Promise<AxiosResponse> {
+  return await $api.post("/api/users/register/validate/", data);
+}
+
 export async function requestEmailVerificationCode(
   email: string
 ): Promise<AxiosResponse<AuthResponseDto>> {

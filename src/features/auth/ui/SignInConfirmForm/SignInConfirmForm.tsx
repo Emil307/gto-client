@@ -31,8 +31,8 @@ export const SignInConfirmForm: React.FC = () => {
       .then(() => {
         setTimeToRequestNewCode(15);
       })
-      .catch((e) => {
-        console.log(e);
+      .catch((error) => {
+        console.log(error);
       })
       .finally(() => {
         setIsLoading(false);
