@@ -16,11 +16,7 @@ interface IFormFileds {
 }
 
 export const SignUpForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormFileds>();
+  const { register, handleSubmit } = useForm<IFormFileds>();
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
