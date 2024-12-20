@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import ratingState from "@/src/entities/rating/store/ratingState";
-import { useDebounce } from "@/src/shared";
+import { SearchInput, useDebounce } from "@/src/shared";
+import Image from "next/image";
 
 export const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -13,15 +14,16 @@ export const Search: React.FC = () => {
     if (typeof debouncedSearchTerm === "string") {
       ratingState.setSearchTerm(searchTerm);
     }
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, searchTerm]);
 
   return (
-    <div>
-      <input
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-    </div>
+    <SearchInput
+      leftSection={
+        <Image src="/icons/search.svg" width={24} height={24} alt="search" />
+      }
+      placeholder="Search..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
   );
 };
