@@ -1,9 +1,9 @@
 import { makeAutoObservable } from "mobx";
 
-type TGender = "male" | "female" | null;
+type TGender = "male" | "female";
 
 class RatingState {
-  genderFilter: TGender = null;
+  genderFilter: TGender = "male";
   searchTerm: string | null = null;
 
   constructor() {

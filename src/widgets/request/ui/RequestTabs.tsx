@@ -5,39 +5,33 @@ import styles from "../styles/styles.module.scss";
 import { CategoryTab, InfoTab, VideoTab } from "@/src/features/request";
 import { observer } from "mobx-react-lite";
 import requestState from "@/src/entities/request/store/requestState";
+import { Tabs } from "@/src/shared";
+
+const tabs = [
+  {
+    id: 1,
+    label: "Данные",
+    value: "info",
+    onClick: () => requestState.setActiveTab("info"),
+  },
+  {
+    id: 2,
+    label: "Категория",
+    value: "category",
+    onClick: () => requestState.setActiveTab("category"),
+  },
+  {
+    id: 3,
+    label: "Видео",
+    value: "video",
+    onClick: () => requestState.setActiveTab("video"),
+  },
+];
 
 export const RequestTabs: React.FC = observer(() => {
   return (
     <div className={styles.container}>
-      <div className={styles.tabs}>
-        <button
-          onClick={() => requestState.setActiveTab("info")}
-          className={styles.tabsButton}
-          style={{
-            opacity: requestState.activeTab === "info" ? "1" : "0.5",
-          }}
-        >
-          Данные
-        </button>
-        <button
-          onClick={() => requestState.setActiveTab("category")}
-          className={styles.tabsButton}
-          style={{
-            opacity: requestState.activeTab === "category" ? "1" : "0.5",
-          }}
-        >
-          Категория
-        </button>
-        <button
-          onClick={() => requestState.setActiveTab("video")}
-          className={styles.tabsButton}
-          style={{
-            opacity: requestState.activeTab === "video" ? "1" : "0.5",
-          }}
-        >
-          Видео
-        </button>
-      </div>
+      <Tabs tabs={tabs} activeTab={requestState.activeTab} />
 
       {requestState.activeTab === "info" && <InfoTab />}
       {requestState.activeTab === "category" && <CategoryTab />}
