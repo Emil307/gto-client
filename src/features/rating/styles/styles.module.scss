@@ -15,3 +15,26 @@
   font-weight: 700;
   line-height: 120%;
 }
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  background: var(--main-bg) !important;
+  height: 500px;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.modalButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}

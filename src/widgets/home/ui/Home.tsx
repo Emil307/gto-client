@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "../styles/styles.module.scss";
 import { Event } from "@/src/features/events";
-import { RatingTrigger } from "@/src/features/rating";
+import { Trigger } from "@/src/features/rating";
 import { observer } from "mobx-react-lite";
 import userState, { IUser } from "@/src/entities/user";
 import { getMe } from "@/src/entities/profile";
@@ -47,7 +47,7 @@ export const Home: React.FC = observer(() => {
           </p>
         </div>
         <div className={styles.articles}>
-          <RatingTrigger />
+          <Trigger />
           <Event />
         </div>
       </div>

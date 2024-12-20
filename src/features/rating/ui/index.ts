@@ -1,1 +1,3 @@
-export { Trigger as RatingTrigger } from "./Trigger";
+export * from "./Trigger";
+export * from "./GenderFilter";
+export * from "./Search";
