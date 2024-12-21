@@ -16,6 +16,27 @@
   line-height: 120%;
 }
 
+.popupTrigger {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  overflow: auto;
+  padding-bottom: 0.5rem;
+}
+
+.filterName {
+  display: flex;
+  align-items: center;
+  height: 2.25rem;
+  padding: 0 1rem;
+  background-color: rgba(255, 255, 255, 0.2);
+
+  font-family: Rubik;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 120%;
+}
+
 .modal {
   display: flex;
   flex-direction: column;
