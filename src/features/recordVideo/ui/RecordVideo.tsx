@@ -45,6 +45,8 @@ export const RecordVideo = () => {
         muted={status === "recording"}
         ref={videoRef}
         className={styles.video}
+        autoPlay
+        playsInline
       />
       {timeToStartRecording ? (
         <div className={styles.timer}>{timeToStartRecording}</div>
