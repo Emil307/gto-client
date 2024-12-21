@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./styles.module.scss";
 import ratingState from "../../store/ratingState";
 import { observer } from "mobx-react-lite";
 
