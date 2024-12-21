@@ -14,7 +14,7 @@ export const Search: React.FC = () => {
     if (typeof debouncedSearchTerm === "string") {
       ratingState.setSearchTerm(searchTerm);
     }
-  }, [debouncedSearchTerm, searchTerm]);
+  }, [debouncedSearchTerm]);
 
   return (
     <SearchInput
