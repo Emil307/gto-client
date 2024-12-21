@@ -1,14 +1,12 @@
 import { Header } from "@/src/widgets/header";
 import styles from "../styles/styles.module.scss";
-import { RatingFilters } from "@/src/widgets/ratingFilters";
-import { RatingList } from "@/src/widgets/ratingList";
+import { Rating } from "@/src/widgets/rating";
 
 export default function Page() {
   return (
     <main className={styles.page}>
       <Header title="Рейтинг спортсменов" confirmClose={false} />
-      <RatingFilters />
-      <RatingList />
+      <Rating />
     </main>
   );
 }
