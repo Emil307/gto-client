@@ -2,18 +2,24 @@
 
 import React from "react";
 import styles from "../../styles/styles.module.scss";
-import { closeModal, openModal } from "@mantine/modals";
+import { openModal, useModals } from "@mantine/modals";
 import { Modal } from "./Modal";
 
 export const Filters: React.FC = () => {
-  const handleClose = () => closeModal("FILTERS");
+  const modals = useModals();
 
   function handleOpenModal() {
     openModal({
-      id: "FILTERS",
+      modalId: "FILTERS",
       withCloseButton: false,
       centered: true,
-      children: <Modal onClose={handleClose} />,
+      children: (
+        <Modal
+          onClose={() => {
+            modals.closeModal("FILTERS");
+          }}
+        />
+      ),
     });
   }
 

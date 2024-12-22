@@ -8,7 +8,7 @@ interface IModalProps {
 export const Modal: React.FC<IModalProps> = ({ onClose }) => {
   return (
     <div className={styles.modal}>
-      c cjd s <button onClick={onClose}>close</button>
+      <button onClick={onClose}>close</button>
     </div>
   );
 };
