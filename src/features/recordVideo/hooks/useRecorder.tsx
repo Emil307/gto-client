@@ -5,11 +5,13 @@ import { saveAs } from "file-saver";
 // import axios from "axios";
 
 type StatusType = "idle" | "recording" | "paused";
+type FacingType = "user" | "environment";
 
 const useRecorder = () => {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusType>("idle");
+  const [facing, setFacing] = useState<FacingType>("user");
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
@@ -19,12 +21,14 @@ const useRecorder = () => {
     if (status === "recording" && stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
-  }, [status, videoRef.current]);
+  }, [status, videoRef.current, facing]);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
+        video: {
+          facingMode: facing === "user" ? "user" : { exact: "environment" },
+        },
         audio: true,
       });
       setStream(stream);
@@ -140,10 +144,12 @@ const useRecorder = () => {
     blob,
     blobUrl,
     status,
+    facing,
     videoRef,
     startRecording,
     stopRecording,
     pauseRecording,
+    setFacing,
     resumeRecording,
     downloadRecording,
   };
