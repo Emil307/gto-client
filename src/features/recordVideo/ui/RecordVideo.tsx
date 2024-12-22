@@ -9,8 +9,7 @@ import Image from "next/image";
 
 export const RecordVideo = () => {
   // const router = useRouter();
-  const { status, facing, videoRef, startRecording, stopRecording, setFacing } =
-    useRecorder();
+  const { status, videoRef, startRecording, stopRecording } = useRecorder();
   const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
 
   function handleStartLater() {
@@ -57,7 +56,7 @@ export const RecordVideo = () => {
         <></>
       )}
       <div className={styles.buttons}>
-        <button
+        {/* <button
           className={styles.rotate}
           onClick={() => setFacing(facing === "user" ? "environment" : "user")}
         >
@@ -67,7 +66,8 @@ export const RecordVideo = () => {
             height={24}
             alt="Перевернуть камеру"
           />
-        </button>
+        </button> */}
+        <div className={styles.rotate}></div>
         {status === "idle" && (
           <div className={styles.recordWrapper}>
             <button onClick={startRecording} className={styles.start}>

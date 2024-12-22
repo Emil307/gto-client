@@ -5,13 +5,13 @@ import { saveAs } from "file-saver";
 // import axios from "axios";
 
 type StatusType = "idle" | "recording" | "paused";
-type FacingType = "user" | "environment";
+// type FacingType = "user" | "environment";
 
 const useRecorder = () => {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusType>("idle");
-  const [facing, setFacing] = useState<FacingType>("user");
+  // const [facing, setFacing] = useState<FacingType>("user");
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
 
@@ -21,14 +21,15 @@ const useRecorder = () => {
     if (status === "recording" && stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
-  }, [status, videoRef.current, facing]);
+  }, [status, videoRef.current]);
 
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: facing === "user" ? "user" : { exact: "environment" },
-        },
+        // video: {
+        //   facingMode: facing === "user" ? "user" : { exact: "environment" },
+        // },
+        video: true,
         audio: true,
       });
       setStream(stream);
@@ -144,12 +145,12 @@ const useRecorder = () => {
     blob,
     blobUrl,
     status,
-    facing,
+    // facing,
     videoRef,
     startRecording,
     stopRecording,
     pauseRecording,
-    setFacing,
+    // setFacing,
     resumeRecording,
     downloadRecording,
   };
