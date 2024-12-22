@@ -1,6 +1,16 @@
+.container {
+  position: relative;
+}
+
 .video {
-  width: 100%;
-  height: calc(100vh - 7rem);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
 }
 
 .video::-webkit-media-controls {
@@ -17,13 +27,16 @@
 }
 
 .buttons {
+  position: absolute;
+  top: calc(100vh - 8rem);
+  left: 1.5rem;
+  z-index: 11;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 7rem;
   width: 100%;
   max-width: calc(100vw - 3rem);
-  margin: 0 auto;
 }
 
 .rotate {

@@ -40,7 +40,7 @@ export const RecordVideo = () => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <video
         muted={status === "recording"}
         ref={videoRef}
