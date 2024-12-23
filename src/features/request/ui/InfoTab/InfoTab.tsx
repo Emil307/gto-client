@@ -4,6 +4,7 @@ import styles from "../../styles/styles.module.scss";
 import { FlushedSelect } from "@/src/shared/ui/FlushedSelect";
 import { getRegions } from "@/src/entities/profile";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
+import requestState from "@/src/entities/request/store/requestState";
 
 const genders = [
   {
@@ -174,7 +175,11 @@ export const InfoTab = () => {
           onChange={setIsCompetition}
           placeholder="Выберите ответ"
         /> */}
-        <ParallelogramButton>Далее</ParallelogramButton>
+        <ParallelogramButton
+          onClick={() => requestState.setActiveTab("category")}
+        >
+          Далее
+        </ParallelogramButton>
         <p className={styles.credits}>
           Нажимая на кнопку «Далее», вы подтверждаете, что заполненные вами
           данные соответствуют действительности и введены корректно. Вы случае
