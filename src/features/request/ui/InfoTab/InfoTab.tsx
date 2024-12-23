@@ -2,9 +2,10 @@ import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles.module.scss";
 import { FlushedSelect } from "@/src/shared/ui/FlushedSelect";
-import { getRegions } from "@/src/entities/profile";
+import { getMe, getRegions } from "@/src/entities/profile";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import requestState from "@/src/entities/request/store/requestState";
+import { IUser } from "@/src/entities/user";
 
 const genders = [
   {
@@ -48,6 +49,7 @@ const BinVariants = [
 ];
 
 export const InfoTab = () => {
+  const [user, setUser] = useState<IUser | null>(null);
   const [regions, setRegions] = useState([]);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
@@ -59,6 +61,7 @@ export const InfoTab = () => {
 
   useEffect(() => {
     handleGetRegions();
+    handleGetUser();
   }, []);
 
   function handleGetRegions() {
@@ -80,6 +83,24 @@ export const InfoTab = () => {
       });
   }
 
+  function handleGetUser() {
+    getMe()
+      .then((res) => {
+        setUser(res.data);
+
+        if (res.data.sex !== "default") {
+          setSelectedGender(res.data.sex);
+        }
+
+        if (res.data.region) {
+          setSelectedRegion(res.data.region);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   return (
     <div className={styles.infoTab}>
       <div className={styles.inputs}>
@@ -90,6 +111,7 @@ export const InfoTab = () => {
           label="Фамилия"
           placeholder="Иванов"
           type="text"
+          defaultValue={user?.surname}
         />
         <div className={styles.inputsRow}>
           <FlushedInput
@@ -99,6 +121,7 @@ export const InfoTab = () => {
             label="Имя"
             placeholder="Иван"
             type="text"
+            defaultValue={user?.name}
           />
           <FlushedInput
             id="patronymic"
@@ -107,6 +130,7 @@ export const InfoTab = () => {
             label="Отчество"
             placeholder="Иванович"
             type="text"
+            defaultValue={user?.patronymic}
           />
         </div>
         <FlushedInput
@@ -116,14 +140,14 @@ export const InfoTab = () => {
           label="E-mail"
           placeholder="example@gmail.com"
           type="E-mail"
+          defaultValue={user?.email}
         />
         <FlushedInput
-          defaultValue="+7 "
           id="phone"
           required
           name="phone"
           label="Телефон"
-          placeholder="example@gmail.com"
+          placeholder="+7 900 000 00 00"
           type="phone"
         />
         <FlushedSelect
