@@ -21,5 +21,12 @@ const tabs = [
 ];
 
 export const GenderFilter: React.FC = observer(() => {
-  return <Tabs tabs={tabs} activeTab={ratingState.genderFilter} />;
+  return (
+    <Tabs
+      tabs={tabs}
+      activeTab={
+        ratingState.filters.gender ? ratingState.filters.gender : "male"
+      }
+    />
+  );
 });

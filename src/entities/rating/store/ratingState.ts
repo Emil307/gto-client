@@ -1,14 +1,20 @@
 import { makeAutoObservable } from "mobx";
 import { IRating } from "../types";
-import { getRating, RatingRequestDTO } from "../api";
+import { getRating, RatingFilters, RatingRequestDTO } from "../api";
 
 type TGender = "male" | "female";
 
 class RatingState {
   rating: IRating[] = [];
   isLoading: boolean = false;
+  filters: RatingFilters = {
+    gender: "male",
+    category: null,
+    region: null,
+    city: null,
+    district: null,
+  };
 
-  genderFilter: TGender = "male";
   searchTerm: string | null = null;
 
   constructor() {
@@ -17,9 +23,13 @@ class RatingState {
 
   getRating(data: RatingRequestDTO) {
     this.isLoading = true;
+
+    data.filters.gender = this.filters.gender;
+
     getRating(data)
       .then((res) => {
         this.rating = res.data.rating;
+        this.filters = data.filters;
       })
       .catch((e) => {
         console.log(e);
@@ -29,8 +39,28 @@ class RatingState {
       });
   }
 
-  setGenderFilter(value: TGender) {
-    this.genderFilter = value;
+  setGenderFilter(gender: TGender) {
+    this.isLoading = true;
+
+    const newFilters = {
+      gender: gender,
+      category: this.filters.category,
+      region: this.filters.region,
+      city: this.filters.city,
+      district: this.filters.district,
+    };
+
+    getRating({ filters: newFilters })
+      .then((res) => {
+        this.rating = res.data.rating;
+        this.filters = newFilters;
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        this.isLoading = false;
+      });
   }
 
   setSearchTerm(value: string | null) {

@@ -8,20 +8,29 @@ import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import { getCities, getRegions } from "@/src/entities/profile";
 import ratingState from "@/src/entities/rating/store/ratingState";
 import { RatingRequestDTO } from "@/src/entities/rating";
+import { observer } from "mobx-react-lite";
 
 interface IModalProps {
   onClose: () => void;
 }
 
-export const Modal: React.FC<IModalProps> = ({ onClose }) => {
+export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
   // const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [districts, setDistricts] = useState([]);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    ratingState.filters.category as string
+  );
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(
+    ratingState.filters.district as string
+  );
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(
+    ratingState.filters.region as string
+  );
+  const [selectedCity, setSelectedCity] = useState<string | null>(
+    ratingState.filters.city as string
+  );
 
   useEffect(() => {
     handleGetRegions();
@@ -99,6 +108,8 @@ export const Modal: React.FC<IModalProps> = ({ onClose }) => {
       },
     };
     ratingState.getRating(data);
+
+    onClose();
   }
 
   return (
@@ -147,4 +158,4 @@ export const Modal: React.FC<IModalProps> = ({ onClose }) => {
       </div>
     </div>
   );
-};
+});
