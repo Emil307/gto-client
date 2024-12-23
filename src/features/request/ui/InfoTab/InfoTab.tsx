@@ -50,11 +50,11 @@ export const InfoTab = () => {
   const [regions, setRegions] = useState([]);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [isGto, setIsGto] = useState<string | null>(null);
-  const [isPro, setIsPro] = useState<string | null>(null);
-  const [isCms, setIsCms] = useState<string | null>(null);
-  const [isCompetition, setIsCompetition] = useState<string | null>(null);
+  // const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  // const [isGto, setIsGto] = useState<string | null>(null);
+  // const [isPro, setIsPro] = useState<string | null>(null);
+  // const [isCms, setIsCms] = useState<string | null>(null);
+  // const [isCompetition, setIsCompetition] = useState<string | null>(null);
 
   useEffect(() => {
     getRegions()
@@ -135,41 +135,41 @@ export const InfoTab = () => {
           onChange={setSelectedRegion}
           placeholder="Выберите регион"
         />
-        <FlushedSelect
+        {/* <FlushedSelect
           data={categories}
           label="В какой максимальной категории вы занимали призовое место в играх?"
           value={selectedCategory}
           onChange={setSelectedCategory}
           placeholder="Выберите ответ"
-        />
-        <FlushedSelect
+        /> */}
+        {/* <FlushedSelect
           data={BinVariants}
           label="Вы являетесь обладателем знака отличия ГТО?"
           value={isGto}
           onChange={setIsGto}
           placeholder="Выберите ответ"
-        />
-        <FlushedSelect
+        /> */}
+        {/* <FlushedSelect
           data={BinVariants}
           label="Вы являетесь профессиональным спортсменом или тренером?"
           value={isPro}
           onChange={setIsPro}
           placeholder="Выберите ответ"
-        />
-        <FlushedSelect
+        /> */}
+        {/* <FlushedSelect
           data={BinVariants}
           label="У вас есть спортивный разряд, звание, КМС?"
           value={isCms}
           onChange={setIsCms}
           placeholder="Выберите ответ"
-        />
-        <FlushedSelect
+        /> */}
+        {/* <FlushedSelect
           data={BinVariants}
           label="Вы являетесь участником спортивных соревнований  (по кроссфиту, полиатлону, триатлону, лёгкой/тяжелой атлетике, гонки героев)?"
           value={isCompetition}
           onChange={setIsCompetition}
           placeholder="Выберите ответ"
-        />
+        /> */}
         <ParallelogramButton>Далее</ParallelogramButton>
         <p className={styles.credits}>
           Нажимая на кнопку «Далее», вы подтверждаете, что заполненные вами
