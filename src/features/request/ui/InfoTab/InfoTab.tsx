@@ -57,6 +57,10 @@ export const InfoTab = () => {
   // const [isCompetition, setIsCompetition] = useState<string | null>(null);
 
   useEffect(() => {
+    handleGetRegions();
+  }, []);
+
+  function handleGetRegions() {
     getRegions()
       .then((res) => {
         const searchedRegions: any = [];
@@ -73,7 +77,7 @@ export const InfoTab = () => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
+  }
 
   return (
     <div className={styles.infoTab}>
