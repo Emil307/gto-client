@@ -2,18 +2,16 @@ import { IRating } from "../types";
 
 type TGender = "male" | "female";
 
-type TCategory = "amateur" | "professional" | "kms" | "master";
-
 export interface RatingRequestDTO {
   limit?: number;
   offset?: number;
   filters: {
     age?: number;
     gender?: TGender;
-    category?: TCategory;
-    region?: string;
-    city?: string;
-    district?: string;
+    category?: string | null;
+    region?: string | null;
+    city?: string | null;
+    district?: string | null;
   };
 }
 

@@ -1,5 +1,7 @@
 import { IUser } from "../../user";
 
+export type TCategory = "amateur" | "professional" | "kms" | "master";
+
 export interface IRating {
   id: number;
   rank: string;
@@ -8,7 +10,7 @@ export interface IRating {
   patronymic: string;
   birthDate: string;
   region: number;
-  category: string;
+  category: TCategory;
   video_file: string;
   result: number;
   rate: number;

@@ -53,6 +53,14 @@
   align-items: center;
 }
 
+.modalTitle {
+  font-family: ttsquare;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 110%;
+  text-align: center;
+}
+
 .modalButtons {
   display: flex;
   flex-direction: column;
