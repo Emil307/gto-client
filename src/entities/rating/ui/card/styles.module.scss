@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.rank {
+  font-family: Roboto;
+  font-size: 18px;
+  line-height: 120%;
+  color: #fff;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nameWrapper {
+  display: flex;
+  align-items: end;
+  gap: 0.5rem;
+}
+
+.nameWrapper > span {
+  font-family: ttsquare;
+  font-size: 1rem;
+  line-height: 110%;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.name {
+  font-family: ttsquare;
+  font-size: 1rem;
+  line-height: 110%;
+  color: #fff;
+}
+
+.result {
+  display: flex;
+}
+
+.resultKey {
+  font-family: Roboto;
+  font-size: 1rem;
+  line-height: 120%;
+  color: #fff;
+  opacity: 0.5;
+}
+
+.resultValue {
+  font-family: Roboto;
+  font-size: 1rem;
+  line-height: 120%;
+  color: #fff;
+}

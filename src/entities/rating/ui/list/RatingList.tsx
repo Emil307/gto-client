@@ -3,6 +3,8 @@
 import React, { useEffect } from "react";
 import ratingState from "../../store/ratingState";
 import { observer } from "mobx-react-lite";
+import { RatingCard } from "../card";
+import styles from "./styles.module.scss";
 
 export const RatingList: React.FC = observer(() => {
   useEffect(() => {
@@ -14,9 +16,12 @@ export const RatingList: React.FC = observer(() => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.container}>
+      {ratingState.myRating && (
+        <RatingCard isMy={true} rating={ratingState.myRating} />
+      )}
       {ratingState.rating.map((rating) => (
-        <div key={rating.id}>{rating.name}</div>
+        <RatingCard key={rating.id} rating={rating} isMy={false} />
       ))}
     </div>
   );

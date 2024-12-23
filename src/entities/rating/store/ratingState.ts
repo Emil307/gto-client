@@ -6,6 +6,7 @@ type TGender = "male" | "female";
 
 class RatingState {
   rating: IRating[] = [];
+  myRating: IRating | null = null;
   isLoading: boolean = false;
   filters: RatingFilters = {
     gender: "male",
@@ -29,6 +30,7 @@ class RatingState {
     getRating(data)
       .then((res) => {
         this.rating = res.data.rating;
+        this.myRating = res.data.user_rating;
         this.filters = data.filters;
       })
       .catch((e) => {
@@ -53,6 +55,7 @@ class RatingState {
     getRating({ filters: newFilters })
       .then((res) => {
         this.rating = res.data.rating;
+        this.myRating = res.data.user_rating;
         this.filters = newFilters;
       })
       .catch((e) => {
