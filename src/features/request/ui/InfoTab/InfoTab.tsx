@@ -1,11 +1,15 @@
+"use client";
+
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles.module.scss";
 import { FlushedSelect } from "@/src/shared/ui/FlushedSelect";
 import { getMe, getRegions } from "@/src/entities/profile";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import requestState from "@/src/entities/request/store/requestState";
-import { IUser } from "@/src/entities/user";
+import requestState, {
+  IInfoData,
+} from "@/src/entities/request/store/requestState";
+import { observer } from "mobx-react-lite";
 
 const genders = [
   {
@@ -18,51 +22,44 @@ const genders = [
   },
 ];
 
-const categories = [
-  {
-    label: "Любитаель",
-    value: "amateur",
-  },
-  {
-    label: "Профессионал",
-    value: "first_try",
-  },
-  {
-    label: "КМС",
-    value: "lovers",
-  },
-  {
-    label: "Мастер спорта",
-    value: "pro",
-  },
-];
-
-const BinVariants = [
-  {
-    label: "Да",
-    value: "true",
-  },
-  {
-    label: "Нет",
-    value: "false",
-  },
-];
-
-export const InfoTab = () => {
-  const [user, setUser] = useState<IUser | null>(null);
+export const InfoTab = observer(() => {
+  const [surname, setSurname] = useState<string>(requestState.infoData.surname);
+  const [name, setName] = useState<string>(requestState.infoData.name);
+  const [patronymic, setPatronymic] = useState<string>(
+    requestState.infoData.patronymic
+  );
+  const [email, setEmail] = useState<string>(requestState.infoData.email);
+  const [phone, setPhone] = useState<string>(requestState.infoData.phone);
   const [regions, setRegions] = useState([]);
-  const [selectedGender, setSelectedGender] = useState<string | null>(null);
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  // const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  // const [isGto, setIsGto] = useState<string | null>(null);
-  // const [isPro, setIsPro] = useState<string | null>(null);
-  // const [isCms, setIsCms] = useState<string | null>(null);
-  // const [isCompetition, setIsCompetition] = useState<string | null>(null);
+  const [selectedGender, setSelectedGender] = useState<string | null>(
+    requestState.infoData.gender
+  );
+  const [selectedRegion, setSelectedRegion] = useState<string | null>(
+    requestState.infoData.region
+  );
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   useEffect(() => {
     handleGetRegions();
     handleGetUser();
   }, []);
+
+  useEffect(() => {
+    if (
+      name &&
+      surname &&
+      patronymic &&
+      email &&
+      phone &&
+      selectedGender &&
+      selectedRegion
+    ) {
+      setIsNextDisabled(false);
+      return;
+    }
+    setIsNextDisabled(true);
+    return;
+  }, [name, surname, patronymic, email, phone, selectedGender, selectedRegion]);
 
   function handleGetRegions() {
     getRegions()
@@ -84,21 +81,39 @@ export const InfoTab = () => {
   }
 
   function handleGetUser() {
-    getMe()
-      .then((res) => {
-        setUser(res.data);
+    if (!requestState.infoData.name || !requestState.infoData.surname) {
+      getMe()
+        .then((res) => {
+          setSurname(res.data.surname);
+          setName(res.data.name);
+          setPatronymic(res.data.patronymic);
+          setEmail(res.data.email);
+          if (res.data.sex !== "default") {
+            setSelectedGender(res.data.sex);
+          }
+          if (res.data.region) {
+            setSelectedRegion(res.data.region);
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+  }
 
-        if (res.data.sex !== "default") {
-          setSelectedGender(res.data.sex);
-        }
+  function handleClickNext() {
+    const infoData: IInfoData = {
+      surname: surname,
+      name: name,
+      patronymic: patronymic,
+      email: email,
+      phone: phone,
+      gender: selectedGender,
+      region: selectedRegion,
+    };
 
-        if (res.data.region) {
-          setSelectedRegion(res.data.region);
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    requestState.setInfoData(infoData);
+    requestState.setActiveTab("category");
   }
 
   return (
@@ -111,7 +126,8 @@ export const InfoTab = () => {
           label="Фамилия"
           placeholder="Иванов"
           type="text"
-          defaultValue={user?.surname}
+          value={surname}
+          onChange={(e) => setSurname(e.target.value)}
         />
         <div className={styles.inputsRow}>
           <FlushedInput
@@ -121,7 +137,8 @@ export const InfoTab = () => {
             label="Имя"
             placeholder="Иван"
             type="text"
-            defaultValue={user?.name}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
           <FlushedInput
             id="patronymic"
@@ -130,7 +147,8 @@ export const InfoTab = () => {
             label="Отчество"
             placeholder="Иванович"
             type="text"
-            defaultValue={user?.patronymic}
+            value={patronymic}
+            onChange={(e) => setPatronymic(e.target.value)}
           />
         </div>
         <FlushedInput
@@ -140,7 +158,8 @@ export const InfoTab = () => {
           label="E-mail"
           placeholder="example@gmail.com"
           type="E-mail"
-          defaultValue={user?.email}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <FlushedInput
           id="phone"
@@ -149,6 +168,8 @@ export const InfoTab = () => {
           label="Телефон"
           placeholder="+7 900 000 00 00"
           type="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
         />
         <FlushedSelect
           data={genders}
@@ -164,43 +185,9 @@ export const InfoTab = () => {
           onChange={setSelectedRegion}
           placeholder="Выберите регион"
         />
-        {/* <FlushedSelect
-          data={categories}
-          label="В какой максимальной категории вы занимали призовое место в играх?"
-          value={selectedCategory}
-          onChange={setSelectedCategory}
-          placeholder="Выберите ответ"
-        /> */}
-        {/* <FlushedSelect
-          data={BinVariants}
-          label="Вы являетесь обладателем знака отличия ГТО?"
-          value={isGto}
-          onChange={setIsGto}
-          placeholder="Выберите ответ"
-        /> */}
-        {/* <FlushedSelect
-          data={BinVariants}
-          label="Вы являетесь профессиональным спортсменом или тренером?"
-          value={isPro}
-          onChange={setIsPro}
-          placeholder="Выберите ответ"
-        /> */}
-        {/* <FlushedSelect
-          data={BinVariants}
-          label="У вас есть спортивный разряд, звание, КМС?"
-          value={isCms}
-          onChange={setIsCms}
-          placeholder="Выберите ответ"
-        /> */}
-        {/* <FlushedSelect
-          data={BinVariants}
-          label="Вы являетесь участником спортивных соревнований  (по кроссфиту, полиатлону, триатлону, лёгкой/тяжелой атлетике, гонки героев)?"
-          value={isCompetition}
-          onChange={setIsCompetition}
-          placeholder="Выберите ответ"
-        /> */}
         <ParallelogramButton
-          onClick={() => requestState.setActiveTab("category")}
+          onClick={handleClickNext}
+          disabled={isNextDisabled}
         >
           Далее
         </ParallelogramButton>
@@ -212,4 +199,4 @@ export const InfoTab = () => {
       </div>
     </div>
   );
-};
+});
