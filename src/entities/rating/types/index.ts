@@ -16,4 +16,5 @@ export interface IRating {
   rate: number;
   user: IUser;
   created_at: string;
+  result_in_minutes: string;
 }

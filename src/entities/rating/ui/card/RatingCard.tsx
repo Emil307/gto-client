@@ -20,7 +20,7 @@ export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
         </div>
         <div className={styles.result}>
           <span className={styles.resultKey}>Результат: </span>{" "}
-          <p className={styles.resultValue}> {rating.result}</p>
+          <p className={styles.resultValue}> {rating.result_in_minutes}</p>
         </div>
       </div>
     </div>
