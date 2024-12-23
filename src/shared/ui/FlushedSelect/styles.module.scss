@@ -18,6 +18,10 @@
   color: #fff;
 }
 
+.input:focus {
+  background: none;
+}
+
 .input::placeholder {
   font-family: "Roboto", sans-serif;
   font-size: 1rem;
