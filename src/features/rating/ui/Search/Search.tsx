@@ -5,7 +5,7 @@ import ratingState from "@/src/entities/rating/store/ratingState";
 import { SearchInput, useDebounce } from "@/src/shared";
 import Image from "next/image";
 
-export const c: React.FC = () => {
+export const Search: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
