@@ -5,7 +5,7 @@ import ratingState from "@/src/entities/rating/store/ratingState";
 import { SearchInput, useDebounce } from "@/src/shared";
 import Image from "next/image";
 
-export const Search: React.FC = () => {
+export const c: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -21,7 +21,7 @@ export const Search: React.FC = () => {
       leftSection={
         <Image src="/icons/search.svg" width={24} height={24} alt="search" />
       }
-      placeholder="Search..."
+      placeholder="Найти спортсмена"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
     />
