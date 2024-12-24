@@ -112,8 +112,8 @@
 }
 
 .videoTabSquare {
-  width: 12rem;
-  height: 12rem;
+  width: 16rem;
+  height: 16rem;
   margin: 3rem auto 0;
   border: 2px dashed var(--border-color);
 }
@@ -123,4 +123,38 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+}
+
+.recordingContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--main-bg);
+}
+
+.videoRecording {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  object-position: center;
+}
+
+.videoWatching {
+  width: 16rem;
+  height: 16rem;
+  margin: 3rem auto 0;
+  border: 2px dashed var(--border-color);
+  object-fit: cover;
+  object-position: center;
+}
+
+.video::-webkit-media-controls {
+  display: none;
 }

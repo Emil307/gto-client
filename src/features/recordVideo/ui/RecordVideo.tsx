@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { StatusType } from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
+import requestState from "@/src/entities/request/store/requestState";
 // import { useRouter } from "next/navigation";
 // import requestState from "@/src/entities/request/store/requestState";
 
@@ -61,6 +62,7 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
 
   function handleStopRecording() {
     stopRecording();
+    requestState.setVideoStatus("watch");
     // router.replace("/request");
     // requestState.setCategory("video");
     // requestState.setVideoStatus("watch");
