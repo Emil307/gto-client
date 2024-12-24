@@ -8,12 +8,14 @@ import requestState from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
   const { status, videoRef, startRecording, stopRecording } = useRecorder();
 
   function handleSendRequest() {
+    requestState.setVideoStatus("record");
     router.replace("/lk");
     toast.success("Заявка успешно отправлена");
   }
@@ -58,13 +60,25 @@ export const VideoTab = observer(() => {
       )}
       {requestState.videoStatus === "watch" && (
         <>
-          <video
-            muted
-            ref={videoRef}
-            className={styles.videoWatching}
-            playsInline
-            loop
-          />
+          <div className={styles.videoWatchingWrapper}>
+            <video
+              muted
+              ref={videoRef}
+              className={styles.videoWatching}
+              playsInline
+              loop
+            />
+            <div className={styles.deleteVideo}>
+              <button onClick={() => requestState.setVideoStatus("record")}>
+                <Image
+                  src="/icons/delete.svg"
+                  width={36}
+                  height={36}
+                  alt="Delete"
+                />
+              </button>
+            </div>
+          </div>
           <div className={styles.videoTabBottom}>
             <ParallelogramButton onClick={handleSendRequest}>
               Отправить заявку

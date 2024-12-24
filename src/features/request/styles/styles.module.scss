@@ -146,13 +146,31 @@
   object-position: center;
 }
 
+.videoWatchingWrapper {
+  position: relative;
+  margin-top: 3rem;
+}
+
 .videoWatching {
   width: 16rem;
   height: 16rem;
-  margin: 3rem auto 0;
+  margin: 0 auto;
   border: 2px dashed var(--border-color);
   object-fit: cover;
   object-position: center;
+}
+
+.deleteVideo {
+  position: absolute;
+  left: calc(50% - 2rem);
+  top: calc(50% - 2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(1, 4, 48, 0.48);
 }
 
 .video::-webkit-media-controls {
