@@ -4,10 +4,10 @@ import { RefObject, useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
 // import axios from "axios";
 
-type StatusType = "idle" | "recording" | "paused";
+export type StatusType = "idle" | "recording" | "paused";
 // type FacingType = "user" | "environment";
 
-const useRecorder = () => {
+export const useRecorder = () => {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<StatusType>("idle");
@@ -155,5 +155,3 @@ const useRecorder = () => {
     downloadRecording,
   };
 };
-
-export default useRecorder;

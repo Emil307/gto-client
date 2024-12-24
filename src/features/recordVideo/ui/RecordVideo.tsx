@@ -1,57 +1,79 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import useRecorder from "../hooks/useRecorder";
+import { StatusType } from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
+import requestState from "@/src/entities/request/store/requestState";
 // import { useRouter } from "next/navigation";
 // import requestState from "@/src/entities/request/store/requestState";
 
-export const RecordVideo = () => {
-  // const router = useRouter();
-  const { status, videoRef, startRecording, stopRecording } = useRecorder();
-  const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
+type Timer = 3 | 5 | 10;
 
-  function handleStartLater() {
+interface IRecordVideoProps {
+  status: StatusType;
+  startRecording: () => void;
+  stopRecording: () => void;
+}
+
+export const RecordVideo: React.FC<IRecordVideoProps> = ({
+  status,
+  startRecording,
+  stopRecording,
+}) => {
+  // const router = useRouter();
+  const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
+  const [currentTimer, setCurrentTimer] = useState<Timer>(3);
+
+  function handleStartRecording() {
     setTimeout(() => {
       startRecording();
-    }, 3000);
+    }, currentTimer * 1000);
 
-    setTimeToStartRecording(3);
+    setTimeToStartRecording(currentTimer);
+  }
+
+  function handleChangeTimer() {
+    if (currentTimer === 3) {
+      setCurrentTimer(5);
+      return;
+    }
+    if (currentTimer === 5) {
+      setCurrentTimer(10);
+      return;
+    }
+    if (currentTimer === 10) {
+      setCurrentTimer(3);
+      return;
+    }
   }
 
   function second() {
     setTimeout(() => {
-      setTimeToStartRecording(timeToStartRecording - 1);
+      if (timeToStartRecording > 0) {
+        setTimeToStartRecording(timeToStartRecording - 1);
+      }
     }, 1000);
   }
 
   useEffect(() => {
-    if (timeToStartRecording > 0) {
-      second();
-    }
+    second();
   }, [timeToStartRecording]);
 
   function handleStopRecording() {
     stopRecording();
+    requestState.setVideoStatus("watch");
     // router.replace("/request");
     // requestState.setCategory("video");
     // requestState.setVideoStatus("watch");
   }
 
   return (
-    <div className={styles.container}>
-      <video
-        muted={status === "recording"}
-        ref={videoRef}
-        className={styles.video}
-        playsInline
-        // style={{
-        //   transform: facing === "user" ? "scale(-1, 1)" : "",
-        // }}
-      />
+    <>
       {timeToStartRecording ? (
-        <div className={styles.timer}>{timeToStartRecording}</div>
+        <div className={styles.timer}>
+          <p>{timeToStartRecording}</p>
+        </div>
       ) : (
         <></>
       )}
@@ -70,7 +92,7 @@ export const RecordVideo = () => {
         <div className={styles.rotate}></div>
         {status === "idle" && (
           <div className={styles.recordWrapper}>
-            <button onClick={startRecording} className={styles.start}>
+            <button onClick={handleStartRecording} className={styles.start}>
               <div className={styles.startInner}></div>
             </button>
             <p>Начать запись</p>
@@ -86,13 +108,13 @@ export const RecordVideo = () => {
         )}
         <button
           className={styles.startLater}
-          onClick={handleStartLater}
+          onClick={handleChangeTimer}
           disabled={status !== "idle"}
         >
           <Image src="/icons/timer.svg" width={24} height={24} alt="timer" />
-          <>3 сек</>
+          <>{currentTimer} сек</>
         </button>
       </div>
-    </div>
+    </>
   );
 };

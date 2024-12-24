@@ -1,26 +1,16 @@
-.container {
-  position: relative;
-}
-
-.video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 10;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  object-position: center;
-}
-
-.video::-webkit-media-controls {
-  display: none;
-}
-
 .timer {
   position: absolute;
-  top: calc(50vh - 192px);
-  left: calc(50vw - 72px);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer > p {
   font-family: Roboto;
   font-size: 16rem;
   line-height: 120%;
@@ -83,7 +73,7 @@
 }
 
 .startLater {
-  width: 2.75rem;
+  width: 3rem;
   height: 2.75rem;
   display: flex;
   align-items: center;

@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx";
 
 type TTab = "info" | "category" | "video";
-type TVideoStatus = "record" | "watch";
+type TVideoStatus = "record" | "recording" | "watch";
 
 export interface IInfoData {
   surname: string;
