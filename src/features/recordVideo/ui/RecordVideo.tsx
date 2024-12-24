@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import useRecorder from "../hooks/useRecorder";
+import { StatusType } from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
 // import { useRouter } from "next/navigation";
@@ -9,9 +9,18 @@ import Image from "next/image";
 
 type Timer = 3 | 5 | 10;
 
-export const RecordVideo = () => {
+interface IRecordVideoProps {
+  status: StatusType;
+  startRecording: () => void;
+  stopRecording: () => void;
+}
+
+export const RecordVideo: React.FC<IRecordVideoProps> = ({
+  status,
+  startRecording,
+  stopRecording,
+}) => {
   // const router = useRouter();
-  const { status, videoRef, startRecording, stopRecording } = useRecorder();
   const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
   const [currentTimer, setCurrentTimer] = useState<Timer>(3);
 
@@ -40,14 +49,14 @@ export const RecordVideo = () => {
 
   function second() {
     setTimeout(() => {
-      setTimeToStartRecording(timeToStartRecording - 1);
+      if (timeToStartRecording > 0) {
+        setTimeToStartRecording(timeToStartRecording - 1);
+      }
     }, 1000);
   }
 
   useEffect(() => {
-    if (timeToStartRecording > 0) {
-      second();
-    }
+    second();
   }, [timeToStartRecording]);
 
   function handleStopRecording() {
@@ -58,16 +67,7 @@ export const RecordVideo = () => {
   }
 
   return (
-    <div className={styles.container}>
-      <video
-        muted={status === "recording"}
-        ref={videoRef}
-        className={styles.video}
-        playsInline
-        // style={{
-        //   transform: facing === "user" ? "scale(-1, 1)" : "",
-        // }}
-      />
+    <>
       {timeToStartRecording ? (
         <div className={styles.timer}>
           <p>{timeToStartRecording}</p>
@@ -113,6 +113,6 @@ export const RecordVideo = () => {
           <>{currentTimer} сек</>
         </button>
       </div>
-    </div>
+    </>
   );
 };
