@@ -4,7 +4,6 @@ import { getCookie, setCookie } from "cookies-next";
 import axios from "axios";
 import userState from "@/src/entities/user";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import toast from "react-hot-toast";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -41,6 +40,7 @@ class AuthState {
       userState.setUser(response.data.user);
       router.replace("/lk");
     } catch (e: any) {
+      const toast = (await import("react-hot-toast")).toast;
       toast.error(
         e?.response?.data?.message ||
           e.response.data.detail ||
