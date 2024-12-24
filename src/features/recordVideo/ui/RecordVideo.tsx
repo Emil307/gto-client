@@ -7,17 +7,35 @@ import Image from "next/image";
 // import { useRouter } from "next/navigation";
 // import requestState from "@/src/entities/request/store/requestState";
 
+type Timer = 3 | 5 | 10;
+
 export const RecordVideo = () => {
   // const router = useRouter();
   const { status, videoRef, startRecording, stopRecording } = useRecorder();
   const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
+  const [currentTimer, setCurrentTimer] = useState<Timer>(3);
 
-  function handleStartLater() {
+  function handleStartRecording() {
     setTimeout(() => {
       startRecording();
-    }, 3000);
+    }, currentTimer * 1000);
 
-    setTimeToStartRecording(3);
+    setTimeToStartRecording(currentTimer);
+  }
+
+  function handleChangeTimer() {
+    if (currentTimer === 3) {
+      setCurrentTimer(5);
+      return;
+    }
+    if (currentTimer === 5) {
+      setCurrentTimer(10);
+      return;
+    }
+    if (currentTimer === 10) {
+      setCurrentTimer(3);
+      return;
+    }
   }
 
   function second() {
@@ -51,7 +69,9 @@ export const RecordVideo = () => {
         // }}
       />
       {timeToStartRecording ? (
-        <div className={styles.timer}>{timeToStartRecording}</div>
+        <div className={styles.timer}>
+          <p>{timeToStartRecording}</p>
+        </div>
       ) : (
         <></>
       )}
@@ -70,7 +90,7 @@ export const RecordVideo = () => {
         <div className={styles.rotate}></div>
         {status === "idle" && (
           <div className={styles.recordWrapper}>
-            <button onClick={startRecording} className={styles.start}>
+            <button onClick={handleStartRecording} className={styles.start}>
               <div className={styles.startInner}></div>
             </button>
             <p>Начать запись</p>
@@ -86,11 +106,11 @@ export const RecordVideo = () => {
         )}
         <button
           className={styles.startLater}
-          onClick={handleStartLater}
+          onClick={handleChangeTimer}
           disabled={status !== "idle"}
         >
           <Image src="/icons/timer.svg" width={24} height={24} alt="timer" />
-          <>3 сек</>
+          <>{currentTimer} сек</>
         </button>
       </div>
     </div>
