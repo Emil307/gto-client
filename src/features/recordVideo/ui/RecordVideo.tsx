@@ -24,6 +24,8 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   // const router = useRouter();
   const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
   const [currentTimer, setCurrentTimer] = useState<Timer>(3);
+  const [mins, setMins] = useState(0);
+  const [seconds, setSeconds] = useState(0);
 
   function handleStartRecording() {
     setTimeout(() => {
@@ -56,9 +58,26 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
     }, 1000);
   }
 
+  function secundsmerSecond() {
+    setTimeout(() => {
+      setSeconds(seconds + 1);
+    }, 1000);
+  }
+
   useEffect(() => {
     second();
   }, [timeToStartRecording]);
+
+  useEffect(() => {
+    if (status === "recording") {
+      secundsmerSecond();
+
+      if (seconds === 60) {
+        setSeconds(0);
+        setMins(mins + 1);
+      }
+    }
+  }, [status, seconds]);
 
   function handleStopRecording() {
     stopRecording();
@@ -76,6 +95,14 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
         </div>
       ) : (
         <></>
+      )}
+      {status === "recording" && (
+        <div className={styles.secondsmer}>
+          <p className={styles.secondsmerValue}>
+            {String(mins).length === 1 ? `0${mins}` : mins}:
+            {String(seconds).length === 1 ? `0${seconds}` : seconds}
+          </p>
+        </div>
       )}
       <div className={styles.buttons}>
         {/* <button
