@@ -24,7 +24,13 @@ export const VideoTab = observer(() => {
     <div className={styles.videoTab}>
       {requestState.videoStatus === "record" && (
         <>
-          <div className={styles.videoTabSquare}></div>
+          <Image
+            src="/img/upload-video.png"
+            width={252}
+            height={252}
+            alt="Upload video"
+            className={styles.videoTabSquare}
+          />
           <div className={styles.videoTabBottom}>
             <ParallelogramButton
               onClick={() => requestState.setVideoStatus("recording")}
