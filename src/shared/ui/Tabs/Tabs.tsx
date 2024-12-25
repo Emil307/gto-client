@@ -5,6 +5,7 @@ export interface ITab {
   id: number;
   label: string;
   value: string;
+  isDisabled: boolean;
   onClick: () => void;
 }
 
@@ -23,6 +24,7 @@ export const Tabs: React.FC<ITabsProps> = ({ tabs, activeTab }) => {
           style={{
             opacity: activeTab === tab.value ? "1" : "0.5",
           }}
+          disabled={tab.isDisabled}
           key={tab.id}
         >
           {tab.label}

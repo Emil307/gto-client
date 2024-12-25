@@ -16,6 +16,26 @@
   line-height: 120%;
 }
 
+.secondsmer {
+  position: absolute;
+  top: calc(100vh - 14rem);
+  left: calc(50% - 6rem);
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5.5rem;
+  width: 12rem;
+  background-color: rgba(0, 4, 48, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.secondsmerValue {
+  font-size: 4rem;
+  line-height: 120%;
+  color: #fff;
+}
+
 .buttons {
   position: absolute;
   top: calc(100vh - 8rem);

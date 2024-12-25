@@ -10,12 +10,14 @@ const tabs = [
     id: 1,
     label: "Мужчины",
     value: "male",
+    isDisabled: false,
     onClick: () => ratingState.setGenderFilter("male"),
   },
   {
     id: 2,
     label: "Женщины",
     value: "female",
+    isDisabled: false,
     onClick: () => ratingState.setGenderFilter("female"),
   },
 ];

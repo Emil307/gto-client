@@ -1,7 +1,7 @@
 "use client";
 
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/styles.module.scss";
 import { RecordVideo, useRecorder } from "@/src/features/recordVideo";
 import requestState from "@/src/entities/request/store/requestState";
@@ -13,6 +13,7 @@ import Image from "next/image";
 export const VideoTab = observer(() => {
   const router = useRouter();
   const { status, videoRef, startRecording, stopRecording } = useRecorder();
+  const [isModalActive, setIsModalActive] = useState(true);
 
   function handleSendRequest() {
     requestState.setVideoStatus("record");
@@ -24,7 +25,13 @@ export const VideoTab = observer(() => {
     <div className={styles.videoTab}>
       {requestState.videoStatus === "record" && (
         <>
-          <div className={styles.videoTabSquare}></div>
+          <Image
+            src="/img/upload-video.png"
+            width={252}
+            height={252}
+            alt="Upload video"
+            className={styles.videoTabSquare}
+          />
           <div className={styles.videoTabBottom}>
             <ParallelogramButton
               onClick={() => requestState.setVideoStatus("recording")}
@@ -41,22 +48,43 @@ export const VideoTab = observer(() => {
         </>
       )}
       {requestState.videoStatus === "recording" && (
-        <div className={styles.recordingContainer}>
-          <video
-            muted={status === "recording"}
-            ref={videoRef}
-            className={styles.videoRecording}
-            playsInline
-            // style={{
-            //   transform: facing === "user" ? "scale(-1, 1)" : "",
-            // }}
-          />
-          <RecordVideo
-            status={status}
-            startRecording={startRecording}
-            stopRecording={stopRecording}
-          />
-        </div>
+        <>
+          <div className={styles.recordingContainer}>
+            <video
+              muted={status === "recording"}
+              ref={videoRef}
+              className={styles.videoRecording}
+              playsInline
+              // style={{
+              //   transform: facing === "user" ? "scale(-1, 1)" : "",
+              // }}
+            />
+            <RecordVideo
+              status={status}
+              startRecording={startRecording}
+              stopRecording={stopRecording}
+            />
+          </div>
+          {isModalActive && (
+            <div
+              className={styles.modal}
+              onClick={() => setIsModalActive(false)}
+            >
+              <div
+                className={styles.modalContent}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <p className={styles.modalText}>
+                  Входящие звонки могут прервать запись. Перед началом
+                  рекомендуется включить режим “Не беспокоить”
+                </p>
+                <ParallelogramButton onClick={() => setIsModalActive(false)}>
+                  Понятно
+                </ParallelogramButton>
+              </div>
+            </div>
+          )}
+        </>
       )}
       {requestState.videoStatus === "watch" && (
         <>
