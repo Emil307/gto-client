@@ -23,19 +23,27 @@ const genders = [
 ];
 
 export const InfoTab = observer(() => {
-  const [surname, setSurname] = useState<string>(requestState.infoData.surname);
-  const [name, setName] = useState<string>(requestState.infoData.name);
-  const [patronymic, setPatronymic] = useState<string>(
-    requestState.infoData.patronymic
+  const [surname, setSurname] = useState<string>(
+    requestState.infoData?.surname as string
   );
-  const [email, setEmail] = useState<string>(requestState.infoData.email);
-  const [phone, setPhone] = useState<string>(requestState.infoData.phone);
+  const [name, setName] = useState<string>(
+    requestState.infoData?.name as string
+  );
+  const [patronymic, setPatronymic] = useState<string>(
+    requestState.infoData?.patronymic as string
+  );
+  const [email, setEmail] = useState<string>(
+    requestState.infoData?.email as string
+  );
+  const [phone, setPhone] = useState<string>(
+    requestState.infoData?.phone as string
+  );
   const [regions, setRegions] = useState([]);
   const [selectedGender, setSelectedGender] = useState<string | null>(
-    requestState.infoData.gender
+    requestState.infoData?.gender as string
   );
   const [selectedRegion, setSelectedRegion] = useState<string | null>(
-    requestState.infoData.region
+    requestState.infoData?.region as string
   );
   const [isNextDisabled, setIsNextDisabled] = useState(true);
 
@@ -81,7 +89,7 @@ export const InfoTab = observer(() => {
   }
 
   function handleGetUser() {
-    if (!requestState.infoData.name || !requestState.infoData.surname) {
+    if (!requestState.infoData) {
       getMe()
         .then((res) => {
           setSurname(res.data.surname);

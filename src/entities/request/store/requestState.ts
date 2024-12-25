@@ -18,15 +18,7 @@ class RequestState {
   category: string = "";
   videoStatus: TVideoStatus = "record";
 
-  infoData: IInfoData = {
-    surname: "",
-    name: "",
-    patronymic: "",
-    email: "",
-    phone: "",
-    gender: null,
-    region: null,
-  };
+  infoData: IInfoData | null = null;
 
   constructor() {
     makeAutoObservable(this);
