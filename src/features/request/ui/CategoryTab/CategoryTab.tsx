@@ -63,6 +63,9 @@ export const CategoryTab = observer(() => {
           </button>
         ))}
       </div>
+      {!requestState.category && (
+        <div style={{ height: "110px", width: "100%" }}></div>
+      )}
       {requestState.category && (
         <div className={styles.rules}>
           <h3>Правила участия в данной категории:</h3>
