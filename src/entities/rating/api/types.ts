@@ -15,6 +15,7 @@ export interface RatingRequestDTO {
   limit?: number;
   offset?: number;
   filters: RatingFilters;
+  search?: string;
 }
 
 export interface RatingResponseDTO {
