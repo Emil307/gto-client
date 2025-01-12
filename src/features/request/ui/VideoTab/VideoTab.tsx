@@ -53,6 +53,7 @@ export const VideoTab = observer(() => {
             <video
               muted
               ref={videoRef}
+              playsInline
               className={styles.videoRecording}
               onError={(e) => console.error("Ошибка видео:", e)}
               onAbort={(e) => console.error("Видео прервано:", e)}
@@ -95,6 +96,7 @@ export const VideoTab = observer(() => {
               ref={videoRef}
               className={styles.videoWatching}
               autoPlay
+              playsInline
               onError={(e) => console.error("Ошибка видео:", e)}
               onAbort={(e) => console.error("Видео прервано:", e)}
             />

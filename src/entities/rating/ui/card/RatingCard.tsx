@@ -26,6 +26,7 @@ export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
           <video
             muted
             src={`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`}
+            playsInline
             className={styles.video}
           />
         )} */}
