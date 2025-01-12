@@ -9,6 +9,7 @@ interface IRatingCardProps {
 }
 
 export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
+  console.log(`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`);
   return (
     <div className={styles.container}>
       {rating.rank === "1" ? (
@@ -20,6 +21,16 @@ export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
       ) : (
         <h5 className={styles.rank}>{rating.rank}.</h5>
       )}
+      {(rating.rank === "1" || rating.rank === "2" || rating.rank === "3") &&
+        rating.video_file && (
+          <video
+            autoPlay
+            muted
+            playsInline
+            src={`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`}
+            className={styles.video}
+          />
+        )}
       <div className={styles.info}>
         <div className={styles.nameWrapper}>
           {isMy && <span>(Вы)</span>}
