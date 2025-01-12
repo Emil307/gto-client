@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { IRating } from "../../types";
 import Image from "next/image";
+import ReactPlayer from "react-player";
 
 interface IRatingCardProps {
   rating: IRating;
@@ -22,12 +23,9 @@ export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
       )}
       {(rating.rank === "1" || rating.rank === "2" || rating.rank === "3") &&
         rating.video_file && (
-          <video
-            autoPlay
-            muted
-            playsInline
-            src={`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`}
-            className={styles.video}
+          <ReactPlayer
+            url={`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`}
+            controls
           />
         )}
       <div className={styles.info}>
