@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { IRating } from "../../types";
 import Image from "next/image";
-import ReactPlayer from "react-player";
 
 interface IRatingCardProps {
   rating: IRating;
@@ -21,13 +20,13 @@ export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
       ) : (
         <h5 className={styles.rank}>{rating.rank}.</h5>
       )}
-      {(rating.rank === "1" || rating.rank === "2" || rating.rank === "3") &&
+      {/* {(rating.rank === "1" || rating.rank === "2" || rating.rank === "3") &&
         rating.video_file && (
           <ReactPlayer
             url={`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`}
             controls
           />
-        )}
+        )} */}
       <div className={styles.info}>
         <div className={styles.nameWrapper}>
           {isMy && <span>(Вы)</span>}
