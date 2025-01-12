@@ -51,10 +51,11 @@ export const VideoTab = observer(() => {
         <>
           <div className={styles.recordingContainer}>
             <video
-              muted={status === "recording"}
+              muted
               ref={videoRef}
               className={styles.videoRecording}
-              playsInline
+              onError={(e) => console.error("Ошибка видео:", e)}
+              onAbort={(e) => console.error("Видео прервано:", e)}
               // style={{
               //   transform: facing === "user" ? "scale(-1, 1)" : "",
               // }}
@@ -93,8 +94,9 @@ export const VideoTab = observer(() => {
               muted
               ref={videoRef}
               className={styles.videoWatching}
-              playsInline
-              loop
+              autoPlay
+              onError={(e) => console.error("Ошибка видео:", e)}
+              onAbort={(e) => console.error("Видео прервано:", e)}
             />
             <div className={styles.deleteVideo}>
               <button onClick={() => requestState.setVideoStatus("record")}>

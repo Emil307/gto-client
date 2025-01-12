@@ -68,14 +68,14 @@ export const useRecorder = () => {
           videoRef.current.pause();
         }
 
-        const blob = new Blob(chunks, { type: "video/webm" });
+        const blob = new Blob(chunks, { type: "video/mp4" });
         setBlob(blob);
 
         const blobURL = URL.createObjectURL(blob);
         setBlobUrl(blobURL);
 
         const formData = new FormData();
-        formData.append("file", blob, "chunk.webm");
+        formData.append("file", blob, "chunk.mp4");
         formData.append("upload_id", "1");
         formData.append("chunk_number", "1");
         formData.append("total_chunks", "1");
@@ -137,7 +137,7 @@ export const useRecorder = () => {
 
   const downloadRecording = () => {
     if (blob) {
-      saveAs(blob, `Video-${Date.now()}.webm`);
+      saveAs(blob, `Video-${Date.now()}.mp4`);
     }
   };
 
