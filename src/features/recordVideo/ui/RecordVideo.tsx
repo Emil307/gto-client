@@ -28,12 +28,32 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   const [seconds, setSeconds] = useState(0);
   const [isRecordingIntro, setIsRecordingIntro] = useState<boolean>(true);
 
+  const playSound = (time: Timer) => {
+    if (time === 3) {
+      const audio = new Audio("/audio/3s.mp3");
+      audio.play();
+      return;
+    }
+    if (time === 5) {
+      const audio = new Audio("/audio/5s.mp3");
+      audio.play();
+      return;
+    }
+    if (time === 10) {
+      const audio = new Audio("/audio/10s.mp3");
+      audio.play();
+      return;
+    }
+  };
+
   function handleStartRecording() {
     startRecording();
   }
 
   function handleStartTimer() {
     setIsRecordingIntro(false);
+
+    playSound(currentTimer);
 
     setTimeout(() => {
       console.log("start");
