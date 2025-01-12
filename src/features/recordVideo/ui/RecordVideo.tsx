@@ -26,10 +26,37 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   const [currentTimer, setCurrentTimer] = useState<Timer>(3);
   const [mins, setMins] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [isRecordingIntro, setIsRecordingIntro] = useState<boolean>(true);
+
+  const playSound = (time: Timer) => {
+    if (time === 3) {
+      const audio = new Audio("/audio/3s.mp3");
+      audio.play();
+      return;
+    }
+    if (time === 5) {
+      const audio = new Audio("/audio/5s.mp3");
+      audio.play();
+      return;
+    }
+    if (time === 10) {
+      const audio = new Audio("/audio/10s.mp3");
+      audio.play();
+      return;
+    }
+  };
 
   function handleStartRecording() {
+    startRecording();
+  }
+
+  function handleStartTimer() {
+    setIsRecordingIntro(false);
+
+    playSound(currentTimer);
+
     setTimeout(() => {
-      startRecording();
+      console.log("start");
     }, currentTimer * 1000);
 
     setTimeToStartRecording(currentTimer);
@@ -69,7 +96,11 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   }, [timeToStartRecording]);
 
   useEffect(() => {
-    if (status === "recording") {
+    if (
+      status === "recording" &&
+      !isRecordingIntro &&
+      timeToStartRecording === 0
+    ) {
       secundsmerSecond();
 
       if (seconds === 60) {
@@ -77,7 +108,7 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
         setMins(mins + 1);
       }
     }
-  }, [status, seconds]);
+  }, [status, isRecordingIntro, timeToStartRecording, seconds]);
 
   function handleStopRecording() {
     stopRecording();
@@ -96,14 +127,16 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
       ) : (
         <></>
       )}
-      {status === "recording" && (
-        <div className={styles.secondsmer}>
-          <p className={styles.secondsmerValue}>
-            {String(mins).length === 1 ? `0${mins}` : mins}:
-            {String(seconds).length === 1 ? `0${seconds}` : seconds}
-          </p>
-        </div>
-      )}
+      {status === "recording" &&
+        !isRecordingIntro &&
+        timeToStartRecording === 0 && (
+          <div className={styles.secondsmer}>
+            <p className={styles.secondsmerValue}>
+              {String(mins).length === 1 ? `0${mins}` : mins}:
+              {String(seconds).length === 1 ? `0${seconds}` : seconds}
+            </p>
+          </div>
+        )}
       <div className={styles.buttons}>
         {/* <button
           className={styles.rotate}
@@ -127,10 +160,27 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
         )}
         {status !== "idle" && (
           <div className={styles.recordWrapper}>
-            <button onClick={handleStopRecording} className={styles.stop}>
-              <div className={styles.stopInner}></div>
-            </button>
-            <p>Остановить видео</p>
+            {!isRecordingIntro && (
+              <>
+                <button onClick={handleStopRecording} className={styles.stop}>
+                  <div className={styles.stopInner}></div>
+                </button>
+                <p>Остановить видео</p>
+              </>
+            )}
+            {isRecordingIntro && (
+              <>
+                <button onClick={handleStartTimer} className={styles.start}>
+                  <Image
+                    src="/icons/startTimer.svg"
+                    width={44}
+                    height={44}
+                    alt="start timer"
+                  />
+                </button>
+                <p>Запустить таймер</p>
+              </>
+            )}
           </div>
         )}
         <button

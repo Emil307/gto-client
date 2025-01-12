@@ -4,15 +4,19 @@ import React, { useState, useEffect } from "react";
 import ratingState from "@/src/entities/rating/store/ratingState";
 import { SearchInput, useDebounce } from "@/src/shared";
 import Image from "next/image";
+import { observer } from "mobx-react-lite";
 
-export const Search: React.FC = () => {
+export const Search: React.FC = observer(() => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   useEffect(() => {
     if (typeof debouncedSearchTerm === "string") {
-      ratingState.setSearchTerm(searchTerm);
+      ratingState.getRating({
+        filters: ratingState.filters,
+        search: searchTerm,
+      });
     }
   }, [debouncedSearchTerm]);
 
@@ -26,4 +30,4 @@ export const Search: React.FC = () => {
       onChange={(e) => setSearchTerm(e.target.value)}
     />
   );
-};
+});

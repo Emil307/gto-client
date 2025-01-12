@@ -4,8 +4,10 @@ import React from "react";
 import styles from "../../styles/styles.module.scss";
 import { openModal, useModals } from "@mantine/modals";
 import { Modal } from "./Modal";
+import ratingState from "@/src/entities/rating/store/ratingState";
+import { observer } from "mobx-react-lite";
 
-export const Filters: React.FC = () => {
+export const Filters: React.FC = observer(() => {
   const modals = useModals();
 
   function handleOpenModal() {
@@ -25,11 +27,50 @@ export const Filters: React.FC = () => {
 
   return (
     <button onClick={handleOpenModal} className={styles.popupTrigger}>
-      <span className={styles.filterName}>Категории</span>
-      <span className={styles.filterName}>Возраст</span>
-      <span className={styles.filterName}>Округ</span>
-      <span className={styles.filterName}>Регион</span>
-      <span className={styles.filterName}>Город</span>
+      <span
+        style={{
+          backgroundColor: ratingState.filters.category
+            ? "var(--main-red)"
+            : "",
+        }}
+        className={styles.filterName}
+      >
+        Категории
+      </span>
+      {/* <span
+        style={{
+          backgroundColor: ratingState.filters.age ? "var(--main-red)" : "",
+        }}
+        className={styles.filterName}
+      >
+        Возраст
+      </span> */}
+      <span
+        style={{
+          backgroundColor: ratingState.filters.district
+            ? "var(--main-red)"
+            : "",
+        }}
+        className={styles.filterName}
+      >
+        Округ
+      </span>
+      <span
+        style={{
+          backgroundColor: ratingState.filters.region ? "var(--main-red)" : "",
+        }}
+        className={styles.filterName}
+      >
+        Регион
+      </span>
+      <span
+        style={{
+          backgroundColor: ratingState.filters.city ? "var(--main-red)" : "",
+        }}
+        className={styles.filterName}
+      >
+        Город
+      </span>
     </button>
   );
-};
+});

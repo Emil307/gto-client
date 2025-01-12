@@ -15,6 +15,8 @@ import {
 import userState, { IUser } from "@/src/entities/user";
 import { observer } from "mobx-react-lite";
 import { Loader } from "@/src/shared";
+import { useRouter } from "next/navigation";
+import { editProfileDto } from "@/src/entities/profile/api";
 
 interface IFormFileds {
   name: string;
@@ -27,6 +29,8 @@ interface IFormFileds {
 
 export const EditProfileForm: React.FC = observer(() => {
   const { register, handleSubmit } = useForm<IFormFileds>();
+
+  const router = useRouter();
 
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -112,9 +116,21 @@ export const EditProfileForm: React.FC = observer(() => {
     data.region = String(selectedRegion);
     data.city = String(selectedCity);
 
-    editProfile(data)
+    const editedProfile: editProfileDto = {
+      name: data.name ? data.name : userState.user?.name,
+      surname: data.surname ? data.surname : userState.user?.surname,
+      patronymic: data.patronymic
+        ? data.patronymic
+        : userState.user?.patronymic,
+      age: data.age ? data.age : String(userState.user?.age),
+      region: selectedRegion ? String(selectedRegion) : userState.user?.region,
+      city: selectedCity ? String(selectedCity) : userState.user?.city,
+    };
+
+    editProfile(editedProfile)
       .then((res) => {
         userState.setUser(res.data);
+        router.push("/profile");
       })
       .catch((e) => {
         console.log(e);

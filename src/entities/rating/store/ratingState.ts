@@ -16,8 +16,6 @@ class RatingState {
     district: null,
   };
 
-  searchTerm: string | null = null;
-
   constructor() {
     makeAutoObservable(this);
   }
@@ -64,10 +62,6 @@ class RatingState {
       .finally(() => {
         this.isLoading = false;
       });
-  }
-
-  setSearchTerm(value: string | null) {
-    this.searchTerm = value;
   }
 }
 
