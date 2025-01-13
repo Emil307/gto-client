@@ -97,6 +97,7 @@ export const VideoTab = observer(() => {
               className={styles.videoWatching}
               autoPlay
               playsInline
+              controls
               onError={(e) => console.error("Ошибка видео:", e)}
               onAbort={(e) => console.error("Видео прервано:", e)}
             />
