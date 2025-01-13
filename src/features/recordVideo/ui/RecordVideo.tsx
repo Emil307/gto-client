@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { StatusType } from "../hooks/useRecorder";
+import { FacingType, StatusType } from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
 import requestState from "@/src/entities/request/store/requestState";
@@ -12,14 +12,18 @@ type Timer = 3 | 5 | 10;
 
 interface IRecordVideoProps {
   status: StatusType;
+  facing: FacingType;
   startRecording: () => void;
   stopRecording: () => void;
+  setFacing: (facing: FacingType) => void;
 }
 
 export const RecordVideo: React.FC<IRecordVideoProps> = ({
   status,
+  facing,
   startRecording,
   stopRecording,
+  setFacing,
 }) => {
   // const router = useRouter();
   const [timeToStartRecording, setTimeToStartRecording] = useState<number>(0);
@@ -138,7 +142,7 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
           </div>
         )}
       <div className={styles.buttons}>
-        {/* <button
+        <button
           className={styles.rotate}
           onClick={() => setFacing(facing === "user" ? "environment" : "user")}
         >
@@ -148,8 +152,8 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
             height={24}
             alt="Перевернуть камеру"
           />
-        </button> */}
-        <div className={styles.rotate}></div>
+        </button>
+        {/* <div className={styles.rotate}></div> */}
         {status === "idle" && (
           <div className={styles.recordWrapper}>
             <button onClick={handleStartRecording} className={styles.start}>
