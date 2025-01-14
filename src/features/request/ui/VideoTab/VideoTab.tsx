@@ -12,7 +12,8 @@ import Image from "next/image";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
-  const { status, videoRef, startRecording, stopRecording } = useRecorder();
+  const { status, videoRef, facing, startRecording, stopRecording, setFacing } =
+    useRecorder();
   const [isModalActive, setIsModalActive] = useState(true);
 
   function handleSendRequest() {
@@ -57,14 +58,16 @@ export const VideoTab = observer(() => {
               className={styles.videoRecording}
               onError={(e) => console.error("Ошибка видео:", e)}
               onAbort={(e) => console.error("Видео прервано:", e)}
-              // style={{
-              //   transform: facing === "user" ? "scale(-1, 1)" : "",
-              // }}
+              style={{
+                transform: facing === "user" ? "scale(-1, 1)" : "",
+              }}
             />
             <RecordVideo
               status={status}
+              facing={facing}
               startRecording={startRecording}
               stopRecording={stopRecording}
+              setFacing={setFacing}
             />
           </div>
           {isModalActive && (
