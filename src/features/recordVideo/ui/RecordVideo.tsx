@@ -32,6 +32,10 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   const [seconds, setSeconds] = useState(0);
   const [isRecordingIntro, setIsRecordingIntro] = useState<boolean>(true);
 
+  function handleRotate() {
+    setFacing(facing === "user" ? "environment" : "user");
+  }
+
   const playSound = (time: Timer) => {
     if (time === 3) {
       const audio = new Audio("/audio/3s.mp3");
@@ -144,11 +148,7 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
       <div className={styles.buttons}>
         <div className={styles.rotate}>
           {status === "idle" && (
-            <button
-              onClick={() =>
-                setFacing(facing === "user" ? "environment" : "user")
-              }
-            >
+            <button onClick={handleRotate}>
               <Image
                 src="/icons/rotate.svg"
                 width={24}

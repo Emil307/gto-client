@@ -12,14 +12,28 @@ import Image from "next/image";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
-  const { status, videoRef, facing, startRecording, stopRecording, setFacing } =
-    useRecorder();
+  const {
+    status,
+    videoRef,
+    facing,
+    error,
+    startRecording,
+    stopRecording,
+    setFacing,
+    setError,
+  } = useRecorder();
   const [isModalActive, setIsModalActive] = useState(true);
 
   function handleSendRequest() {
     requestState.setVideoStatus("record");
     router.replace("/lk");
     toast.success("Заявка успешно отправлена");
+  }
+
+  function toggleFacing() {
+    console.log(error);
+    setFacing("user");
+    setError(null);
   }
 
   return (
@@ -84,6 +98,23 @@ export const VideoTab = observer(() => {
                   рекомендуется включить режим “Не беспокоить”
                 </p>
                 <ParallelogramButton onClick={() => setIsModalActive(false)}>
+                  Понятно
+                </ParallelogramButton>
+              </div>
+            </div>
+          )}
+          {error && (
+            <div className={styles.modal} onClick={toggleFacing}>
+              <div
+                className={styles.modalContent}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <p className={styles.modalText}>
+                  {error == "OverconstrainedError"
+                    ? "На вашем устройстве нет второй камеры"
+                    : "Произошла ошибка, попробуйте позже"}
+                </p>
+                <ParallelogramButton onClick={toggleFacing}>
                   Понятно
                 </ParallelogramButton>
               </div>

@@ -14,6 +14,7 @@ export const useRecorder = () => {
   const [facing, setFacing] = useState<FacingType>("user");
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
+  const [error, setError] = useState<unknown | null>(null);
 
   const videoRef = useRef() as RefObject<HTMLVideoElement>;
 
@@ -106,8 +107,8 @@ export const useRecorder = () => {
 
       mediaRecorder.start();
       setStatus("recording");
-    } catch (error: any) {
-      console.error("Error getting access", error);
+    } catch (error: unknown) {
+      setError(error);
     }
   };
 
@@ -147,11 +148,13 @@ export const useRecorder = () => {
     status,
     facing,
     videoRef,
+    error,
     startRecording,
     stopRecording,
     pauseRecording,
     setFacing,
     resumeRecording,
     downloadRecording,
+    setError,
   };
 };
