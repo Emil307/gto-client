@@ -142,17 +142,22 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
           </div>
         )}
       <div className={styles.buttons}>
-        <button
-          className={styles.rotate}
-          onClick={() => setFacing(facing === "user" ? "environment" : "user")}
-        >
-          <Image
-            src="/icons/rotate.svg"
-            width={24}
-            height={24}
-            alt="Перевернуть камеру"
-          />
-        </button>
+        <div className={styles.rotate}>
+          {status === "idle" && (
+            <button
+              onClick={() =>
+                setFacing(facing === "user" ? "environment" : "user")
+              }
+            >
+              <Image
+                src="/icons/rotate.svg"
+                width={24}
+                height={24}
+                alt="Перевернуть камеру"
+              />
+            </button>
+          )}
+        </div>
         {/* <div className={styles.rotate}></div> */}
         {status === "idle" && (
           <div className={styles.recordWrapper}>
@@ -187,14 +192,19 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
             )}
           </div>
         )}
-        <button
-          className={styles.startLater}
-          onClick={handleChangeTimer}
-          disabled={status !== "idle"}
-        >
-          <Image src="/icons/timer.svg" width={24} height={24} alt="timer" />
-          <>{currentTimer} сек</>
-        </button>
+        <div className={styles.startLater}>
+          {status === "idle" && (
+            <button onClick={handleChangeTimer} disabled={status !== "idle"}>
+              <Image
+                src="/icons/timer.svg"
+                width={24}
+                height={24}
+                alt="timer"
+              />
+              <>{currentTimer} сек</>
+            </button>
+          )}
+        </div>
       </div>
     </>
   );
