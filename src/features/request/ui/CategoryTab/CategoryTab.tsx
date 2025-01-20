@@ -1,37 +1,53 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/styles.module.scss";
 import requestState from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
+import { getAgeCategory, getCategories } from "@/src/entities/categories";
 
-const categories = [
-  {
-    id: 1,
-    label: "Любитель",
-    value: "amateur",
-  },
-  {
-    id: 2,
-    label: "Профессионал",
-    value: "professional",
-  },
-  {
-    id: 3,
-    label: "КМС",
-    value: "сms",
-  },
-  {
-    id: 4,
-    label: "Мастер спорта",
-    value: "master",
-  },
-];
+export type TCategory = {
+  value: string;
+  label: string;
+};
 
 export const CategoryTab = observer(() => {
+  const [ageCategory, setAgeCategory] = useState("");
+  const [categories, setCategories] = useState<TCategory[]>([]);
+
+  useEffect(() => {
+    handleGetCategories();
+  }, []);
+
+  function handleGetCategories() {
+    getCategories()
+      .then((res) => {
+        const categories: any = [];
+
+        res.data.forEach((category: any) => {
+          categories.push({
+            label: category.title,
+            value: String(category.id),
+          });
+        });
+
+        setCategories(categories);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   function handleSelectCategory(value: string) {
+    getAgeCategory(value)
+      .then((res) => {
+        setAgeCategory(res.data.age_category);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     requestState.setCategory(value);
   }
 
@@ -45,7 +61,7 @@ export const CategoryTab = observer(() => {
           height={24}
           alt="info"
         />
-        <p>Ваша возрастная категория: 18-34</p>
+        <p>Ваша возрастная категория: {ageCategory}</p>
       </div>
       <div className={styles.categories}>
         <h5>Выберите одну из доступных вам категорий:</h5>
@@ -56,7 +72,7 @@ export const CategoryTab = observer(() => {
                 requestState.category === category.value ? "#F70115" : "",
             }}
             onClick={() => handleSelectCategory(category.value)}
-            key={category.id}
+            key={category.value}
             className={styles.category}
           >
             {category.label}

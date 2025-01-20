@@ -14,6 +14,7 @@ export const VideoTab = observer(() => {
   const router = useRouter();
   const {
     status,
+    previewVideoRef,
     videoRef,
     facing,
     error,
@@ -31,8 +32,6 @@ export const VideoTab = observer(() => {
   }
 
   function toggleFacing() {
-    console.log(error);
-    setFacing("user");
     setError(null);
   }
 
@@ -65,17 +64,32 @@ export const VideoTab = observer(() => {
       {requestState.videoStatus === "recording" && (
         <>
           <div className={styles.recordingContainer}>
-            <video
-              muted
-              ref={videoRef}
-              playsInline
-              className={styles.videoRecording}
-              onError={(e) => console.error("Ошибка видео:", e)}
-              onAbort={(e) => console.error("Видео прервано:", e)}
-              style={{
-                transform: facing === "user" ? "scale(-1, 1)" : "",
-              }}
-            />
+            {status === "idle" && (
+              <video
+                muted
+                ref={previewVideoRef}
+                playsInline
+                className={styles.videoRecording}
+                onError={(e) => console.error("Ошибка видео:", e)}
+                onAbort={(e) => console.error("Видео прервано:", e)}
+                style={{
+                  transform: facing === "user" ? "scale(-1, 1)" : "",
+                }}
+              />
+            )}
+            {status === "recording" && (
+              <video
+                muted
+                ref={videoRef}
+                playsInline
+                className={styles.videoRecording}
+                onError={(e) => console.error("Ошибка видео:", e)}
+                onAbort={(e) => console.error("Видео прервано:", e)}
+                style={{
+                  transform: facing === "user" ? "scale(-1, 1)" : "",
+                }}
+              />
+            )}
             <RecordVideo
               status={status}
               facing={facing}
