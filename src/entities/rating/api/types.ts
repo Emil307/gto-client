@@ -5,7 +5,7 @@ type TGender = "male" | "female";
 export interface RatingFilters {
   age?: number;
   gender?: TGender;
-  category?: string | null;
+  category_id?: number | null;
   region?: string | null;
   city?: string | null;
   district?: string | null;

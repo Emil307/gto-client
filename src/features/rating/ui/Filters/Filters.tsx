@@ -29,7 +29,7 @@ export const Filters: React.FC = observer(() => {
     <button onClick={handleOpenModal} className={styles.popupTrigger}>
       <span
         style={{
-          backgroundColor: ratingState.filters.category
+          backgroundColor: ratingState.filters.category_id
             ? "var(--main-red)"
             : "",
         }}

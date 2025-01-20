@@ -17,12 +17,45 @@ export const useRecorder = () => {
   const [error, setError] = useState<unknown | null>(null);
 
   const videoRef = useRef() as RefObject<HTMLVideoElement>;
+  const previewVideoRef = useRef() as RefObject<HTMLVideoElement>;
 
   useEffect(() => {
     if (status === "recording" && stream && videoRef.current) {
       videoRef.current.srcObject = stream;
     }
   }, [status, videoRef.current]);
+
+  async function be() {
+    if (previewVideoRef.current) {
+      try {
+        const previewStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: facing === "user" ? "user" : { exact: "environment" },
+          },
+          // video: true,
+          audio: true,
+        });
+        previewVideoRef.current.srcObject = previewStream;
+
+        const mediaRecorder = new MediaRecorder(previewStream);
+
+        mediaRecorder.onstart = () => {
+          if (previewVideoRef.current) {
+            previewVideoRef.current.play();
+          }
+        };
+
+        mediaRecorder.start();
+      } catch (e: unknown) {
+        setError(e);
+        console.log(e);
+      }
+    }
+  }
+
+  useEffect(() => {
+    be();
+  }, [previewVideoRef.current, error]);
 
   const startRecording = async () => {
     try {
@@ -147,6 +180,7 @@ export const useRecorder = () => {
     blobUrl,
     status,
     facing,
+    previewVideoRef,
     videoRef,
     error,
     startRecording,
