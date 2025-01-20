@@ -3,12 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { FlushedSelect, getDistricts } from "@/src/shared";
 import styles from "../../styles/styles.module.scss";
-import { categories } from "./constants";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import { getCities, getRegions } from "@/src/entities/profile";
 import ratingState from "@/src/entities/rating/store/ratingState";
 import { RatingRequestDTO } from "@/src/entities/rating";
 import { observer } from "mobx-react-lite";
+import { getCategories } from "@/src/entities/categories";
 
 interface IModalProps {
   onClose: () => void;
@@ -16,11 +16,12 @@ interface IModalProps {
 
 export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
   // const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [categories, setCategories] = useState([]);
   const [districts, setDistricts] = useState([]);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    ratingState.filters.category as string
+    String(ratingState.filters.category_id)
   );
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(
     ratingState.filters.district as string
@@ -33,6 +34,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
   );
 
   useEffect(() => {
+    handleGetCategories();
     handleGetRegions();
     handleGetDistricts();
   }, []);
@@ -57,6 +59,25 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
         });
     }
   }, [selectedRegion]);
+
+  function handleGetCategories() {
+    getCategories()
+      .then((res) => {
+        const categories: any = [];
+
+        res.data.forEach((category: any) => {
+          categories.push({
+            label: category.title,
+            value: String(category.id),
+          });
+        });
+
+        setCategories(categories);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   function handleGetRegions() {
     getRegions()
@@ -101,7 +122,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
       filters: {
         // age?: number;
         // gender?: TGender;
-        category: selectedCategory,
+        category_id: Number(selectedCategory),
         region: selectedRegion,
         city: selectedCity,
         district: selectedDistrict,

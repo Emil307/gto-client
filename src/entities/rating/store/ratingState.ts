@@ -10,7 +10,7 @@ class RatingState {
   isLoading: boolean = false;
   filters: RatingFilters = {
     gender: "male",
-    category: null,
+    category_id: null,
     region: null,
     city: null,
     district: null,
@@ -44,7 +44,7 @@ class RatingState {
 
     const newFilters = {
       gender: gender,
-      category: this.filters.category,
+      category: this.filters.category_id,
       region: this.filters.region,
       city: this.filters.city,
       district: this.filters.district,
