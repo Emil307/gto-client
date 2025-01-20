@@ -9,7 +9,6 @@ interface IRatingCardProps {
 }
 
 export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
-  console.log(`${process.env.NEXT_PUBLIC_API_URL}${rating.video_file}`);
   return (
     <div className={styles.container}>
       {rating.rank === "1" ? (
