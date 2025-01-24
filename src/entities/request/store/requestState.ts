@@ -36,7 +36,7 @@ class RequestState {
     this.videoStatus = status;
   }
 
-  setInfoData(data: IInfoData) {
+  setInfoData(data: IInfoData | null) {
     this.infoData = data;
   }
 }
