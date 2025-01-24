@@ -9,6 +9,8 @@ import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { RequestDTO, sendRequest } from "@/src/entities/request";
+import { Loader } from "@/src/shared";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
@@ -23,11 +25,34 @@ export const VideoTab = observer(() => {
     setError,
   } = useRecorder();
   const [isModalActive, setIsModalActive] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleSendRequest() {
-    requestState.setVideoStatus("record");
-    router.replace("/lk");
-    toast.success("Заявка успешно отправлена");
+    setIsLoading(true);
+
+    const newRequest: RequestDTO = {
+      surname: String(requestState.infoData?.surname),
+      name: String(requestState.infoData?.name),
+      patronymic: String(requestState.infoData?.patronymic),
+      birthDate: "2025-01-23",
+      email: String(requestState.infoData?.email),
+      region: String(requestState.infoData?.region),
+      category_id: String(requestState.category),
+      phone: String(requestState.infoData?.phone),
+    };
+
+    sendRequest(newRequest)
+      .then(() => {
+        requestState.setVideoStatus("record");
+        router.replace("/lk");
+        toast.success("Заявка успешно отправлена");
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   function toggleFacing() {
@@ -139,31 +164,36 @@ export const VideoTab = observer(() => {
       )}
       {requestState.videoStatus === "watch" && (
         <>
-          <div className={styles.videoWatchingWrapper}>
-            <video
-              muted
-              ref={videoRef}
-              className={styles.videoWatching}
-              autoPlay
-              playsInline
-              controls
-              onError={(e) => console.error("Ошибка видео:", e)}
-              onAbort={(e) => console.error("Видео прервано:", e)}
-            />
-          </div>
-          <div className={styles.deleteVideo}>
-            <button onClick={() => requestState.setVideoStatus("record")}>
-              <Image
-                src="/icons/delete.svg"
-                width={36}
-                height={36}
-                alt="Delete"
+          <div>
+            <div className={styles.videoWatchingWrapper}>
+              <video
+                muted
+                ref={videoRef}
+                className={styles.videoWatching}
+                autoPlay
+                playsInline
+                controls
+                onError={(e) => console.error("Ошибка видео:", e)}
+                onAbort={(e) => console.error("Видео прервано:", e)}
               />
-            </button>
+            </div>
+            <div className={styles.deleteVideo}>
+              <button onClick={() => requestState.setVideoStatus("record")}>
+                <Image
+                  src="/icons/delete.svg"
+                  width={36}
+                  height={36}
+                  alt="Delete"
+                />
+              </button>
+            </div>
           </div>
           <div className={styles.videoTabBottom}>
-            <ParallelogramButton onClick={handleSendRequest}>
-              Отправить заявку
+            <ParallelogramButton
+              onClick={handleSendRequest}
+              disabled={isLoading}
+            >
+              {isLoading ? <Loader /> : <>Отправить заявку</>}
             </ParallelogramButton>
             <p className={styles.credits}>
               Нажимая на кнопку «Отправить заявку», вы подтверждаете, что

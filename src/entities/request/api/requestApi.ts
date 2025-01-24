@@ -1,5 +1,10 @@
 import { $api } from "@/src/shared/api";
 import { AxiosResponse } from "axios";
+import { RequestDTO } from "./types";
+
+export async function sendRequest(data: RequestDTO): Promise<AxiosResponse> {
+  return await $api.post(`/api/application/create`, data);
+}
 
 export async function sendRecording(base64: string): Promise<AxiosResponse> {
   return await $api.post(`/api/application/chunk/upload`, {
