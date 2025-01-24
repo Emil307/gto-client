@@ -109,13 +109,20 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: calc(100vh - 16rem);
+  height: calc(100vh - 9rem);
+}
+
+.videoTabSquareWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .videoTabSquare {
   width: 16rem;
   height: 16rem;
-  margin: 1.5rem auto;
 }
 
 .videoTabBottom {
@@ -161,16 +168,13 @@
 }
 
 .deleteVideo {
-  position: absolute;
-  left: calc(50% - 2rem);
-  top: calc(50% - 2rem);
   display: flex;
   align-items: center;
   justify-content: center;
   width: 4rem;
   height: 4rem;
   border-radius: 50%;
-  background: rgba(1, 4, 48, 0.48);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .video::-webkit-media-controls {
