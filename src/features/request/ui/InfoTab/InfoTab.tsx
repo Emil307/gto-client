@@ -4,23 +4,14 @@ import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles.module.scss";
 import { FlushedSelect } from "@/src/shared/ui/FlushedSelect";
-import { getMe, getRegions } from "@/src/entities/profile";
+import { editProfile, getMe, getRegions } from "@/src/entities/profile";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import requestState, {
   IInfoData,
 } from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
-
-const genders = [
-  {
-    label: "Мужской",
-    value: "male",
-  },
-  {
-    label: "Женский",
-    value: "female",
-  },
-];
+import { genders } from "./constants";
+import { Loader } from "@/src/shared";
 
 export const InfoTab = observer(() => {
   const [surname, setSurname] = useState<string>(
@@ -46,6 +37,7 @@ export const InfoTab = observer(() => {
     requestState.infoData?.region as string
   );
   const [isNextDisabled, setIsNextDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     handleGetRegions();
@@ -96,6 +88,7 @@ export const InfoTab = observer(() => {
           setName(res.data.name);
           setPatronymic(res.data.patronymic);
           setEmail(res.data.email);
+          setPhone(res.data.phone);
           if (res.data.sex !== "default") {
             setSelectedGender(res.data.sex);
           }
@@ -109,7 +102,21 @@ export const InfoTab = observer(() => {
     }
   }
 
+  function handleUpdatePhone() {
+    setIsLoading(true);
+    editProfile({ phone: phone })
+      .then(() => {})
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }
+
   function handleClickNext() {
+    handleUpdatePhone();
+
     const infoData: IInfoData = {
       surname: surname,
       name: name,
@@ -197,7 +204,7 @@ export const InfoTab = observer(() => {
           onClick={handleClickNext}
           disabled={isNextDisabled}
         >
-          Далее
+          {isLoading ? <Loader /> : <>Далее</>}
         </ParallelogramButton>
         <p className={styles.credits}>
           Нажимая на кнопку «Далее», вы подтверждаете, что заполненные вами

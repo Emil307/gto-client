@@ -5,6 +5,10 @@ export async function getCategories(): Promise<AxiosResponse> {
   return await $api.get(`/api/application/categories`);
 }
 
+export async function getMyCategories(): Promise<AxiosResponse> {
+  return await $api.get(`/api/application/categories/me`);
+}
+
 export async function getAgeCategory(
   categoryId: string
 ): Promise<AxiosResponse> {

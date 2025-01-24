@@ -10,6 +10,7 @@ export interface IUser {
   city?: string;
   createdAt: string;
   age: number;
+  phone: string;
 }
 
 export interface efitProfileDto {

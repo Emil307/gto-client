@@ -5,4 +5,5 @@ export interface editProfileDto {
   age?: string;
   region?: string;
   city?: string;
+  phone?: string;
 }

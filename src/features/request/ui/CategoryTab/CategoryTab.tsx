@@ -6,7 +6,7 @@ import styles from "../../styles/styles.module.scss";
 import requestState from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import { getAgeCategory, getCategories } from "@/src/entities/categories";
+import { getAgeCategory, getMyCategories } from "@/src/entities/categories";
 
 export type TCategory = {
   value: string;
@@ -22,7 +22,7 @@ export const CategoryTab = observer(() => {
   }, []);
 
   function handleGetCategories() {
-    getCategories()
+    getMyCategories()
       .then((res) => {
         const categories: any = [];
 
