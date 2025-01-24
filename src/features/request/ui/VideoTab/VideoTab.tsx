@@ -43,6 +43,9 @@ export const VideoTab = observer(() => {
 
     sendRequest(newRequest)
       .then(() => {
+        requestState.setInfoData(null);
+        requestState.setCategory("");
+        requestState.setActiveTab("info");
         requestState.setVideoStatus("record");
         router.replace("/lk");
         toast.success("Заявка успешно отправлена");
