@@ -49,8 +49,8 @@ export const Header: React.FC<IHeaderProps> = ({ title, confirmClose }) => {
       {title && <h4 className={styles.title}>{title}</h4>}
       <Image
         src="/img/logo.png"
-        width={48}
-        height={53}
+        width={36}
+        height={38}
         alt="GTO"
         priority={true}
       />

@@ -8,7 +8,7 @@ export function RequestLayout({
 }>) {
   return (
     <div className={styles.page}>
-      <Header />
+      <Header title="Новая заявка" />
       {children}
     </div>
   );

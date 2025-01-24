@@ -38,13 +38,15 @@ export const VideoTab = observer(() => {
     <div className={styles.videoTab}>
       {requestState.videoStatus === "record" && (
         <>
-          <Image
-            src="/img/upload-video.png"
-            width={252}
-            height={252}
-            alt="Upload video"
-            className={styles.videoTabSquare}
-          />
+          <div className={styles.videoTabSquareWrapper}>
+            <Image
+              src="/img/upload-video.png"
+              width={252}
+              height={252}
+              alt="Upload video"
+              className={styles.videoTabSquare}
+            />
+          </div>
           <div className={styles.videoTabBottom}>
             <ParallelogramButton
               onClick={() => requestState.setVideoStatus("recording")}
@@ -148,16 +150,16 @@ export const VideoTab = observer(() => {
               onError={(e) => console.error("Ошибка видео:", e)}
               onAbort={(e) => console.error("Видео прервано:", e)}
             />
-            <div className={styles.deleteVideo}>
-              <button onClick={() => requestState.setVideoStatus("record")}>
-                <Image
-                  src="/icons/delete.svg"
-                  width={36}
-                  height={36}
-                  alt="Delete"
-                />
-              </button>
-            </div>
+          </div>
+          <div className={styles.deleteVideo}>
+            <button onClick={() => requestState.setVideoStatus("record")}>
+              <Image
+                src="/icons/delete.svg"
+                width={36}
+                height={36}
+                alt="Delete"
+              />
+            </button>
           </div>
           <div className={styles.videoTabBottom}>
             <ParallelogramButton onClick={handleSendRequest}>
