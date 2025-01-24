@@ -14,7 +14,6 @@ export const VideoTab = observer(() => {
   const router = useRouter();
   const {
     status,
-    previewVideoRef,
     videoRef,
     facing,
     error,
@@ -64,7 +63,7 @@ export const VideoTab = observer(() => {
       {requestState.videoStatus === "recording" && (
         <>
           <div className={styles.recordingContainer}>
-            {status === "idle" && (
+            {/* {status === "idle" && (
               <video
                 muted
                 ref={previewVideoRef}
@@ -76,7 +75,7 @@ export const VideoTab = observer(() => {
                   transform: facing === "user" ? "scale(-1, 1)" : "",
                 }}
               />
-            )}
+            )} */}
             {status === "recording" && (
               <video
                 muted
