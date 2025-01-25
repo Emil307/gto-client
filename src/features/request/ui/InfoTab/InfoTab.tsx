@@ -10,7 +10,7 @@ import requestState, {
   IInfoData,
 } from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
-import { genders } from "./constants";
+import { genders } from "@/src/entities/user";
 import { Loader } from "@/src/shared";
 
 export const InfoTab = observer(() => {

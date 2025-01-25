@@ -169,6 +169,12 @@ export const EditProfileForm: React.FC = observer(() => {
             defaultValue={user?.patronymic}
           />
         </div>
+        <FlushedSelect
+          data={regions}
+          label="Пол"
+          value={selectedRegion}
+          onChange={setSelectedRegion}
+        />
         <FlushedInput
           id="age"
           register={register}
