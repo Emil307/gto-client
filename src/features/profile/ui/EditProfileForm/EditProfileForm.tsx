@@ -193,6 +193,7 @@ export const EditProfileForm: React.FC = observer(() => {
           label="Город"
           value={selectedCity}
           onChange={setSelectedCity}
+          placeholder="Не выбран"
         />
       </div>
       <ParallelogramButton type="submit" disabled={isLoading}>
