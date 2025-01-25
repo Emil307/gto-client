@@ -47,11 +47,6 @@ export const EditProfileForm: React.FC = observer(() => {
   );
 
   useEffect(() => {
-    if (userState.user) {
-      setUser(userState.user);
-      return;
-    }
-
     getMe()
       .then((res) => {
         userState.setUser(res.data);
@@ -93,9 +88,7 @@ export const EditProfileForm: React.FC = observer(() => {
 
   useEffect(() => {
     if (selectedRegion && selectedRegion !== "undefined") {
-      if (userState.user?.city !== selectedCity) {
-        setSelectedCity(null);
-      }
+      setSelectedCity(null);
 
       getCities(selectedRegion)
         .then((res) => {
@@ -129,7 +122,7 @@ export const EditProfileForm: React.FC = observer(() => {
       sex: selectedGender ? String(selectedGender) : userState.user?.sex,
       age: data.age ? data.age : String(userState.user?.age),
       region: selectedRegion ? String(selectedRegion) : userState.user?.region,
-      city: selectedCity ? String(selectedCity) : userState.user?.city,
+      city: selectedCity ? String(selectedCity) : "",
     };
 
     editProfile(editedProfile)
