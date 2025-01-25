@@ -2,6 +2,7 @@ export interface editProfileDto {
   name?: string;
   surname?: string;
   patronymic?: string;
+  sex?: string;
   age?: string;
   region?: string;
   city?: string;
