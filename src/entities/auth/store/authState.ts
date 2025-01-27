@@ -36,7 +36,11 @@ class AuthState {
       const response = await login(data);
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
-      setCookie("refresh", response.data.refresh_token);
+      setCookie("refresh", response.data.refresh_token, {
+        maxAge: 86400 * 60,
+        secure: true,
+        sameSite: "lax",
+      });
 
       userState.setUser(response.data.user);
       router.replace("/lk");
@@ -54,7 +58,11 @@ class AuthState {
       const response = await registration(data);
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
-      setCookie("refresh", response.data.refresh_token);
+      setCookie("refresh", response.data.refresh_token, {
+        maxAge: 86400 * 60,
+        secure: true,
+        sameSite: "lax",
+      });
 
       userState.setUser(response.data.user);
     } catch (e: any) {
@@ -85,12 +93,14 @@ class AuthState {
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
       userState.setUser(response.data.user);
+      console.log(getCookie("refresh"));
 
       console.log(getCookie("refresh"));
 
       router.replace("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
+      router.replace("/");
     }
   }
 }
