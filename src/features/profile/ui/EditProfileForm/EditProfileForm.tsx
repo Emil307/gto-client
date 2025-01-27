@@ -12,7 +12,7 @@ import {
   getRegions,
   editProfile,
 } from "@/src/entities/profile";
-import userState, { IUser } from "@/src/entities/user";
+import userState, { genders, IUser } from "@/src/entities/user";
 import { observer } from "mobx-react-lite";
 import { Loader } from "@/src/shared";
 import { useRouter } from "next/navigation";
@@ -36,6 +36,9 @@ export const EditProfileForm: React.FC = observer(() => {
   const [isLoading, setIsLoading] = useState(false);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
+  const [selectedGender, setSelectedGender] = useState<string | null>(
+    userState.user?.sex as string
+  );
   const [selectedRegion, setSelectedRegion] = useState<string | null>(
     userState.user?.region as string
   );
@@ -44,11 +47,6 @@ export const EditProfileForm: React.FC = observer(() => {
   );
 
   useEffect(() => {
-    if (userState.user) {
-      setUser(userState.user);
-      return;
-    }
-
     getMe()
       .then((res) => {
         userState.setUser(res.data);
@@ -60,6 +58,7 @@ export const EditProfileForm: React.FC = observer(() => {
   }, []);
 
   useEffect(() => {
+    setSelectedGender(String(userState.user?.sex));
     setSelectedRegion(String(userState.user?.region));
     setSelectedCity(String(userState.user?.city));
   }, [userState.user]);
@@ -89,9 +88,7 @@ export const EditProfileForm: React.FC = observer(() => {
 
   useEffect(() => {
     if (selectedRegion && selectedRegion !== "undefined") {
-      if (userState.user?.city !== selectedCity) {
-        setSelectedCity(null);
-      }
+      setSelectedCity(null);
 
       getCities(selectedRegion)
         .then((res) => {
@@ -122,9 +119,10 @@ export const EditProfileForm: React.FC = observer(() => {
       patronymic: data.patronymic
         ? data.patronymic
         : userState.user?.patronymic,
+      sex: selectedGender ? String(selectedGender) : userState.user?.sex,
       age: data.age ? data.age : String(userState.user?.age),
       region: selectedRegion ? String(selectedRegion) : userState.user?.region,
-      city: selectedCity ? String(selectedCity) : userState.user?.city,
+      city: selectedCity ? String(selectedCity) : "",
     };
 
     editProfile(editedProfile)
@@ -169,6 +167,12 @@ export const EditProfileForm: React.FC = observer(() => {
             defaultValue={user?.patronymic}
           />
         </div>
+        <FlushedSelect
+          data={genders}
+          label="Пол"
+          value={selectedGender}
+          onChange={setSelectedGender}
+        />
         <FlushedInput
           id="age"
           register={register}
@@ -189,6 +193,7 @@ export const EditProfileForm: React.FC = observer(() => {
           label="Город"
           value={selectedCity}
           onChange={setSelectedCity}
+          placeholder="Не выбран"
         />
       </div>
       <ParallelogramButton type="submit" disabled={isLoading}>
