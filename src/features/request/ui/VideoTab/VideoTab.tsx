@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { RequestDTO, sendRequest } from "@/src/entities/request";
+import { RequestDTO, sendRecording, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
 
 export const VideoTab = observer(() => {
@@ -18,6 +18,7 @@ export const VideoTab = observer(() => {
     status,
     videoRef,
     previewVideoRef,
+    chunks,
     facing,
     error,
     previewError,
@@ -37,7 +38,7 @@ export const VideoTab = observer(() => {
       surname: String(requestState.infoData?.surname),
       name: String(requestState.infoData?.name),
       patronymic: String(requestState.infoData?.patronymic),
-      birthDate: "2025-01-23",
+      birthDate: "2001-01-23",
       email: String(requestState.infoData?.email),
       region: String(requestState.infoData?.region),
       category_id: String(requestState.category),
@@ -45,13 +46,19 @@ export const VideoTab = observer(() => {
     };
 
     sendRequest(newRequest)
-      .then(() => {
-        requestState.setInfoData(null);
-        requestState.setCategory("");
-        requestState.setActiveTab("info");
-        requestState.setVideoStatus("record");
-        router.replace("/lk");
-        toast.success("Заявка успешно отправлена");
+      .then((res) => {
+        sendRecording(res.data.id, new Blob(chunks, { type: "video/mp4" }))
+          .then(() => {
+            requestState.setInfoData(null);
+            requestState.setCategory("");
+            requestState.setActiveTab("info");
+            requestState.setVideoStatus("record");
+            router.replace("/lk");
+            toast.success("Заявка успешно отправлена");
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       })
       .catch((e) => {
         console.log(e);

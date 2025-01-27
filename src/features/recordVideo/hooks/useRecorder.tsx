@@ -10,6 +10,7 @@ export type FacingType = "user" | "environment";
 export const useRecorder = () => {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [chunks, setChunks] = useState<Blob[]>([]);
   const [status, setStatus] = useState<StatusType>("idle");
   const [facing, setFacing] = useState<FacingType>("user");
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
@@ -94,6 +95,7 @@ export const useRecorder = () => {
         if (e.data.size > 0) {
           chunks.push(e.data);
           console.log(e.data);
+          setChunks([...chunks, e.data]);
         }
       };
 
@@ -178,6 +180,7 @@ export const useRecorder = () => {
   return {
     blob,
     blobUrl,
+    chunks,
     status,
     facing,
     previewVideoRef,
