@@ -93,9 +93,6 @@ class AuthState {
       localStorage.setItem("token", response.data.access_token);
       this.setIsAuth(true);
       userState.setUser(response.data.user);
-      console.log(getCookie("refresh"));
-
-      console.log(getCookie("refresh"));
 
       router.replace("/lk");
     } catch (e: any) {
