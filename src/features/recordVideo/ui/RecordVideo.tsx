@@ -63,10 +63,6 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
 
     playSound(currentTimer);
 
-    setTimeout(() => {
-      console.log("start");
-    }, currentTimer * 1000);
-
     setTimeToStartRecording(currentTimer);
   }
 
