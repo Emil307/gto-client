@@ -2,7 +2,6 @@
 
 import { RefObject, useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
-// import axios from "axios";
 
 export type StatusType = "idle" | "recording" | "paused";
 export type FacingType = "user" | "environment";
@@ -34,7 +33,6 @@ export const useRecorder = () => {
           video: {
             facingMode: facing === "user" ? "user" : { exact: "environment" },
           },
-          // video: true,
           audio: true,
         });
         previewVideoRef.current.srcObject = previewStream;
@@ -115,22 +113,6 @@ export const useRecorder = () => {
         formData.append("chunk_number", "1");
         formData.append("total_chunks", "1");
         formData.append("application_id", "1");
-
-        // const API = process.env.NEXT_PUBLIC_API_URL;
-
-        // const access = localStorage.getItem("token");
-
-        // const response = await axios({
-        //   url: `${API}/api/application/chunk/upload`,
-        //   method: "POST",
-        //   headers: {
-        //     Authorization: `Bearer ${access}`,
-        //     "Content-Type": "multipart/form-data; boundary=something",
-        //   },
-        //   data: formData,
-        // });
-
-        // console.log("Ответ сервера:", response.data);
 
         if (videoRef.current) {
           videoRef.current.srcObject = null;
