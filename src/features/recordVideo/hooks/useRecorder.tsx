@@ -15,6 +15,7 @@ export const useRecorder = () => {
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [error, setError] = useState<unknown | null>(null);
+  const [previewError, setPreviewError] = useState<unknown | null>(null);
 
   const videoRef = useRef() as RefObject<HTMLVideoElement>;
   const previewVideoRef = useRef() as RefObject<HTMLVideoElement>;
@@ -47,15 +48,14 @@ export const useRecorder = () => {
 
         mediaRecorder.start();
       } catch (e: unknown) {
-        setError(e);
-        console.log(e);
+        setPreviewError(e);
       }
     }
   }
 
   useEffect(() => {
     be();
-  }, [previewVideoRef.current, error]);
+  }, [previewVideoRef.current, facing]);
 
   const startRecording = async () => {
     try {
@@ -183,6 +183,7 @@ export const useRecorder = () => {
     previewVideoRef,
     videoRef,
     error,
+    previewError,
     startRecording,
     stopRecording,
     pauseRecording,
@@ -190,5 +191,6 @@ export const useRecorder = () => {
     resumeRecording,
     downloadRecording,
     setError,
+    setPreviewError,
   };
 };
