@@ -17,8 +17,10 @@ export const VideoTab = observer(() => {
   const {
     status,
     videoRef,
+    previewVideoRef,
     facing,
     error,
+    previewError,
     startRecording,
     stopRecording,
     setFacing,
@@ -93,7 +95,7 @@ export const VideoTab = observer(() => {
       {requestState.videoStatus === "recording" && (
         <>
           <div className={styles.recordingContainer}>
-            {/* {status === "idle" && (
+            {status === "idle" && (
               <video
                 muted
                 ref={previewVideoRef}
@@ -102,10 +104,11 @@ export const VideoTab = observer(() => {
                 onError={(e) => console.error("Ошибка видео:", e)}
                 onAbort={(e) => console.error("Видео прервано:", e)}
                 style={{
-                  transform: facing === "user" ? "scale(-1, 1)" : "",
+                  transform:
+                    facing === "user" && !previewError ? "scale(-1, 1)" : "",
                 }}
               />
-            )} */}
+            )}
             {status === "recording" && (
               <video
                 muted
@@ -115,7 +118,7 @@ export const VideoTab = observer(() => {
                 onError={(e) => console.error("Ошибка видео:", e)}
                 onAbort={(e) => console.error("Видео прервано:", e)}
                 style={{
-                  transform: facing === "user" ? "scale(-1, 1)" : "",
+                  transform: facing === "user" && !error ? "scale(-1, 1)" : "",
                 }}
               />
             )}
@@ -146,14 +149,15 @@ export const VideoTab = observer(() => {
               </div>
             </div>
           )}
-          {error && (
+          {(error || previewError) && (
             <div className={styles.modal} onClick={toggleFacing}>
               <div
                 className={styles.modalContent}
                 onClick={(e) => e.stopPropagation()}
               >
                 <p className={styles.modalText}>
-                  {error == "OverconstrainedError"
+                  {error == "OverconstrainedError" ||
+                  previewError == "OverconstrainedError"
                     ? "На вашем устройстве нет второй камеры"
                     : "Произошла ошибка, попробуйте позже"}
                 </p>
