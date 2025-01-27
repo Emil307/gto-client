@@ -24,7 +24,7 @@ export const SignUpForm = () => {
       name: data.name,
       surname: data.surname,
       patronymic: data.patronymic,
-      email: data.email,
+      email: data.email.toLowerCase(),
       birthDate: "2024-10-30",
       sex: "male",
     };

@@ -34,9 +34,9 @@ export const SignInForm = () => {
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     setIsLoading(true);
-    requestEmailVerificationCode(data.email)
+    requestEmailVerificationCode(data.email.toLocaleLowerCase())
       .then(() => {
-        router.push(`/auth/signInConfirm?email=${data.email}`);
+        router.push(`/auth/signInConfirm?email=${data.email.toLowerCase()}`);
       })
       .catch((error) => {
         if (error.status === 404) {

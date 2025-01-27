@@ -19,7 +19,7 @@ export const PrivacyStep: React.FC = () => {
     if (authState.registerDto) {
       authState.registration(authState.registerDto).then(() => {
         router.replace(
-          `/auth/signInConfirm?email=${authState.registerDto?.email}`
+          `/auth/signInConfirm?email=${authState.registerDto?.email.toLowerCase()}`
         );
       });
     }
