@@ -25,6 +25,7 @@ export const VideoTab = observer(() => {
     stopRecording,
     setFacing,
     setError,
+    setPreviewError,
   } = useRecorder();
   const [isModalActive, setIsModalActive] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -62,6 +63,7 @@ export const VideoTab = observer(() => {
 
   function toggleFacing() {
     setError(null);
+    setPreviewError(null);
   }
 
   return (
