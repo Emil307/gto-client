@@ -7,6 +7,7 @@ import { theme } from "../../../theme";
 import { roboto, rubik, TTSquare } from "../styles/fonts";
 import { ModalsProvider } from "@mantine/modals";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "../providers";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,6 +34,7 @@ export function RootLayout({
       >
         <MantineProvider theme={theme}>
           <ModalsProvider>{children}</ModalsProvider>
+          <AuthProvider />
           <Toaster position="top-right" />
         </MantineProvider>
       </body>
