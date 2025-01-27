@@ -94,7 +94,6 @@ export const useRecorder = () => {
       mediaRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
           chunks.push(e.data);
-          console.log(e.data);
           setChunks([...chunks, e.data]);
         }
       };
