@@ -62,7 +62,6 @@ export const useRecorder = () => {
         video: {
           facingMode: facing === "user" ? "user" : { exact: "environment" },
         },
-        // video: true,
         audio: true,
       });
       setStream(stream);
