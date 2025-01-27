@@ -1,4 +1,4 @@
-import "@mantine/core/styles.css";
+"use client";
 
 import type { Metadata } from "next";
 import "../styles";
@@ -8,6 +8,10 @@ import { roboto, rubik, TTSquare } from "../styles/fonts";
 import { ModalsProvider } from "@mantine/modals";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "../providers";
+import { DatesProvider } from "@mantine/dates";
+import "dayjs/locale/ru";
+import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,7 +37,15 @@ export function RootLayout({
         className={`${roboto.variable} ${rubik.variable} ${TTSquare.variable} antialiased`}
       >
         <MantineProvider theme={theme}>
-          <ModalsProvider>{children}</ModalsProvider>
+          <DatesProvider
+            settings={{
+              locale: "ru",
+              firstDayOfWeek: 0,
+              timezone: "UTC",
+            }}
+          >
+            <ModalsProvider>{children}</ModalsProvider>
+          </DatesProvider>
           <AuthProvider />
           <Toaster position="top-right" />
         </MantineProvider>

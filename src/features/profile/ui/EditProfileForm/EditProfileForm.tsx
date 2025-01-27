@@ -4,6 +4,7 @@ import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import React, { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import styles from "../../styles/styles.module.scss";
+import datepickerStyles from "../../styles/datepicker/styles.module.scss";
 import { FlushedSelect } from "@/src/shared/ui/FlushedSelect";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import {
@@ -17,6 +18,8 @@ import { observer } from "mobx-react-lite";
 import { Loader } from "@/src/shared";
 import { useRouter } from "next/navigation";
 import { editProfileDto } from "@/src/entities/profile/api";
+import { DatePickerInput } from "@mantine/dates";
+import dayjs from "dayjs";
 
 interface IFormFileds {
   name: string;
@@ -38,6 +41,9 @@ export const EditProfileForm: React.FC = observer(() => {
   const [cities, setCities] = useState([]);
   const [selectedGender, setSelectedGender] = useState<string | null>(
     userState.user?.sex as string
+  );
+  const [dob, setDob] = useState<Date | null>(
+    userState.user?.birthDate ? new Date(userState.user?.birthDate) : null
   );
   const [selectedRegion, setSelectedRegion] = useState<string | null>(
     userState.user?.region as string
@@ -120,7 +126,9 @@ export const EditProfileForm: React.FC = observer(() => {
         ? data.patronymic
         : userState.user?.patronymic,
       sex: selectedGender ? String(selectedGender) : userState.user?.sex,
-      age: data.age ? data.age : String(userState.user?.age),
+      birthDate: dob
+        ? new Date(String(dob))
+        : new Date(String(userState.user?.birthDate)),
       region: selectedRegion ? String(selectedRegion) : userState.user?.region,
       city: selectedCity ? String(selectedCity) : "",
     };
@@ -173,14 +181,12 @@ export const EditProfileForm: React.FC = observer(() => {
           value={selectedGender}
           onChange={setSelectedGender}
         />
-        <FlushedInput
-          id="age"
-          register={register}
-          name="age"
-          label="Возраст"
-          placeholder="Не указан"
-          type="text"
-          defaultValue={user?.age ? user?.age : ""}
+        <DatePickerInput
+          label="Дата рождения"
+          classNames={datepickerStyles}
+          value={dob}
+          onChange={setDob}
+          maxDate={new Date(dayjs().format("YYYY/MM/DD"))}
         />
         <FlushedSelect
           data={regions}

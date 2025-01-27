@@ -3,7 +3,7 @@ export interface editProfileDto {
   surname?: string;
   patronymic?: string;
   sex?: string;
-  age?: string;
+  birthDate?: string | Date;
   region?: string;
   city?: string;
   phone?: string;
