@@ -86,6 +86,8 @@ class AuthState {
       this.setIsAuth(true);
       userState.setUser(response.data.user);
 
+      console.log(getCookie("refresh"));
+
       router.replace("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
