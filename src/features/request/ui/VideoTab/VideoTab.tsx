@@ -64,6 +64,8 @@ export const VideoTab = observer(() => {
     setError(null);
   }
 
+  console.log(error, previewError);
+
   return (
     <div className={styles.videoTab}>
       {requestState.videoStatus === "record" && (
