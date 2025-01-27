@@ -29,10 +29,12 @@ export const VideoTab = observer(() => {
     setPreviewError,
   } = useRecorder();
   const [isModalActive, setIsModalActive] = useState(true);
+  const [isLoadingModalActive, setIsLoadingModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleSendRequest() {
     setIsLoading(true);
+    setIsLoadingModalActive(true);
 
     const newRequest: RequestDTO = {
       surname: String(requestState.infoData?.surname),
@@ -58,13 +60,14 @@ export const VideoTab = observer(() => {
           })
           .catch((e) => {
             console.log(e);
+          })
+          .finally(() => {
+            setIsLoading(false);
+            setIsLoadingModalActive(false);
           });
       })
       .catch((e) => {
         console.log(e);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }
 
@@ -221,6 +224,27 @@ export const VideoTab = observer(() => {
             </p>
           </div>
         </>
+      )}
+
+      {isLoadingModalActive && (
+        <div
+          className={styles.modal}
+          onClick={() => setIsLoadingModalActive(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className={styles.modalText}>
+              Ваша заявка отправляется, не закрывайте страницу отправки заявки и
+              приложение Telegram до окнчания загрузки, иначе заявка не будет
+              сохранена
+            </p>
+            <ParallelogramButton onClick={() => setIsLoadingModalActive(false)}>
+              Понятно
+            </ParallelogramButton>
+          </div>
+        </div>
       )}
     </div>
   );
