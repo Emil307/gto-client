@@ -14,6 +14,8 @@
   font-family: Roboto;
   font-size: 16rem;
   line-height: 120%;
+
+  color: var(--main-white);
 }
 
 .secondsmer {
@@ -33,7 +35,7 @@
 .secondsmerValue {
   font-size: 4rem;
   line-height: 120%;
-  color: #fff;
+  color: var(--main-white);
 }
 
 .buttons {
@@ -62,6 +64,8 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+
+  color: var(--main-white);
 }
 
 .start,
@@ -98,6 +102,8 @@
   justify-content: center;
   width: 3rem;
   height: 2.75rem;
+
+  color: var(--main-white);
 }
 
 .startLater > button {
