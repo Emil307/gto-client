@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { RequestDTO, sendRequest } from "@/src/entities/request";
+import { RequestDTO, sendRecording, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
 
 export const VideoTab = observer(() => {
@@ -18,6 +18,7 @@ export const VideoTab = observer(() => {
     status,
     videoRef,
     previewVideoRef,
+    chunks,
     facing,
     error,
     previewError,
@@ -28,16 +29,18 @@ export const VideoTab = observer(() => {
     setPreviewError,
   } = useRecorder();
   const [isModalActive, setIsModalActive] = useState(true);
+  const [isLoadingModalActive, setIsLoadingModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   function handleSendRequest() {
     setIsLoading(true);
+    setIsLoadingModalActive(true);
 
     const newRequest: RequestDTO = {
       surname: String(requestState.infoData?.surname),
       name: String(requestState.infoData?.name),
       patronymic: String(requestState.infoData?.patronymic),
-      birthDate: "2025-01-23",
+      birthDate: "2001-01-23",
       email: String(requestState.infoData?.email),
       region: String(requestState.infoData?.region),
       category_id: String(requestState.category),
@@ -45,19 +48,26 @@ export const VideoTab = observer(() => {
     };
 
     sendRequest(newRequest)
-      .then(() => {
-        requestState.setInfoData(null);
-        requestState.setCategory("");
-        requestState.setActiveTab("info");
-        requestState.setVideoStatus("record");
-        router.replace("/lk");
-        toast.success("Заявка успешно отправлена");
+      .then((res) => {
+        sendRecording(res.data.id, new Blob(chunks, { type: "video/mp4" }))
+          .then(() => {
+            requestState.setInfoData(null);
+            requestState.setCategory("");
+            requestState.setActiveTab("info");
+            requestState.setVideoStatus("record");
+            router.replace("/lk");
+            toast.success("Заявка успешно отправлена");
+          })
+          .catch((e) => {
+            console.log(e);
+          })
+          .finally(() => {
+            setIsLoading(false);
+            setIsLoadingModalActive(false);
+          });
       })
       .catch((e) => {
         console.log(e);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   }
 
@@ -214,6 +224,27 @@ export const VideoTab = observer(() => {
             </p>
           </div>
         </>
+      )}
+
+      {isLoadingModalActive && (
+        <div
+          className={styles.modal}
+          onClick={() => setIsLoadingModalActive(false)}
+        >
+          <div
+            className={styles.modalContent}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p className={styles.modalText}>
+              Ваша заявка отправляется, не закрывайте страницу отправки заявки и
+              приложение Telegram до окнчания загрузки, иначе заявка не будет
+              сохранена
+            </p>
+            <ParallelogramButton onClick={() => setIsLoadingModalActive(false)}>
+              Понятно
+            </ParallelogramButton>
+          </div>
+        </div>
       )}
     </div>
   );

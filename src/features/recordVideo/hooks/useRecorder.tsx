@@ -2,7 +2,6 @@
 
 import { RefObject, useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
-// import axios from "axios";
 
 export type StatusType = "idle" | "recording" | "paused";
 export type FacingType = "user" | "environment";
@@ -10,6 +9,7 @@ export type FacingType = "user" | "environment";
 export const useRecorder = () => {
   const [blob, setBlob] = useState<Blob | null>(null);
   const [blobUrl, setBlobUrl] = useState<string | null>(null);
+  const [chunks, setChunks] = useState<Blob[]>([]);
   const [status, setStatus] = useState<StatusType>("idle");
   const [facing, setFacing] = useState<FacingType>("user");
   const [recorder, setRecorder] = useState<MediaRecorder | null>(null);
@@ -33,7 +33,6 @@ export const useRecorder = () => {
           video: {
             facingMode: facing === "user" ? "user" : { exact: "environment" },
           },
-          // video: true,
           audio: true,
         });
         previewVideoRef.current.srcObject = previewStream;
@@ -63,7 +62,6 @@ export const useRecorder = () => {
         video: {
           facingMode: facing === "user" ? "user" : { exact: "environment" },
         },
-        // video: true,
         audio: true,
       });
       setStream(stream);
@@ -93,7 +91,7 @@ export const useRecorder = () => {
       mediaRecorder.ondataavailable = (e) => {
         if (e.data.size > 0) {
           chunks.push(e.data);
-          console.log(e.data);
+          setChunks([...chunks, e.data]);
         }
       };
 
@@ -114,22 +112,6 @@ export const useRecorder = () => {
         formData.append("chunk_number", "1");
         formData.append("total_chunks", "1");
         formData.append("application_id", "1");
-
-        // const API = process.env.NEXT_PUBLIC_API_URL;
-
-        // const access = localStorage.getItem("token");
-
-        // const response = await axios({
-        //   url: `${API}/api/application/chunk/upload`,
-        //   method: "POST",
-        //   headers: {
-        //     Authorization: `Bearer ${access}`,
-        //     "Content-Type": "multipart/form-data; boundary=something",
-        //   },
-        //   data: formData,
-        // });
-
-        // console.log("Ответ сервера:", response.data);
 
         if (videoRef.current) {
           videoRef.current.srcObject = null;
@@ -178,6 +160,7 @@ export const useRecorder = () => {
   return {
     blob,
     blobUrl,
+    chunks,
     status,
     facing,
     previewVideoRef,
