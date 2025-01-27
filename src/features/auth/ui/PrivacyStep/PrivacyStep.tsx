@@ -32,11 +32,13 @@ export const PrivacyStep: React.FC = () => {
           checked={firstChecked}
           onChange={(event) => setFirstChecked(event.currentTarget.checked)}
           label="Подтверждаю, что предоставленные мной сведения являются достоверными"
+          style={{ color: "var(--main-white)" }}
         />
         <Checkbox
           checked={secondChecked}
           onChange={(event) => setSecondChecked(event.currentTarget.checked)}
           label="Даю согласие на сбор и обработку персональных данных*"
+          style={{ color: "var(--main-white)" }}
         />
       </div>
       <div className={styles.privacyBottom}>
