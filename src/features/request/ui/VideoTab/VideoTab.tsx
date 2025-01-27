@@ -157,7 +157,9 @@ export const VideoTab = observer(() => {
               >
                 <p className={styles.modalText}>
                   {error == "OverconstrainedError" ||
-                  previewError == "OverconstrainedError"
+                  previewError == "OverconstrainedError" ||
+                  error ||
+                  previewError
                     ? "На вашем устройстве нет второй камеры"
                     : "Произошла ошибка, попробуйте позже"}
                 </p>
