@@ -7,6 +7,11 @@ import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authState from "@/src/entities/auth/store/authState";
 import { validate } from "@/src/entities/auth";
+import { FlushedSelect } from "@/src/shared";
+import { genders } from "@/src/entities/user";
+import { DatePickerInput } from "@mantine/dates";
+import datepickerStyles from "../../styles/datepicker/styles.module.scss";
+import dayjs from "dayjs";
 
 interface IFormFileds {
   name: string;
@@ -17,16 +22,28 @@ interface IFormFileds {
 
 export const SignUpForm = () => {
   const { register, handleSubmit } = useForm<IFormFileds>();
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [dob, setDob] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
+    if (!dob) {
+      setError("Укажите дату рождения");
+      return;
+    }
+
+    if (!selectedGender) {
+      setError("Выберите пол");
+      return;
+    }
+
     const newUser = {
       name: data.name,
       surname: data.surname,
       patronymic: data.patronymic,
       email: data.email.toLowerCase(),
       birthDate: "2024-10-30",
-      sex: "male",
+      sex: selectedGender,
     };
 
     validate(newUser)
@@ -84,6 +101,21 @@ export const SignUpForm = () => {
           label="E-mail"
           placeholder="example@gmail.com"
           type="E-mail"
+        />
+        <DatePickerInput
+          placeholder="Не указана"
+          label="Дата рождения"
+          classNames={datepickerStyles}
+          value={dob}
+          onChange={setDob}
+          maxDate={new Date(dayjs().format("YYYY/MM/DD"))}
+        />
+        <FlushedSelect
+          placeholder="Не выбрано"
+          data={genders}
+          label="Пол"
+          value={selectedGender}
+          onChange={setSelectedGender}
         />
         {error && <span className={styles.error}>{error}</span>}
       </div>
