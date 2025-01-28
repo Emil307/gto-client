@@ -42,7 +42,7 @@ export const SignUpForm = () => {
       surname: data.surname,
       patronymic: data.patronymic,
       email: data.email.toLowerCase(),
-      birthDate: "2024-10-30",
+      birthDate: new Date(String(dob)),
       sex: selectedGender,
     };
 
