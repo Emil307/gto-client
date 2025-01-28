@@ -18,7 +18,7 @@ export default function StartScreen() {
     <div className={styles.page}>
       <Image
         className={styles.img}
-        src={"/img/logo-big.png"}
+        src={"/icons/logo.svg"}
         width={354}
         height={480}
         alt="gto"

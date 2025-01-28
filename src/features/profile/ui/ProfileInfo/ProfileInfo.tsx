@@ -37,7 +37,7 @@ export const ProfileInfo: React.FC = observer(() => {
   }, []);
 
   function handleEditInfo() {
-    router.push("/profile/edit");
+    router.replace("/profile/edit");
   }
 
   if (isLoading) {

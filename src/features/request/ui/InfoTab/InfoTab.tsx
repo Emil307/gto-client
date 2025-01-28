@@ -27,7 +27,7 @@ export const InfoTab = observer(() => {
     requestState.infoData?.email as string
   );
   const [phone, setPhone] = useState<string>(
-    requestState.infoData?.phone as string
+    requestState.infoData?.phone ? requestState.infoData?.phone : "+7"
   );
   const [regions, setRegions] = useState([]);
   const [selectedGender, setSelectedGender] = useState<string | null>(
