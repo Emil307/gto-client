@@ -5,7 +5,7 @@ export interface registrationDto {
   surname: string;
   patronymic: string;
   email: string;
-  birthDate: string;
+  birthDate: Date;
   sex: string;
 }
 
