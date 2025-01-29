@@ -6,7 +6,7 @@ import styles from "../../styles/styles.module.scss";
 import requestState from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import { getAgeCategory, getMyCategories } from "@/src/entities/categories";
+import { getCategoryInfo, getMyCategories } from "@/src/entities/categories";
 
 export type TCategory = {
   value: string;
@@ -16,6 +16,7 @@ export type TCategory = {
 export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
   const [categories, setCategories] = useState<TCategory[]>([]);
+  const [guide, setGuide] = useState("");
 
   useEffect(() => {
     handleGetCategories();
@@ -41,9 +42,10 @@ export const CategoryTab = observer(() => {
   }
 
   function handleSelectCategory(value: string) {
-    getAgeCategory(value)
+    getCategoryInfo(value)
       .then((res) => {
         setAgeCategory(res.data.age_category);
+        setGuide(res.data.guide);
       })
       .catch((e) => {
         console.log(e);
@@ -82,9 +84,17 @@ export const CategoryTab = observer(() => {
       {!requestState.category && (
         <div style={{ height: "110px", width: "100%" }}></div>
       )}
-      {requestState.category && (
+      {requestState.category && guide && (
         <>
           <div className={styles.rules}>
+            <h3>Видеоинструкция для выполнения упражнений:</h3>
+            <video
+              src={guide}
+              width={"100%"}
+              autoPlay={false}
+              controls
+              preload="auto"
+            ></video>
             <h3>Правила участия в данной категории:</h3>
             <div>
               <p>
