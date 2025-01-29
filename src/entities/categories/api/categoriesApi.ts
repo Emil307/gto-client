@@ -9,7 +9,7 @@ export async function getMyCategories(): Promise<AxiosResponse> {
   return await $api.get(`/api/application/categories/me`);
 }
 
-export async function getAgeCategory(
+export async function getCategoryInfo(
   categoryId: string
 ): Promise<AxiosResponse> {
   return await $api.post(`/api/application/category/age`, {
