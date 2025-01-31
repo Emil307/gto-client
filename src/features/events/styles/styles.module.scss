@@ -1,13 +1,34 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
+  width: 100%;
   height: 274px;
-  padding: 1rem;
   background-image: url(../../../../public/img/event-bg.jpg);
   background-size: cover;
   background-position: 100%;
   background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+}
+
+.content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
 }
 
 .wrapper {
