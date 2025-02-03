@@ -17,10 +17,8 @@ export const Event: React.FC = () => {
         />
         <div className={styles.wrapper}>
           <div className={styles.info}>
-            <div className={styles.dates}>26 октября – 2 ноября</div>
-            <h3 className={styles.title}>
-              Тренировочные сборы федерации многоборья ГТО России
-            </h3>
+            <div className={styles.dates}>17 февраля – 31 марта 2025</div>
+            <h3 className={styles.title}>Народные Игры ГТО. Сезон 2</h3>
           </div>
           <div className={styles.buttons}>
             <Button>Положение</Button>
