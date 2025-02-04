@@ -107,7 +107,7 @@ export const CategoryTab = observer(() => {
                   <iframe
                     width={"100%"}
                     src={guide}
-                    allow="clipboard-write;"
+                    allow="clipboard-write;autoplay;fullscreen;display-capture;encrypted-media;"
                     allowFullScreen
                   ></iframe>
                 )}
