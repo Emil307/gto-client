@@ -55,6 +55,8 @@ export const CategoryTab = observer(() => {
     requestState.setCategory(value);
   }
 
+  console.log(rules);
+
   return (
     <div className={styles.categoryTab}>
       <div className={styles.ageCategory}>
@@ -86,19 +88,27 @@ export const CategoryTab = observer(() => {
       {!requestState.category && (
         <div style={{ height: "110px", width: "100%" }}></div>
       )}
-      {requestState.category && guide && rules && (
+      {requestState.category && (
         <>
           <div className={styles.rules}>
-            <h3>Видеоинструкция для выполнения упражнений:</h3>
-            <video
-              src={guide}
-              width={"100%"}
-              autoPlay={false}
-              controls
-              preload="auto"
-            ></video>
-            <h3>Правила участия в данной категории:</h3>
-            <p>{rules}</p>
+            {guide && (
+              <>
+                <h3>Видеоинструкция для выполнения упражнений:</h3>
+                <video
+                  src={guide}
+                  width={"100%"}
+                  autoPlay={false}
+                  controls
+                  preload="auto"
+                ></video>
+              </>
+            )}
+            {rules && (
+              <>
+                <h3>Правила участия в данной категории:</h3>
+                <p>{rules}</p>
+              </>
+            )}
           </div>
           <div style={{ height: "90px", width: "100%" }}></div>
         </>
