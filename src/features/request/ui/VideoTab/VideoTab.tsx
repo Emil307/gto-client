@@ -1,7 +1,7 @@
 "use client";
 
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../styles/styles.module.scss";
 import { RecordVideo, useRecorder } from "@/src/features/recordVideo";
 import requestState from "@/src/entities/request/store/requestState";
@@ -31,6 +31,8 @@ export const VideoTab = observer(() => {
   const [isModalActive, setIsModalActive] = useState(true);
   const [isLoadingModalActive, setIsLoadingModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [seconds, setSeconds] = useState("");
+  const [minutes, setMinutes] = useState("");
 
   function handleSendRequest() {
     setIsLoading(true);
@@ -45,6 +47,8 @@ export const VideoTab = observer(() => {
       region: String(requestState.infoData?.region),
       category_id: String(requestState.category),
       phone: String(requestState.infoData?.phone),
+      result_minutes: String(minutes),
+      result_seconds: String(seconds),
     };
 
     sendRequest(newRequest)
@@ -75,6 +79,42 @@ export const VideoTab = observer(() => {
     setError(null);
     setPreviewError(null);
   }
+
+  function handleInputMinutes(e: any) {
+    if (e.target.value.length <= 2) {
+      setMinutes(e.target.value);
+    }
+    if (e.target.value.length > 2 && minutes[0] === "0") {
+      setMinutes(e.target.value.slice(1));
+    }
+  }
+
+  function handleInputSeconds(e: any) {
+    if (e.target.value.length <= 2) {
+      setSeconds(e.target.value);
+    }
+    if (e.target.value.length > 2 && seconds[0] === "0") {
+      setSeconds(e.target.value.slice(1));
+    }
+  }
+
+  useEffect(() => {
+    if (minutes.length === 1) {
+      setMinutes(`0${minutes}`);
+    }
+    if (Number(minutes) > 59) {
+      setMinutes("59");
+    }
+  }, [minutes]);
+
+  useEffect(() => {
+    if (seconds.length === 1) {
+      setSeconds(`0${seconds}`);
+    }
+    if (Number(seconds) > 59) {
+      setSeconds("59");
+    }
+  }, [seconds]);
 
   return (
     <div className={styles.videoTab}>
@@ -207,6 +247,30 @@ export const VideoTab = observer(() => {
                   alt="Delete"
                 />
               </button>
+            </div>
+            <div className={styles.secondsmer}>
+              <h5 className={styles.secondsmerTitle}>
+                Укажите время выполнения упражнения:
+              </h5>
+              <div className={styles.secondsmerInputs}>
+                <input
+                  placeholder="00"
+                  type="number"
+                  value={minutes}
+                  onChange={handleInputMinutes}
+                  className={styles.secondsmerInput}
+                  maxLength={2}
+                />
+                <p className={styles.secondsmerValue}>:</p>
+                <input
+                  placeholder="00"
+                  type="number"
+                  value={seconds}
+                  onChange={handleInputSeconds}
+                  className={styles.secondsmerInput}
+                  maxLength={2}
+                />
+              </div>
             </div>
           </div>
           <div className={styles.videoTabBottom}>
