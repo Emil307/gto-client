@@ -17,6 +17,7 @@ export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
   const [categories, setCategories] = useState<TCategory[]>([]);
   const [guide, setGuide] = useState("");
+  const [guideType, setGuideType] = useState<"video" | "iframe" | null>(null);
   const [rules, setRules] = useState("");
 
   useEffect(() => {
@@ -46,6 +47,7 @@ export const CategoryTab = observer(() => {
     getCategoryInfo(value)
       .then((res) => {
         setAgeCategory(res.data.age_category);
+        setGuideType(res.data.type);
         setGuide(res.data.guide);
         setRules(res.data.rules);
       })
@@ -54,8 +56,6 @@ export const CategoryTab = observer(() => {
       });
     requestState.setCategory(value);
   }
-
-  console.log(rules);
 
   return (
     <div className={styles.categoryTab}>
@@ -94,13 +94,23 @@ export const CategoryTab = observer(() => {
             {guide && (
               <>
                 <h3>Видеоинструкция для выполнения упражнений:</h3>
-                <video
-                  src={guide}
-                  width={"100%"}
-                  autoPlay={false}
-                  controls
-                  preload="auto"
-                ></video>
+                {guideType === "video" && (
+                  <video
+                    src={guide}
+                    width={"100%"}
+                    autoPlay={false}
+                    controls
+                    preload="auto"
+                  ></video>
+                )}
+                {guideType === "iframe" && (
+                  <iframe
+                    width={"100%"}
+                    src={guide}
+                    allow="clipboard-write;"
+                    allowFullScreen
+                  ></iframe>
+                )}
               </>
             )}
             {rules && (
