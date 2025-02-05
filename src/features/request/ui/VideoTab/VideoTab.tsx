@@ -31,10 +31,14 @@ export const VideoTab = observer(() => {
   const [isModalActive, setIsModalActive] = useState(true);
   const [isLoadingModalActive, setIsLoadingModalActive] = useState(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [seconds, setSeconds] = useState("");
-  const [minutes, setMinutes] = useState("");
+  const [seconds, setSeconds] = useState("00");
+  const [minutes, setMinutes] = useState("00");
 
   function handleSendRequest() {
+    if (Number(minutes) * 60 + Number(seconds) <= 0) {
+      return;
+    }
+
     setIsLoading(true);
     setIsLoadingModalActive(true);
 
@@ -105,6 +109,9 @@ export const VideoTab = observer(() => {
     if (Number(minutes) > 59) {
       setMinutes("59");
     }
+    if (Number(minutes) < 0) {
+      setMinutes("00");
+    }
   }, [minutes]);
 
   useEffect(() => {
@@ -113,6 +120,9 @@ export const VideoTab = observer(() => {
     }
     if (Number(seconds) > 59) {
       setSeconds("59");
+    }
+    if (Number(seconds) < 0) {
+      setSeconds("00");
     }
   }, [seconds]);
 
@@ -260,6 +270,8 @@ export const VideoTab = observer(() => {
                   onChange={handleInputMinutes}
                   className={styles.secondsmerInput}
                   maxLength={2}
+                  min={0}
+                  max={59}
                 />
                 <p className={styles.secondsmerValue}>:</p>
                 <input
@@ -269,6 +281,8 @@ export const VideoTab = observer(() => {
                   onChange={handleInputSeconds}
                   className={styles.secondsmerInput}
                   maxLength={2}
+                  min={0}
+                  max={59}
                 />
               </div>
             </div>
