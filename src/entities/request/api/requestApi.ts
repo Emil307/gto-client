@@ -18,3 +18,17 @@ export async function sendRecording(
     file: blob,
   });
 }
+
+export async function sendChunk(
+  application_id: number,
+  chunkNumber: number,
+  totalChunks: number,
+  blob: Blob
+): Promise<AxiosResponse> {
+  return await $apiFile.post(`/api/application/chunk/upload`, {
+    application_id: application_id,
+    chunk_number: chunkNumber,
+    total_chunks: totalChunks,
+    file: blob,
+  });
+}

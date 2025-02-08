@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { RequestDTO, sendRecording, sendRequest } from "@/src/entities/request";
+import { RequestDTO, sendChunk, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
 
 export const VideoTab = observer(() => {
@@ -34,6 +34,54 @@ export const VideoTab = observer(() => {
   const [seconds, setSeconds] = useState("00");
   const [minutes, setMinutes] = useState("00");
 
+  const CHUNK_SIZE = 1024 * 1024 * 5;
+
+  function createChunks(blob: Blob): Blob[] {
+    const chunks: Blob[] = [];
+    let start = 0;
+    while (start < blob.size) {
+      const chunk = blob.slice(start, start + CHUNK_SIZE);
+      chunks.push(chunk);
+      start += CHUNK_SIZE;
+    }
+    return chunks;
+  }
+
+  function generateBlobId(): string {
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  function getUploadedChunks(blobId: string): Set<number> {
+    const uploadedChunks = JSON.parse(localStorage.getItem(blobId) || "[]");
+    return new Set(uploadedChunks);
+  }
+
+  function markChunkAsUploaded(blobId: string, chunkIndex: number) {
+    const uploadedChunks = getUploadedChunks(blobId);
+    uploadedChunks.add(chunkIndex);
+    localStorage.setItem(blobId, JSON.stringify(Array.from(uploadedChunks)));
+  }
+
+  async function uploadFile(applicationId: number, blob: Blob) {
+    const blobId = generateBlobId(); // Генерируем уникальный ID для этого Blob
+    const chunks = createChunks(blob);
+    const uploadedChunks = getUploadedChunks(blobId);
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (uploadedChunks.has(i)) {
+        continue; // Этот чанк уже отправлен
+      }
+
+      try {
+        await sendChunk(applicationId, i, chunks.length, chunks[i]);
+        markChunkAsUploaded(blobId, i);
+      } catch (error) {
+        console.error("Error uploading chunk:", error);
+        break; // Можешь добавить логику повторной отправки
+      }
+    }
+  }
+
   function handleSendRequest() {
     if (Number(minutes) * 60 + Number(seconds) <= 0) {
       return;
@@ -57,7 +105,7 @@ export const VideoTab = observer(() => {
 
     sendRequest(newRequest)
       .then((res) => {
-        sendRecording(res.data.id, new Blob(chunks, { type: "video/mp4" }))
+        uploadFile(res.data.id, new Blob(chunks, { type: "video/mp4" }))
           .then(() => {
             requestState.setInfoData(null);
             requestState.setCategory("");
