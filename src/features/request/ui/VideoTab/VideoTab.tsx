@@ -99,7 +99,7 @@ export const VideoTab = observer(() => {
         : null,
       email: String(requestState.infoData?.email),
       region: String(requestState.infoData?.region),
-      category_id: String(requestState.category),
+      category_id: String(requestState.category?.id),
       phone: String(requestState.infoData?.phone),
       result_minutes: String(minutes),
       result_seconds: String(seconds),

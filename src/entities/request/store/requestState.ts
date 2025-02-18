@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import { ICategory } from "../../categories";
 
 type TTab = "info" | "category" | "video";
 type TVideoStatus = "record" | "recording" | "watch";
@@ -18,7 +19,7 @@ export interface IInfoData {
 class RequestState {
   activeTab: TTab = "info";
   isChild: boolean = false;
-  category: string = "";
+  category: ICategory | null = null;
   videoStatus: TVideoStatus = "record";
 
   infoData: IInfoData | null = null;
@@ -35,7 +36,7 @@ class RequestState {
     this.isChild = value;
   }
 
-  setCategory(category: string) {
+  setCategory(category: ICategory) {
     this.category = category;
   }
 

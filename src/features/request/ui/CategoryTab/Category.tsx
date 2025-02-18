@@ -21,9 +21,9 @@ export const Category: React.FC<CategoryProps> = ({
 }) => {
   const [isShowingSubcategories, setIsShowingSubcategories] = useState(false);
 
-  function handleSelect(value: string) {
+  function handleSelect(category: ICategory) {
     getCategoryInfo(
-      value,
+      String(category.id),
       requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
     )
       .then((res) => {
@@ -32,20 +32,20 @@ export const Category: React.FC<CategoryProps> = ({
         setGuide(res.data.guide);
         setRules(res.data.rules);
 
-        requestState.setCategory(value);
+        requestState.setCategory(category);
       })
       .catch((e) => {
         console.log(e);
       });
   }
 
-  function handleSelectCategory(value: string) {
+  function handleSelectCategory(category: ICategory) {
     if (!category.is_able_to_choice) {
       setIsShowingSubcategories(!isShowingSubcategories);
       return;
     }
 
-    handleSelect(value);
+    handleSelect(category);
   }
 
   return (
@@ -53,9 +53,9 @@ export const Category: React.FC<CategoryProps> = ({
       <button
         style={{
           background:
-            requestState.category === String(category.id) ? "#F70115" : "",
+            requestState.category?.id === category.id ? "#F70115" : "",
         }}
-        onClick={() => handleSelectCategory(String(category.id))}
+        onClick={() => handleSelectCategory(category)}
         key={category.id}
         className={styles.category}
       >
@@ -77,14 +77,12 @@ export const Category: React.FC<CategoryProps> = ({
         <>
           {category.subcategories.map((subcategory) => (
             <button
-              onClick={() => handleSelect(String(subcategory.id))}
+              onClick={() => handleSelect(subcategory)}
               className={styles.subcategory}
               key={subcategory.id}
               style={{
                 background:
-                  requestState.category === String(subcategory.id)
-                    ? "#F70115"
-                    : "",
+                  requestState.category?.id === subcategory.id ? "#F70115" : "",
               }}
             >
               {subcategory.title}
