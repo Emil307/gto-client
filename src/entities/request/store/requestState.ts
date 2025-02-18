@@ -11,10 +11,12 @@ export interface IInfoData {
   phone: string;
   gender: string | null;
   region: string | null;
+  is_child: boolean;
 }
 
 class RequestState {
   activeTab: TTab = "info";
+  isChild: boolean = false;
   category: string = "";
   videoStatus: TVideoStatus = "record";
 
@@ -26,6 +28,10 @@ class RequestState {
 
   setActiveTab(value: TTab) {
     this.activeTab = value;
+  }
+
+  setIsChild(value: boolean) {
+    this.isChild = value;
   }
 
   setCategory(category: string) {

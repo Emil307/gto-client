@@ -8,15 +8,15 @@ export async function getMe(): Promise<AxiosResponse<IUser>> {
 }
 
 export async function getRegions(): Promise<AxiosResponse> {
-  return await $api.get("/api/users/regions");
+  return await $api.get("/api/settings/regions");
 }
 
 export async function getCities(region: string): Promise<AxiosResponse> {
-  return await $api.get(`/api/users/cities?region_name=${region}`);
+  return await $api.get(`/api/settings/cities?region_name=${region}`);
 }
 
 export async function editProfile(
   data: editProfileDto
 ): Promise<AxiosResponse<IUser>> {
-  return await $api.patch(`/api/users/me`, data);
+  return await $api.patch(`/api/users/me/`, data);
 }

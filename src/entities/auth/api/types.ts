@@ -11,7 +11,7 @@ export interface registrationDto {
 
 export interface loginDto {
   email: string;
-  code: number;
+  code: string;
 }
 
 export interface AuthResponseDto {

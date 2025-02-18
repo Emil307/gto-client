@@ -73,7 +73,7 @@ export const VideoTab = observer(() => {
       }
 
       try {
-        await sendChunk(applicationId, i, chunks.length, chunks[i]);
+        await sendChunk(applicationId, i + 1, chunks.length, chunks[i]);
         markChunkAsUploaded(blobId, i);
       } catch (error) {
         console.error("Error uploading chunk:", error);

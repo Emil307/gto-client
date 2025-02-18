@@ -7,6 +7,7 @@ import { Trigger } from "@/src/features/rating";
 import { observer } from "mobx-react-lite";
 import userState, { IUser } from "@/src/entities/user";
 import { getMe } from "@/src/entities/profile";
+import { HistoryButton } from "@/src/features/request";
 
 export const Home: React.FC = observer(() => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -48,6 +49,7 @@ export const Home: React.FC = observer(() => {
         </div>
         <div className={styles.articles}>
           <Trigger />
+          <HistoryButton />
           <Event />
         </div>
       </div>

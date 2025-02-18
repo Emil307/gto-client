@@ -50,11 +50,12 @@ export const CategoryTab = observer(() => {
         setGuideType(res.data.type);
         setGuide(res.data.guide);
         setRules(res.data.rules);
+
+        requestState.setCategory(value);
       })
       .catch((e) => {
         console.log(e);
       });
-    requestState.setCategory(value);
   }
 
   return (

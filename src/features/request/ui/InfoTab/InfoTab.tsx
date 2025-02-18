@@ -12,6 +12,7 @@ import requestState, {
 import { observer } from "mobx-react-lite";
 import { genders } from "@/src/entities/user";
 import { Loader } from "@/src/shared";
+import { Checkbox } from "@mantine/core";
 
 export const InfoTab = observer(() => {
   const [surname, setSurname] = useState<string>(
@@ -125,6 +126,7 @@ export const InfoTab = observer(() => {
       phone: phone,
       gender: selectedGender,
       region: selectedRegion,
+      is_child: requestState.isChild,
     };
 
     requestState.setInfoData(infoData);
@@ -133,6 +135,14 @@ export const InfoTab = observer(() => {
 
   return (
     <div className={styles.infoTab}>
+      <Checkbox
+        checked={requestState.isChild}
+        onChange={(event) =>
+          requestState.setIsChild(event.currentTarget.checked)
+        }
+        label="Заполнить анкету за ребенка"
+        style={{ color: "var(--main-white)" }}
+      />
       <div className={styles.inputs}>
         <FlushedInput
           id="surname"

@@ -1,0 +1,56 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--main-gray);
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.infoWrapper div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoBlock {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.p {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  opacity: 0.5;
+  color: #fff;
+}
+
+.span {
+  font-size: 1rem;
+  line-height: 1.25rem;
+  opacity: 1;
+  color: #fff;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1rem;
+  height: 3rem;
+  border-radius: 2px;
+
+  background-color: var(--disabled-bg);
+
+  font-family: ttsquare;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 120%;
+  text-transform: uppercase;
+
+  color: var(--main-white);
+}
