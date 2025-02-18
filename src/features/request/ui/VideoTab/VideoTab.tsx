@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { RequestDTO, sendChunk, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
+import { FlushedInput } from "@/src/shared/ui/flushedInput";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
@@ -33,6 +34,8 @@ export const VideoTab = observer(() => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [seconds, setSeconds] = useState("00");
   const [minutes, setMinutes] = useState("00");
+  const [link, setLink] = useState("");
+  const [exercises, setExercises] = useState("");
 
   const CHUNK_SIZE = 1024 * 1024 * 5;
 
@@ -101,8 +104,10 @@ export const VideoTab = observer(() => {
       region: String(requestState.infoData?.region),
       category_id: String(requestState.category?.id),
       phone: String(requestState.infoData?.phone),
-      result_minutes: String(minutes),
-      result_seconds: String(seconds),
+      result_minutes: Number(minutes),
+      result_seconds: Number(seconds),
+      result_exercise: Number(exercises) ? Number(exercises) : null,
+      blog_link: link ? link : null,
     };
 
     sendRequest(newRequest)
@@ -308,34 +313,64 @@ export const VideoTab = observer(() => {
                 />
               </button>
             </div>
-            <div className={styles.secondsmer}>
-              <h5 className={styles.secondsmerTitle}>
-                Укажите время выполнения упражнения:
-              </h5>
-              <div className={styles.secondsmerInputs}>
-                <input
-                  placeholder="00"
+            {requestState.category?.is_needed_time && (
+              <div className={styles.secondsmer}>
+                <h5 className={styles.secondsmerTitle}>
+                  Укажите время выполнения упражнения:
+                </h5>
+                <div className={styles.secondsmerInputs}>
+                  <input
+                    placeholder="00"
+                    type="number"
+                    value={minutes}
+                    onChange={handleInputMinutes}
+                    className={styles.secondsmerInput}
+                    maxLength={2}
+                    min={0}
+                    max={59}
+                  />
+                  <p className={styles.secondsmerValue}>:</p>
+                  <input
+                    placeholder="00"
+                    type="number"
+                    value={seconds}
+                    onChange={handleInputSeconds}
+                    className={styles.secondsmerInput}
+                    maxLength={2}
+                    min={0}
+                    max={59}
+                  />
+                </div>
+              </div>
+            )}
+            {requestState.category?.is_needed_exercise && (
+              <div className={styles.secondsmer}>
+                <FlushedInput
+                  id="exercise"
+                  required
+                  name="exercise"
                   type="number"
-                  value={minutes}
-                  onChange={handleInputMinutes}
-                  className={styles.secondsmerInput}
-                  maxLength={2}
-                  min={0}
-                  max={59}
-                />
-                <p className={styles.secondsmerValue}>:</p>
-                <input
-                  placeholder="00"
-                  type="number"
-                  value={seconds}
-                  onChange={handleInputSeconds}
-                  className={styles.secondsmerInput}
-                  maxLength={2}
-                  min={0}
-                  max={59}
+                  placeholder="20"
+                  label="Укажите количество выполнений упражнения"
+                  value={exercises}
+                  onChange={(e) => setExercises(e.target.value)}
                 />
               </div>
-            </div>
+            )}
+            {requestState.category?.is_needed_blog && (
+              <div className={styles.secondsmer}>
+                <FlushedInput
+                  id="link"
+                  required
+                  name="link"
+                  type="text"
+                  placeholder="https://blog.ru"
+                  label="Вставьте ссылку на ваш блог"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.videoTabBottom}>
             <ParallelogramButton

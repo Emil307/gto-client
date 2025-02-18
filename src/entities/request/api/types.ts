@@ -7,6 +7,8 @@ export interface RequestDTO {
   region: string;
   category_id: string;
   phone: string;
-  result_minutes: string;
-  result_seconds: string;
+  result_minutes: number;
+  result_seconds: number;
+  result_exercise: number | null;
+  blog_link: string | null;
 }
