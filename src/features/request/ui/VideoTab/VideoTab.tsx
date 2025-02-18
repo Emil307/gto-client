@@ -110,7 +110,7 @@ export const VideoTab = observer(() => {
         uploadFile(res.data.id, new Blob(chunks, { type: "video/mp4" }))
           .then(() => {
             requestState.setInfoData(null);
-            requestState.setCategory("");
+            requestState.setCategory(null);
             requestState.setActiveTab("info");
             requestState.setVideoStatus("record");
             router.replace("/lk");

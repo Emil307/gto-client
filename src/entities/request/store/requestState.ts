@@ -36,7 +36,7 @@ class RequestState {
     this.isChild = value;
   }
 
-  setCategory(category: ICategory) {
+  setCategory(category: ICategory | null) {
     this.category = category;
   }
 
