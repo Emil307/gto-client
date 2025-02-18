@@ -9,8 +9,9 @@ import { observer } from "mobx-react-lite";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { RequestDTO, sendRecording, sendRequest } from "@/src/entities/request";
+import { RequestDTO, sendChunk, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
+import { FlushedInput } from "@/src/shared/ui/flushedInput";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
@@ -33,6 +34,56 @@ export const VideoTab = observer(() => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [seconds, setSeconds] = useState("00");
   const [minutes, setMinutes] = useState("00");
+  const [link, setLink] = useState("");
+  const [exercises, setExercises] = useState("");
+
+  const CHUNK_SIZE = 1024 * 1024 * 5;
+
+  function createChunks(blob: Blob): Blob[] {
+    const chunks: Blob[] = [];
+    let start = 0;
+    while (start < blob.size) {
+      const chunk = blob.slice(start, start + CHUNK_SIZE);
+      chunks.push(chunk);
+      start += CHUNK_SIZE;
+    }
+    return chunks;
+  }
+
+  function generateBlobId(): string {
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+  }
+
+  function getUploadedChunks(blobId: string): Set<number> {
+    const uploadedChunks = JSON.parse(localStorage.getItem(blobId) || "[]");
+    return new Set(uploadedChunks);
+  }
+
+  function markChunkAsUploaded(blobId: string, chunkIndex: number) {
+    const uploadedChunks = getUploadedChunks(blobId);
+    uploadedChunks.add(chunkIndex);
+    localStorage.setItem(blobId, JSON.stringify(Array.from(uploadedChunks)));
+  }
+
+  async function uploadFile(applicationId: number, blob: Blob) {
+    const blobId = generateBlobId(); // Генерируем уникальный ID для этого Blob
+    const chunks = createChunks(blob);
+    const uploadedChunks = getUploadedChunks(blobId);
+
+    for (let i = 0; i < chunks.length; i++) {
+      if (uploadedChunks.has(i)) {
+        continue; // Этот чанк уже отправлен
+      }
+
+      try {
+        await sendChunk(applicationId, i + 1, chunks.length, chunks[i]);
+        markChunkAsUploaded(blobId, i);
+      } catch (error) {
+        console.error("Error uploading chunk:", error);
+        break; // Можешь добавить логику повторной отправки
+      }
+    }
+  }
 
   function handleSendRequest() {
     if (Number(minutes) * 60 + Number(seconds) <= 0) {
@@ -46,21 +97,25 @@ export const VideoTab = observer(() => {
       surname: String(requestState.infoData?.surname),
       name: String(requestState.infoData?.name),
       patronymic: String(requestState.infoData?.patronymic),
-      birthDate: "2001-01-23",
+      birthDate: requestState.infoData?.birthDate
+        ? requestState.infoData?.birthDate
+        : null,
       email: String(requestState.infoData?.email),
       region: String(requestState.infoData?.region),
-      category_id: String(requestState.category),
+      category_id: String(requestState.category?.id),
       phone: String(requestState.infoData?.phone),
-      result_minutes: String(minutes),
-      result_seconds: String(seconds),
+      result_minutes: Number(minutes),
+      result_seconds: Number(seconds),
+      result_exercise: Number(exercises) ? Number(exercises) : null,
+      blog_link: link ? link : null,
     };
 
     sendRequest(newRequest)
       .then((res) => {
-        sendRecording(res.data.id, new Blob(chunks, { type: "video/mp4" }))
+        uploadFile(res.data.id, new Blob(chunks, { type: "video/mp4" }))
           .then(() => {
             requestState.setInfoData(null);
-            requestState.setCategory("");
+            requestState.setCategory(null);
             requestState.setActiveTab("info");
             requestState.setVideoStatus("record");
             router.replace("/lk");
@@ -258,34 +313,64 @@ export const VideoTab = observer(() => {
                 />
               </button>
             </div>
-            <div className={styles.secondsmer}>
-              <h5 className={styles.secondsmerTitle}>
-                Укажите время выполнения упражнения:
-              </h5>
-              <div className={styles.secondsmerInputs}>
-                <input
-                  placeholder="00"
+            {requestState.category?.is_needed_time && (
+              <div className={styles.secondsmer}>
+                <h5 className={styles.secondsmerTitle}>
+                  Укажите время выполнения упражнения:
+                </h5>
+                <div className={styles.secondsmerInputs}>
+                  <input
+                    placeholder="00"
+                    type="number"
+                    value={minutes}
+                    onChange={handleInputMinutes}
+                    className={styles.secondsmerInput}
+                    maxLength={2}
+                    min={0}
+                    max={59}
+                  />
+                  <p className={styles.secondsmerValue}>:</p>
+                  <input
+                    placeholder="00"
+                    type="number"
+                    value={seconds}
+                    onChange={handleInputSeconds}
+                    className={styles.secondsmerInput}
+                    maxLength={2}
+                    min={0}
+                    max={59}
+                  />
+                </div>
+              </div>
+            )}
+            {requestState.category?.is_needed_exercise && (
+              <div className={styles.secondsmer}>
+                <FlushedInput
+                  id="exercise"
+                  required
+                  name="exercise"
                   type="number"
-                  value={minutes}
-                  onChange={handleInputMinutes}
-                  className={styles.secondsmerInput}
-                  maxLength={2}
-                  min={0}
-                  max={59}
-                />
-                <p className={styles.secondsmerValue}>:</p>
-                <input
-                  placeholder="00"
-                  type="number"
-                  value={seconds}
-                  onChange={handleInputSeconds}
-                  className={styles.secondsmerInput}
-                  maxLength={2}
-                  min={0}
-                  max={59}
+                  placeholder="20"
+                  label="Укажите количество выполнений упражнения"
+                  value={exercises}
+                  onChange={(e) => setExercises(e.target.value)}
                 />
               </div>
-            </div>
+            )}
+            {requestState.category?.is_needed_blog && (
+              <div className={styles.secondsmer}>
+                <FlushedInput
+                  id="link"
+                  required
+                  name="link"
+                  type="text"
+                  placeholder="https://blog.ru"
+                  label="Вставьте ссылку на ваш блог"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                />
+              </div>
+            )}
           </div>
           <div className={styles.videoTabBottom}>
             <ParallelogramButton

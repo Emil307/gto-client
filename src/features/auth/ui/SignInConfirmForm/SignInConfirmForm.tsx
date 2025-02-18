@@ -21,10 +21,7 @@ export const SignInConfirmForm: React.FC = () => {
 
   useEffect(() => {
     if (code.length === 4) {
-      authState.login(
-        { email: email.toLowerCase(), code: Number(code) },
-        router
-      );
+      authState.login({ email: email.toLowerCase(), code: code }, router);
     }
   }, [code]);
 

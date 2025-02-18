@@ -62,7 +62,8 @@
   color: var(--main-white);
 }
 
-.category {
+.category,
+.subcategory {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,6 +77,11 @@
   text-transform: uppercase;
 
   color: var(--main-white);
+}
+
+.subcategory {
+  width: 90%;
+  margin: 0 auto;
 }
 
 .rules {

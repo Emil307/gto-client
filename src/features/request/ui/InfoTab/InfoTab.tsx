@@ -12,8 +12,13 @@ import requestState, {
 import { observer } from "mobx-react-lite";
 import { genders } from "@/src/entities/user";
 import { Loader } from "@/src/shared";
+import { Checkbox } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
+import datepickerStyles from "../../styles/datepicker/styles.module.scss";
+import dayjs from "dayjs";
 
 export const InfoTab = observer(() => {
+  const [dob, setDob] = useState<Date | null>(null);
   const [surname, setSurname] = useState<string>(
     requestState.infoData?.surname as string
   );
@@ -125,6 +130,10 @@ export const InfoTab = observer(() => {
       phone: phone,
       gender: selectedGender,
       region: selectedRegion,
+      is_child: requestState.isChild,
+      birthDate: dob
+        ? dayjs(String(dob)).format("YYYY/MM/DD").replaceAll("/", "-")
+        : null,
     };
 
     requestState.setInfoData(infoData);
@@ -133,6 +142,24 @@ export const InfoTab = observer(() => {
 
   return (
     <div className={styles.infoTab}>
+      <Checkbox
+        checked={requestState.isChild}
+        onChange={(event) =>
+          requestState.setIsChild(event.currentTarget.checked)
+        }
+        label="Заполнить анкету за ребенка"
+        style={{ color: "var(--main-white)" }}
+      />
+      {requestState.isChild && (
+        <DatePickerInput
+          placeholder="Не указана"
+          label="Дата рождения ребенка"
+          classNames={datepickerStyles}
+          value={dob}
+          onChange={setDob}
+          maxDate={new Date(dayjs().format("YYYY/MM/DD"))}
+        />
+      )}
       <div className={styles.inputs}>
         <FlushedInput
           id="surname"
