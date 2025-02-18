@@ -94,7 +94,9 @@ export const VideoTab = observer(() => {
       surname: String(requestState.infoData?.surname),
       name: String(requestState.infoData?.name),
       patronymic: String(requestState.infoData?.patronymic),
-      birthDate: String(requestState.infoData?.birthDate),
+      birthDate: requestState.infoData?.birthDate
+        ? requestState.infoData?.birthDate
+        : null,
       email: String(requestState.infoData?.email),
       region: String(requestState.infoData?.region),
       category_id: String(requestState.category),

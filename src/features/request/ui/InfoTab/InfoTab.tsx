@@ -140,9 +140,6 @@ export const InfoTab = observer(() => {
     requestState.setActiveTab("category");
   }
 
-  console.log(dob);
-  console.log(dayjs(String(dob)).format("YYYY/MM/DD").replaceAll("/", "-"));
-
   return (
     <div className={styles.infoTab}>
       <Checkbox

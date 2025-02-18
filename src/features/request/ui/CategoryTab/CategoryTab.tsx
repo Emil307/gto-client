@@ -6,16 +6,12 @@ import styles from "../../styles/styles.module.scss";
 import requestState from "@/src/entities/request/store/requestState";
 import { observer } from "mobx-react-lite";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
-import { getCategoryInfo, getMyCategories } from "@/src/entities/categories";
-
-export type TCategory = {
-  value: string;
-  label: string;
-};
+import { getMyCategories, ICategory } from "@/src/entities/categories";
+import { Category } from "./Category";
 
 export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
-  const [categories, setCategories] = useState<TCategory[]>([]);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [guide, setGuide] = useState("");
   const [guideType, setGuideType] = useState<"video" | "iframe" | null>(null);
   const [rules, setRules] = useState("");
@@ -29,41 +25,12 @@ export const CategoryTab = observer(() => {
       requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
     )
       .then((res) => {
-        const categories: any = [];
-
-        res.data.forEach((category: any) => {
-          categories.push({
-            label: category.title,
-            value: String(category.id),
-          });
-        });
-
-        setCategories(categories);
+        setCategories(res.data);
       })
       .catch((e) => {
         console.log(e);
       });
   }
-
-  function handleSelectCategory(value: string) {
-    getCategoryInfo(
-      value,
-      requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
-    )
-      .then((res) => {
-        setAgeCategory(res.data.age_category);
-        setGuideType(res.data.type);
-        setGuide(res.data.guide);
-        setRules(res.data.rules);
-
-        requestState.setCategory(value);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
-
-  console.log(requestState.infoData?.birthDate);
 
   return (
     <div className={styles.categoryTab}>
@@ -80,17 +47,14 @@ export const CategoryTab = observer(() => {
       <div className={styles.categories}>
         <h5>Выберите одну из доступных вам категорий:</h5>
         {categories.map((category) => (
-          <button
-            style={{
-              background:
-                requestState.category === category.value ? "#F70115" : "",
-            }}
-            onClick={() => handleSelectCategory(category.value)}
-            key={category.value}
-            className={styles.category}
-          >
-            {category.label}
-          </button>
+          <Category
+            category={category}
+            setAgeCategory={setAgeCategory}
+            setGuideType={setGuideType}
+            setGuide={setGuide}
+            setRules={setRules}
+            key={category.id}
+          />
         ))}
       </div>
       {!requestState.category && (
