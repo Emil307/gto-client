@@ -1,7 +1,8 @@
 import { getCategoryInfo, ICategory } from "@/src/entities/categories";
 import requestState from "@/src/entities/request/store/requestState";
-import React from "react";
+import React, { useState } from "react";
 import styles from "../../styles/styles.module.scss";
+import Image from "next/image";
 
 interface CategoryProps {
   category: ICategory;
@@ -18,7 +19,9 @@ export const Category: React.FC<CategoryProps> = ({
   setGuide,
   setRules,
 }) => {
-  function handleSelectCategory(value: string) {
+  const [isShowingSubcategories, setIsShowingSubcategories] = useState(false);
+
+  function handleSelect(value: string) {
     getCategoryInfo(
       value,
       requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
@@ -36,17 +39,59 @@ export const Category: React.FC<CategoryProps> = ({
       });
   }
 
+  function handleSelectCategory(value: string) {
+    if (!category.is_able_to_choice) {
+      setIsShowingSubcategories(!isShowingSubcategories);
+      return;
+    }
+
+    handleSelect(value);
+  }
+
   return (
-    <button
-      style={{
-        background:
-          requestState.category === String(category.id) ? "#F70115" : "",
-      }}
-      onClick={() => handleSelectCategory(String(category.id))}
-      key={category.id}
-      className={styles.category}
-    >
-      {category.title}
-    </button>
+    <>
+      <button
+        style={{
+          background:
+            requestState.category === String(category.id) ? "#F70115" : "",
+        }}
+        onClick={() => handleSelectCategory(String(category.id))}
+        key={category.id}
+        className={styles.category}
+      >
+        {category.title}
+        {category.subcategories.length > 0 && (
+          <Image
+            src="/icons/arrow-white.svg"
+            width={24}
+            height={24}
+            alt="open"
+            style={{
+              rotate: isShowingSubcategories ? "180deg" : "0deg",
+              transition: "all .2s ",
+            }}
+          />
+        )}
+      </button>
+      {isShowingSubcategories && (
+        <>
+          {category.subcategories.map((subcategory) => (
+            <button
+              onClick={() => handleSelect(String(subcategory.id))}
+              className={styles.subcategory}
+              key={subcategory.id}
+              style={{
+                background:
+                  requestState.category === String(subcategory.id)
+                    ? "#F70115"
+                    : "",
+              }}
+            >
+              {subcategory.title}
+            </button>
+          ))}
+        </>
+      )}
+    </>
   );
 };
