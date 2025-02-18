@@ -13,8 +13,12 @@ import { observer } from "mobx-react-lite";
 import { genders } from "@/src/entities/user";
 import { Loader } from "@/src/shared";
 import { Checkbox } from "@mantine/core";
+import { DatePickerInput } from "@mantine/dates";
+import datepickerStyles from "../../styles/datepicker/styles.module.scss";
+import dayjs from "dayjs";
 
 export const InfoTab = observer(() => {
+  const [dob, setDob] = useState<Date | null>(null);
   const [surname, setSurname] = useState<string>(
     requestState.infoData?.surname as string
   );
@@ -127,11 +131,17 @@ export const InfoTab = observer(() => {
       gender: selectedGender,
       region: selectedRegion,
       is_child: requestState.isChild,
+      birthDate: dob
+        ? dayjs(String(dob)).format("YYYY/MM/DD").replaceAll("/", "-")
+        : null,
     };
 
     requestState.setInfoData(infoData);
     requestState.setActiveTab("category");
   }
+
+  console.log(dob);
+  console.log(dayjs(String(dob)).format("YYYY/MM/DD").replaceAll("/", "-"));
 
   return (
     <div className={styles.infoTab}>
@@ -143,6 +153,16 @@ export const InfoTab = observer(() => {
         label="Заполнить анкету за ребенка"
         style={{ color: "var(--main-white)" }}
       />
+      {requestState.isChild && (
+        <DatePickerInput
+          placeholder="Не указана"
+          label="Дата рождения ребенка"
+          classNames={datepickerStyles}
+          value={dob}
+          onChange={setDob}
+          maxDate={new Date(dayjs().format("YYYY/MM/DD"))}
+        />
+      )}
       <div className={styles.inputs}>
         <FlushedInput
           id="surname"

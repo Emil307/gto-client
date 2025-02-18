@@ -12,6 +12,7 @@ export interface IInfoData {
   gender: string | null;
   region: string | null;
   is_child: boolean;
+  birthDate: string | null;
 }
 
 class RequestState {

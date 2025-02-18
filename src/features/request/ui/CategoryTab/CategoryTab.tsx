@@ -25,7 +25,9 @@ export const CategoryTab = observer(() => {
   }, []);
 
   function handleGetCategories() {
-    getMyCategories()
+    getMyCategories(
+      requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
+    )
       .then((res) => {
         const categories: any = [];
 
@@ -44,7 +46,10 @@ export const CategoryTab = observer(() => {
   }
 
   function handleSelectCategory(value: string) {
-    getCategoryInfo(value)
+    getCategoryInfo(
+      value,
+      requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
+    )
       .then((res) => {
         setAgeCategory(res.data.age_category);
         setGuideType(res.data.type);
@@ -57,6 +62,8 @@ export const CategoryTab = observer(() => {
         console.log(e);
       });
   }
+
+  console.log(requestState.infoData?.birthDate);
 
   return (
     <div className={styles.categoryTab}>
