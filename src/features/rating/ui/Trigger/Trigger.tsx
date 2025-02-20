@@ -11,9 +11,9 @@ export const Trigger: React.FC = () => {
         src="/icons/cup.svg"
         width={24}
         height={24}
-        alt="Рейтинг спортсменов"
+        alt="Рейтинг атлетов"
       />
-      <p>Рейтинг спортсменов</p>
+      <p>Рейтинг атлетов</p>
     </Link>
   );
 };
