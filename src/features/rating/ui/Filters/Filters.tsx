@@ -37,14 +37,6 @@ export const Filters: React.FC = observer(() => {
       >
         Категории
       </span>
-      {/* <span
-        style={{
-          backgroundColor: ratingState.filters.age ? "var(--main-red)" : "",
-        }}
-        className={styles.filterName}
-      >
-        Возраст
-      </span> */}
       <span
         style={{
           backgroundColor: ratingState.filters.district
