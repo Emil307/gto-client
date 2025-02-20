@@ -153,7 +153,7 @@ export const InfoTab = observer(() => {
         onChange={(event) =>
           requestState.setIsChild(event.currentTarget.checked)
         }
-        label="Заполнить анкету за ребенка"
+        label="Подать заявку за несовершеннолетнего"
         style={{ color: "var(--main-white)" }}
       />
       {requestState.isChild && (
