@@ -66,6 +66,12 @@ export const InfoTab = observer(() => {
     return;
   }, [name, surname, patronymic, email, phone, selectedGender, selectedRegion]);
 
+  useEffect(() => {
+    if (!requestState.isChild) {
+      setDob(null);
+    }
+  }, [requestState.isChild]);
+
   function handleGetRegions() {
     getRegions()
       .then((res) => {
