@@ -16,6 +16,10 @@ import { Checkbox } from "@mantine/core";
 import { DatePickerInput } from "@mantine/dates";
 import datepickerStyles from "../../styles/datepicker/styles.module.scss";
 import dayjs from "dayjs";
+import {
+  getParticipationChildDocument,
+  getParticipationDocument,
+} from "@/src/entities/documnets";
 
 export const InfoTab = observer(() => {
   const [dob, setDob] = useState<Date | null>(null);
@@ -41,10 +45,17 @@ export const InfoTab = observer(() => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(
     requestState.infoData?.region as string
   );
+  const [acceptProccessing, setAcceptProccessing] = useState<boolean>(false);
   const [isNextDisabled, setIsNextDisabled] = useState(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const [document, setDocument] = useState("");
+  const [childDocument, setChildDocument] = useState("");
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
+    handleGetDocuments();
     handleGetRegions();
     handleGetUser();
   }, []);
@@ -57,20 +68,47 @@ export const InfoTab = observer(() => {
       email &&
       phone &&
       selectedGender &&
-      selectedRegion
+      selectedRegion &&
+      acceptProccessing
     ) {
       setIsNextDisabled(false);
       return;
     }
     setIsNextDisabled(true);
     return;
-  }, [name, surname, patronymic, email, phone, selectedGender, selectedRegion]);
+  }, [
+    name,
+    surname,
+    patronymic,
+    email,
+    phone,
+    selectedGender,
+    selectedRegion,
+    acceptProccessing,
+  ]);
 
   useEffect(() => {
     if (!requestState.isChild) {
       setDob(null);
     }
   }, [requestState.isChild]);
+
+  function handleGetDocuments() {
+    getParticipationDocument()
+      .then((res) => {
+        setDocument(res.data.pdf);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    getParticipationChildDocument()
+      .then((res) => {
+        setChildDocument(res.data.pdf);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   function handleGetRegions() {
     getRegions()
@@ -233,6 +271,20 @@ export const InfoTab = observer(() => {
           onChange={setSelectedRegion}
           placeholder="Выберите регион"
         />
+        <div className={styles.documents}>
+          <Checkbox
+            checked={acceptProccessing}
+            onChange={(event) =>
+              setAcceptProccessing(event.currentTarget.checked)
+            }
+            label=""
+            style={{ color: "var(--main-white)" }}
+          />
+          <a href={`${API}${requestState.isChild ? childDocument : document}`}>
+            Соглашаюсь с Правилами обработки персональных данных, фото- и
+            видео-изображений
+          </a>
+        </div>
         <ParallelogramButton
           onClick={handleClickNext}
           disabled={isNextDisabled}
