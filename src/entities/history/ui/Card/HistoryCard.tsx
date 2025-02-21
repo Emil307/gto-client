@@ -45,12 +45,12 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
 
       {isShowingVideo && (
         <video
-          src={`${API}${history.video_file}`}
-          width={"100%"}
-          muted
+          loop
           autoPlay
-          playsInline
           controls
+          width={"100%"}
+          height={"100%"}
+          src={`${API}${history.video_file}`}
         ></video>
       )}
 
