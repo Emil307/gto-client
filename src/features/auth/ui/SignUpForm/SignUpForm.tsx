@@ -155,8 +155,9 @@ export const SignUpForm = () => {
           style={{ color: "var(--main-white)" }}
         />
         <p>
-          Согласен с
-          <a href={`${API}${document}`}>пользовательским соглашением</a>
+          <a href={`${API}${document}`}>
+            Согласен с пользовательским соглашением
+          </a>
         </p>
       </div>
       <ParallelogramButton type="submit" disabled={isCreateDisabled}>
