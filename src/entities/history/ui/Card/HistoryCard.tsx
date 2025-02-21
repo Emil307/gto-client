@@ -51,7 +51,6 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
           controls
           playsInline
           muted
-          preload="auto"
         ></video>
       )}
 
