@@ -1,11 +1,14 @@
 import React from "react";
 import styles from "../../styles/styles.module.scss";
 import Image from "next/image";
-import Link from "next/link";
+import toast from "react-hot-toast";
 
 export const Trigger: React.FC = () => {
   return (
-    <Link href="/lk/rating" className={styles.container}>
+    <button
+      onClick={() => toast("Рейтинг будет доступен после окончания судейства")}
+      className={styles.container}
+    >
       <Image
         priority={true}
         src="/icons/cup.svg"
@@ -14,6 +17,6 @@ export const Trigger: React.FC = () => {
         alt="Рейтинг атлетов"
       />
       <p>Рейтинг атлетов</p>
-    </Link>
+    </button>
   );
 };
