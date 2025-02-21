@@ -50,6 +50,7 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
           autoPlay={false}
           controls
           playsInline
+          muted
           preload="auto"
         ></video>
       )}
