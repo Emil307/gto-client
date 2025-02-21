@@ -18,7 +18,7 @@ import datepickerStyles from "../../styles/datepicker/styles.module.scss";
 import dayjs from "dayjs";
 import {
   getParticipationChildDocument,
-  getParticipationDocument,
+  getPersonalTermsDocument,
 } from "@/src/entities/documnets";
 
 export const InfoTab = observer(() => {
@@ -94,7 +94,7 @@ export const InfoTab = observer(() => {
   }, [requestState.isChild]);
 
   function handleGetDocuments() {
-    getParticipationDocument()
+    getPersonalTermsDocument()
       .then((res) => {
         setDocument(res.data.pdf);
       })
