@@ -269,3 +269,15 @@
   line-height: 120%;
   color: var(--main-white);
 }
+
+.documents {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.documents > a {
+  font-size: 0.75rem;
+  color: #fff;
+  text-decoration: underline;
+}

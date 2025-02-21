@@ -1,9 +1,22 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+}
+
 .container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoWrapper {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
 
 .rank {
@@ -17,6 +30,7 @@
   width: 4rem;
   height: 4rem;
   border-radius: 2px;
+  object-fit: cover;
 }
 
 .info {
@@ -51,7 +65,8 @@
   gap: 0.5rem;
 }
 
-.resultKey {
+.resultKey,
+.detailsKey {
   font-family: Roboto;
   font-size: 1rem;
   line-height: 120%;
@@ -59,9 +74,17 @@
   opacity: 0.5;
 }
 
-.resultValue {
+.resultValue,
+.detailsValue {
   font-family: Roboto;
   font-size: 1rem;
   line-height: 120%;
   color: #fff;
+}
+
+.detailsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.25rem;
 }

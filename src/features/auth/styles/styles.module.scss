@@ -93,3 +93,21 @@
   text-align: left;
   color: var(--main-red);
 }
+
+.documents {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.documents > a {
+  font-size: 0.75rem;
+  color: #fff;
+  text-decoration: underline;
+}
+
+.documents > p {
+  font-size: 0.75rem;
+  color: #fff;
+  text-decoration: underline;
+}

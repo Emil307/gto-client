@@ -9,12 +9,20 @@ import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import { getMyCategories, ICategory } from "@/src/entities/categories";
 import { Category } from "./Category";
 
+interface IRule {
+  id: number;
+  p: string;
+}
+
 export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
   const [categories, setCategories] = useState<ICategory[]>([]);
   const [guide, setGuide] = useState("");
   const [guideType, setGuideType] = useState<"video" | "iframe" | null>(null);
-  const [rules, setRules] = useState("");
+  const [rules, setRules] = useState<IRule[]>([]);
+  const [document, setDocument] = useState("");
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     handleGetCategories();
@@ -53,6 +61,7 @@ export const CategoryTab = observer(() => {
             setGuideType={setGuideType}
             setGuide={setGuide}
             setRules={setRules}
+            setDocument={setDocument}
             key={category.id}
           />
         ))}
@@ -85,10 +94,15 @@ export const CategoryTab = observer(() => {
                 )}
               </>
             )}
+            {document && (
+              <a href={`${API}${document}`}>Подробная PDF-инструкция</a>
+            )}
             {rules && (
               <>
                 <h3>Правила участия в данной категории:</h3>
-                <p>{rules}</p>
+                {rules.map((rule) => (
+                  <p key={rule.id}>{rule.p}</p>
+                ))}
               </>
             )}
           </div>
