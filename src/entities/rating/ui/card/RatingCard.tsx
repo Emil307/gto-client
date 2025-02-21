@@ -37,7 +37,8 @@ export const RatingCard: React.FC<IRatingCardProps> = ({ rating, isMy }) => {
                 width={64}
                 height={64}
                 muted
-                controls
+                playsInline
+                autoPlay
                 src={`${API}${rating.video_file}`}
                 className={styles.video}
               />
