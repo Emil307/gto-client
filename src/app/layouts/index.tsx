@@ -12,6 +12,7 @@ import { DatesProvider } from "@mantine/dates";
 import "dayjs/locale/ru";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
+import { addToHomeScreen } from "@telegram-apps/sdk";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,6 +24,10 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (addToHomeScreen.isAvailable()) {
+    addToHomeScreen();
+  }
+
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
