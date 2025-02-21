@@ -1,6 +1,10 @@
 import { $api } from "@/src/shared";
 import { AxiosResponse } from "axios";
 
+export async function getRegistrationDocument(): Promise<AxiosResponse> {
+  return await $api.get(`/api/settings/documents/user_terms/`);
+}
+
 export async function getCateriesDocument(): Promise<AxiosResponse> {
   return await $api.get(`/api/settings/documents/categories/`);
 }

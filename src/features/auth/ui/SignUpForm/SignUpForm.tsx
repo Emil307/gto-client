@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import styles from "../../styles/styles.module.scss";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
@@ -12,6 +12,8 @@ import { genders } from "@/src/entities/user";
 import { DatePickerInput } from "@mantine/dates";
 import datepickerStyles from "../../styles/datepicker/styles.module.scss";
 import dayjs from "dayjs";
+import { Checkbox } from "@mantine/core";
+import { getRegistrationDocument } from "@/src/entities/documnets";
 
 interface IFormFileds {
   name: string;
@@ -25,6 +27,30 @@ export const SignUpForm = () => {
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [dob, setDob] = useState<Date | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [acceptProccessing, setAcceptProccessing] = useState<boolean>(false);
+  const [document, setDocument] = useState("");
+  const [isCreateDisabled, setIsCreateDisabled] = useState(true);
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    getRegistrationDocument()
+      .then((res) => {
+        setDocument(res.data.pdf);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (selectedGender && acceptProccessing && dob) {
+      setIsCreateDisabled(false);
+      return;
+    }
+    setIsCreateDisabled(true);
+    return;
+  }, [selectedGender, dob, acceptProccessing]);
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     if (!dob) {
@@ -119,7 +145,23 @@ export const SignUpForm = () => {
         />
         {error && <span className={styles.error}>{error}</span>}
       </div>
-      <ParallelogramButton type="submit">Создать аккаунт</ParallelogramButton>
+      <div className={styles.documents}>
+        <Checkbox
+          checked={acceptProccessing}
+          onChange={(event) =>
+            setAcceptProccessing(event.currentTarget.checked)
+          }
+          label=""
+          style={{ color: "var(--main-white)" }}
+        />
+        <p>
+          Согласен с
+          <a href={`${API}${document}`}>пользовательским соглашением</a>
+        </p>
+      </div>
+      <ParallelogramButton type="submit" disabled={isCreateDisabled}>
+        Создать аккаунт
+      </ParallelogramButton>
     </form>
   );
 };

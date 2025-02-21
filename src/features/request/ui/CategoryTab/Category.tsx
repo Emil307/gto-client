@@ -10,6 +10,7 @@ interface CategoryProps {
   setGuideType: (type: "video" | "iframe" | null) => void;
   setGuide: (guide: string) => void;
   setRules: (rules: string) => void;
+  setDocument: (document: string) => void;
 }
 
 export const Category: React.FC<CategoryProps> = ({
@@ -18,6 +19,7 @@ export const Category: React.FC<CategoryProps> = ({
   setGuideType,
   setGuide,
   setRules,
+  setDocument,
 }) => {
   const [isShowingSubcategories, setIsShowingSubcategories] = useState(false);
 
@@ -31,6 +33,7 @@ export const Category: React.FC<CategoryProps> = ({
         setGuideType(res.data.type);
         setGuide(res.data.guide);
         setRules(res.data.rules);
+        setDocument(res.data.pdf);
 
         requestState.setCategory(category);
       })

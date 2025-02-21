@@ -15,6 +15,9 @@ export const CategoryTab = observer(() => {
   const [guide, setGuide] = useState("");
   const [guideType, setGuideType] = useState<"video" | "iframe" | null>(null);
   const [rules, setRules] = useState("");
+  const [document, setDocument] = useState("");
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     handleGetCategories();
@@ -53,6 +56,7 @@ export const CategoryTab = observer(() => {
             setGuideType={setGuideType}
             setGuide={setGuide}
             setRules={setRules}
+            setDocument={setDocument}
             key={category.id}
           />
         ))}
@@ -84,6 +88,9 @@ export const CategoryTab = observer(() => {
                   ></iframe>
                 )}
               </>
+            )}
+            {document && (
+              <a href={`${API}${document}`}>Подробная PDF-инструкция</a>
             )}
             {rules && (
               <>
