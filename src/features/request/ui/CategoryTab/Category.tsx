@@ -9,7 +9,7 @@ interface CategoryProps {
   setAgeCategory: (category: string) => void;
   setGuideType: (type: "video" | "iframe" | null) => void;
   setGuide: (guide: string) => void;
-  setRules: (rules: string) => void;
+  setRules: (rules: []) => void;
   setDocument: (document: string) => void;
 }
 
@@ -32,7 +32,7 @@ export const Category: React.FC<CategoryProps> = ({
         setAgeCategory(res.data.age_category);
         setGuideType(res.data.type);
         setGuide(res.data.guide);
-        setRules(res.data.rules);
+        setRules(res.data.rules_json);
         setDocument(res.data.pdf);
 
         requestState.setCategory(category);
