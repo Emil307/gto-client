@@ -49,6 +49,7 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
           width={"100%"}
           autoPlay={false}
           controls
+          playsInline
           preload="auto"
         ></video>
       )}

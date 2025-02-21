@@ -209,7 +209,9 @@ export const InfoTab = observer(() => {
           id="surname"
           required
           name="surname"
-          label="Фамилия"
+          label={
+            requestState.isChild ? "Фамилия несовершеннолетнего" : "Фамилия"
+          }
           placeholder="Иванов"
           type="text"
           value={surname}
@@ -220,7 +222,7 @@ export const InfoTab = observer(() => {
             id="name"
             required
             name="name"
-            label="Имя"
+            label={requestState.isChild ? "Имя несовершеннолетнего" : "Имя"}
             placeholder="Иван"
             type="text"
             value={name}
@@ -230,7 +232,9 @@ export const InfoTab = observer(() => {
             id="patronymic"
             required
             name="patronymic"
-            label="Отчество"
+            label={
+              requestState.isChild ? "Отчество несовершеннолетнего" : "Отчество"
+            }
             placeholder="Иванович"
             type="text"
             value={patronymic}
@@ -259,14 +263,14 @@ export const InfoTab = observer(() => {
         />
         <FlushedSelect
           data={genders}
-          label="Пол"
+          label={requestState.isChild ? "Пол несовершеннолетнего" : "Пол"}
           value={selectedGender}
           onChange={setSelectedGender}
           placeholder="Выберите пол"
         />
         <FlushedSelect
           data={regions}
-          label="Регион"
+          label={requestState.isChild ? "Регион несовершеннолетнего" : "Регион"}
           value={selectedRegion}
           onChange={setSelectedRegion}
           placeholder="Выберите регион"
@@ -282,7 +286,7 @@ export const InfoTab = observer(() => {
           />
           <a href={`${API}${requestState.isChild ? childDocument : document}`}>
             Соглашаюсь с Правилами обработки персональных данных, фото- и
-            видео-изображений
+            видео-изображений {requestState.isChild && "несовершеннолетнего"}
           </a>
         </div>
         <ParallelogramButton
