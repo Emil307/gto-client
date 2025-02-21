@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
 import { Button } from "@/src/shared";
-import { getCateriesDocument } from "@/src/entities/documnets";
+import {
+  getCateriesDocument,
+  getParticipationDocument,
+} from "@/src/entities/documnets";
 
 export const Event: React.FC = () => {
-  const [document, setDocument] = useState("");
+  const [categoriesDocument, setCategoriesDocument] = useState("");
+  const [positionDocument, setPositionDocument] = useState("");
 
   const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -14,9 +18,16 @@ export const Event: React.FC = () => {
   }, []);
 
   function handleGetDocuments() {
+    getParticipationDocument()
+      .then((res) => {
+        setPositionDocument(res.data.pdf);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     getCateriesDocument()
       .then((res) => {
-        setDocument(res.data.pdf);
+        setCategoriesDocument(res.data.pdf);
       })
       .catch((e) => {
         console.log(e);
@@ -40,10 +51,12 @@ export const Event: React.FC = () => {
             <h3 className={styles.title}>Народные Игры ГТО. Сезон 2</h3>
           </div>
           <div className={styles.buttons}>
-            <a href={`${API}${document}`}>
+            <a href={`${API}${positionDocument}`}>
               <Button>Положение</Button>
             </a>
-            <Button>Категории</Button>
+            <a href={`${API}${categoriesDocument}`}>
+              <Button>Категории</Button>
+            </a>
           </div>
         </div>
       </div>
