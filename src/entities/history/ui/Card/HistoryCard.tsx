@@ -43,16 +43,15 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
         </div>
       </div>
 
-      {isShowingVideo && (
-        <video
-          loop
-          autoPlay
-          controls
-          width={"100%"}
-          height={"100%"}
-          src={`${API}${history.video_file}`}
-        ></video>
-      )}
+      <video
+        playsInline
+        muted
+        controls
+        width={"100%"}
+        height={"100%"}
+        src={`${API}${history.video_file}`}
+        type="video/mp4"
+      ></video>
 
       <button className={styles.button} onClick={() => setIsShowingVideo(true)}>
         Открыть видео заявки
