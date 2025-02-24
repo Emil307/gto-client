@@ -1,13 +1,13 @@
 FROM node:lts as dependencies
 WORKDIR /front
 COPY package.json ./
-RUN npm i --force
+RUN yarn
 
 FROM node:lts as builder
 WORKDIR /front
 COPY . .
 COPY --from=dependencies /front/node_modules ./node_modules
-RUN npm run build
+RUN yarn build
 
 FROM node:lts as runner
 WORKDIR /front
@@ -19,4 +19,4 @@ COPY --from=builder /front/.next ./.next
 COPY --from=builder /front/node_modules ./node_modules
 
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["yarn", "start"]

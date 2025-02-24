@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { IHistory } from "../../types";
 import styles from "./styles.module.scss";
 import dayjs from "dayjs";
