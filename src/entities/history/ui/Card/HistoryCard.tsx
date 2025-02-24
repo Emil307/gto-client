@@ -2,6 +2,7 @@ import React from "react";
 import { IHistory } from "../../types";
 import styles from "./styles.module.scss";
 import dayjs from "dayjs";
+import ReactPlayer from "react-player";
 
 interface IHistoryCardProps {
   history: IHistory;
@@ -43,9 +44,7 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
         </div>
       </div>
 
-      <video autoPlay={false} controls>
-        <source src={`${API}${history.video_file}`} type="video/mp4" />
-      </video>
+      <ReactPlayer url={`${API}${history.video_file}`} />
 
       {/* <button className={styles.button} onClick={() => setIsShowingVideo(true)}>
         Открыть видео заявки
