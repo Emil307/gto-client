@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev & npx next-video sync -w",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,11 +21,11 @@
     "mobx": "^6.13.5",
     "mobx-react-lite": "^4.0.7",
     "next": "15.0.1",
+    "next-video": "^2.1.0",
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-hook-form": "^7.53.1",
     "react-hot-toast": "^2.4.1",
-    "react-player": "^2.16.0",
     "sass": "^1.80.4"
   },
   "devDependencies": {
