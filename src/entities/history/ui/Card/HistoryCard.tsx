@@ -8,7 +8,7 @@ interface IHistoryCardProps {
 }
 
 export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
-  const [isShowingVideo, setIsShowingVideo] = useState(false);
+  // const [isShowingVideo, setIsShowingVideo] = useState(false);
 
   const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -43,15 +43,13 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
         </div>
       </div>
 
-      {isShowingVideo && (
-        <video playsInline muted controls>
-          <source src={`${API}${history.video_file}`} type="video/mp4" />
-        </video>
-      )}
+      <video playsInline muted controls>
+        <source src={`${API}${history.video_file}`} type="video/mp4" />
+      </video>
 
-      <button className={styles.button} onClick={() => setIsShowingVideo(true)}>
+      {/* <button className={styles.button} onClick={() => setIsShowingVideo(true)}>
         Открыть видео заявки
-      </button>
+      </button> */}
     </div>
   );
 };
