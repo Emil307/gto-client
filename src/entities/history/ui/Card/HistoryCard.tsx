@@ -43,7 +43,7 @@ export const HistoryCard: React.FC<IHistoryCardProps> = ({ history }) => {
         </div>
       </div>
 
-      <video playsInline muted controls>
+      <video autoPlay={false} controls>
         <source src={`${API}${history.video_file}`} type="video/mp4" />
       </video>
 
