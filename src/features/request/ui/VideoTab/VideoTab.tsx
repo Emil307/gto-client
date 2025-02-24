@@ -86,10 +86,6 @@ export const VideoTab = observer(() => {
   }
 
   function handleSendRequest() {
-    if (Number(minutes) * 60 + Number(seconds) <= 0) {
-      return;
-    }
-
     setIsLoading(true);
     setIsLoadingModalActive(true);
 
