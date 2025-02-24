@@ -95,7 +95,12 @@ export const CategoryTab = observer(() => {
               </>
             )}
             {document && (
-              <a href={`${API}${document}`}>Подробная PDF-инструкция</a>
+              <a
+                style={{ textDecoration: "underline" }}
+                href={`${API}${document}`}
+              >
+                Подробная PDF-инструкция
+              </a>
             )}
             {rules && (
               <>
