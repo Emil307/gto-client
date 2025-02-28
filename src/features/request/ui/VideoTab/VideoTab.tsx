@@ -86,6 +86,18 @@ export const VideoTab = observer(() => {
   }
 
   function handleSendRequest() {
+    if (requestState.category?.is_needed_time) {
+      if (minutes === "00" && seconds === "00") {
+        return;
+      }
+    }
+
+    if (requestState.category?.is_needed_exercise) {
+      if (!exercises) {
+        return;
+      }
+    }
+
     setIsLoading(true);
     setIsLoadingModalActive(true);
 
@@ -102,7 +114,7 @@ export const VideoTab = observer(() => {
       phone: String(requestState.infoData?.phone),
       result_minutes: Number(minutes),
       result_seconds: Number(seconds),
-      result_exercise: Number(exercises) ? Number(exercises) : null,
+      result_exercise: Number(exercises),
       blog_link: link ? link : null,
     };
 
@@ -347,6 +359,7 @@ export const VideoTab = observer(() => {
                   name="exercise"
                   type="number"
                   placeholder="20"
+                  min={0}
                   label="Укажите количество выполнений упражнения"
                   value={exercises}
                   onChange={(e) => setExercises(e.target.value)}
