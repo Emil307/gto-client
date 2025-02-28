@@ -26,7 +26,7 @@ interface IFormFileds {
   surname: string;
   patronymic: string;
   region: string;
-  city: string;
+  city: string | null;
   age: string;
 }
 
@@ -51,6 +51,8 @@ export const EditProfileForm: React.FC = observer(() => {
   const [selectedCity, setSelectedCity] = useState<string | null>(
     userState.user?.city as string
   );
+
+  console.log(userState.user?.city);
 
   useEffect(() => {
     getMe()
@@ -117,7 +119,7 @@ export const EditProfileForm: React.FC = observer(() => {
 
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     data.region = String(selectedRegion);
-    data.city = String(selectedCity);
+    data.city = selectedCity;
 
     const editedProfile: editProfileDto = {
       name: data.name ? data.name : userState.user?.name,
@@ -130,7 +132,7 @@ export const EditProfileForm: React.FC = observer(() => {
         ? new Date(String(dob))
         : new Date(String(userState.user?.birthDate)),
       region: selectedRegion ? String(selectedRegion) : userState.user?.region,
-      city: selectedCity ? String(selectedCity) : "",
+      city: selectedCity ? String(selectedCity) : null,
     };
 
     editProfile(editedProfile)
@@ -142,6 +144,8 @@ export const EditProfileForm: React.FC = observer(() => {
         console.log(e);
       });
   };
+
+  console.log(selectedCity);
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>

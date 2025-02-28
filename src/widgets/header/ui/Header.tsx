@@ -11,9 +11,14 @@ import React from "react";
 interface IHeaderProps {
   title?: string;
   confirmClose?: boolean;
+  backButtonLink?: string;
 }
 
-export const Header: React.FC<IHeaderProps> = ({ title, confirmClose }) => {
+export const Header: React.FC<IHeaderProps> = ({
+  title,
+  confirmClose,
+  backButtonLink,
+}) => {
   const router = useRouter();
 
   const handleClose = () => closeModal("DELETE_ADVANTAGE");
@@ -32,7 +37,12 @@ export const Header: React.FC<IHeaderProps> = ({ title, confirmClose }) => {
       handleConfirmClose();
       return;
     }
-    router.back();
+    if (backButtonLink) {
+      router.push(backButtonLink);
+    }
+    if (!backButtonLink) {
+      router.back();
+    }
   }
 
   return (

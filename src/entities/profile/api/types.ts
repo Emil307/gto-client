@@ -5,6 +5,6 @@ export interface editProfileDto {
   sex?: string;
   birthDate?: string | Date;
   region?: string;
-  city?: string;
+  city?: string | null;
   phone?: string;
 }

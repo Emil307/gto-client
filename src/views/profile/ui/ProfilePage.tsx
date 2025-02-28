@@ -4,7 +4,7 @@ import { Profile } from "@/src/widgets/profile";
 export default function Page() {
   return (
     <>
-      <Header title="Профиль" />
+      <Header title="Профиль" backButtonLink="/lk" />
       <Profile />
     </>
   );
