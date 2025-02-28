@@ -132,7 +132,11 @@ export const CategoryTab = observer(() => {
       <div className={styles.creditsWrapper}>
         <ParallelogramButton
           onClick={() => requestState.setActiveTab("video")}
-          disabled={Boolean(!requestState.category)}
+          disabled={Boolean(
+            !requestState.category || requestState.category?.is_needed_blog
+              ? !requestState.blogLink
+              : false
+          )}
         >
           Далее
         </ParallelogramButton>
