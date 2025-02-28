@@ -280,7 +280,10 @@ export const InfoTab = observer(() => {
             label=""
             style={{ color: "var(--main-white)" }}
           />
-          <a href={`${API}${requestState.isChild ? childDocument : document}`}>
+          <a
+            target="_blank"
+            href={`${API}${requestState.isChild ? childDocument : document}`}
+          >
             Соглашаюсь с Правилами обработки персональных данных, фото- и
             видео-изображений {requestState.isChild && "несовершеннолетнего"}
           </a>

@@ -51,10 +51,10 @@ export const Event: React.FC = () => {
             <h3 className={styles.title}>Народные Игры ГТО. Сезон 2</h3>
           </div>
           <div className={styles.buttons}>
-            <a href={`${API}${positionDocument}`}>
+            <a target="_blank" href={`${API}${positionDocument}`}>
               <Button>Положение</Button>
             </a>
-            <a href={`${API}${categoriesDocument}`}>
+            <a target="_blank" href={`${API}${categoriesDocument}`}>
               <Button>Категории</Button>
             </a>
           </div>

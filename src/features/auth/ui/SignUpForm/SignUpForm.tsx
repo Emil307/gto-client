@@ -155,7 +155,7 @@ export const SignUpForm = () => {
           style={{ color: "var(--main-white)" }}
         />
         <p>
-          <a href={`${API}${document}`}>
+          <a target="_blank" href={`${API}${document}`}>
             Согласен с пользовательским соглашением
           </a>
         </p>

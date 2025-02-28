@@ -113,6 +113,7 @@ export const CategoryTab = observer(() => {
               <a
                 style={{ textDecoration: "underline" }}
                 href={`${API}${document}`}
+                target="_blank"
               >
                 Подробная PDF-инструкция
               </a>
