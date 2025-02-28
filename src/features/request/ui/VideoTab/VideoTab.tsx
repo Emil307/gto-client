@@ -235,6 +235,19 @@ export const VideoTab = observer(() => {
               />
             </button>
             {status === "idle" && (
+              <div className={styles.horizanotalWrapper}>
+                <p className={styles.modalText}>
+                  Переверните смартфон горизонтально.
+                </p>
+                <p className={styles.modalText}>
+                  Начните запись подготовительного этапа.
+                </p>
+                <p className={styles.modalText}>
+                  После нажмите на таймер и выполняйте упражнения.
+                </p>
+              </div>
+            )}
+            {status === "idle" && (
               <video
                 muted
                 ref={previewVideoRef}
