@@ -219,6 +219,21 @@ export const VideoTab = observer(() => {
       {requestState.videoStatus === "recording" && (
         <>
           <div className={styles.recordingContainer}>
+            <button
+              className={styles.backButton}
+              onClick={() => {
+                stopRecording();
+                requestState.setVideoStatus("record");
+              }}
+            >
+              <Image
+                src="/icons/arrow-left.svg"
+                width={24}
+                height={24}
+                priority={true}
+                alt="go back"
+              />
+            </button>
             {status === "idle" && (
               <video
                 muted
