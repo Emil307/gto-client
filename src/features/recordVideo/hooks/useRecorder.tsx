@@ -37,9 +37,7 @@ export const useRecorder = () => {
         });
         previewVideoRef.current.srcObject = previewStream;
 
-        const mediaRecorder = new MediaRecorder(previewStream, {
-          mimeType: "video/mp4;codecs=h264",
-        });
+        const mediaRecorder = new MediaRecorder(previewStream);
 
         mediaRecorder.onstart = () => {
           if (previewVideoRef.current) {
