@@ -197,7 +197,7 @@ export const InfoTab = observer(() => {
       {requestState.isChild && (
         <DatePickerInput
           placeholder="Не указана"
-          label="Дата рождения ребенка"
+          label="Дата рождения несовершеннолетнего"
           classNames={datepickerStyles}
           value={dob}
           onChange={setDob}
@@ -209,9 +209,7 @@ export const InfoTab = observer(() => {
           id="surname"
           required
           name="surname"
-          label={
-            requestState.isChild ? "Фамилия несовершеннолетнего" : "Фамилия"
-          }
+          label={requestState.isChild ? "Фамилия" : "Фамилия"}
           placeholder="Иванов"
           type="text"
           value={surname}
@@ -222,7 +220,7 @@ export const InfoTab = observer(() => {
             id="name"
             required
             name="name"
-            label={requestState.isChild ? "Имя несовершеннолетнего" : "Имя"}
+            label={requestState.isChild ? "Имя" : "Имя"}
             placeholder="Иван"
             type="text"
             value={name}
@@ -232,9 +230,7 @@ export const InfoTab = observer(() => {
             id="patronymic"
             required
             name="patronymic"
-            label={
-              requestState.isChild ? "Отчество несовершеннолетнего" : "Отчество"
-            }
+            label={requestState.isChild ? "Отчество" : "Отчество"}
             placeholder="Иванович"
             type="text"
             value={patronymic}
