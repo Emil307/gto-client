@@ -21,6 +21,7 @@ class RequestState {
   isChild: boolean = false;
   category: ICategory | null = null;
   videoStatus: TVideoStatus = "record";
+  blogLink: string = "";
 
   infoData: IInfoData | null = null;
 
@@ -46,6 +47,10 @@ class RequestState {
 
   setInfoData(data: IInfoData | null) {
     this.infoData = data;
+  }
+
+  setBlogLink(link: string) {
+    this.blogLink = link;
   }
 }
 

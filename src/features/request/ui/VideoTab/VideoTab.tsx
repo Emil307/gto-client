@@ -34,7 +34,6 @@ export const VideoTab = observer(() => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [seconds, setSeconds] = useState("00");
   const [minutes, setMinutes] = useState("00");
-  const [link, setLink] = useState("");
   const [exercises, setExercises] = useState("");
 
   const CHUNK_SIZE = 1024 * 1024 * 5;
@@ -86,6 +85,18 @@ export const VideoTab = observer(() => {
   }
 
   function handleSendRequest() {
+    if (requestState.category?.is_needed_time) {
+      if (minutes === "00" && seconds === "00") {
+        return;
+      }
+    }
+
+    if (requestState.category?.is_needed_exercise) {
+      if (!exercises) {
+        return;
+      }
+    }
+
     setIsLoading(true);
     setIsLoadingModalActive(true);
 
@@ -102,8 +113,8 @@ export const VideoTab = observer(() => {
       phone: String(requestState.infoData?.phone),
       result_minutes: Number(minutes),
       result_seconds: Number(seconds),
-      result_exercise: Number(exercises) ? Number(exercises) : null,
-      blog_link: link ? link : null,
+      result_exercise: Number(exercises),
+      blog_link: requestState.blogLink ? requestState.blogLink : null,
     };
 
     sendRequest(newRequest)
@@ -208,6 +219,34 @@ export const VideoTab = observer(() => {
       {requestState.videoStatus === "recording" && (
         <>
           <div className={styles.recordingContainer}>
+            <button
+              className={styles.backButton}
+              onClick={() => {
+                stopRecording();
+                requestState.setVideoStatus("record");
+              }}
+            >
+              <Image
+                src="/icons/arrow-left.svg"
+                width={24}
+                height={24}
+                priority={true}
+                alt="go back"
+              />
+            </button>
+            {status === "idle" && (
+              <div className={styles.horizanotalWrapper}>
+                <p className={styles.modalText}>
+                  Переверните смартфон горизонтально.
+                </p>
+                <p className={styles.modalText}>
+                  Начните запись подготовительного этапа.
+                </p>
+                <p className={styles.modalText}>
+                  После нажмите на таймер и выполняйте упражнения.
+                </p>
+              </div>
+            )}
             {status === "idle" && (
               <video
                 muted
@@ -347,23 +386,10 @@ export const VideoTab = observer(() => {
                   name="exercise"
                   type="number"
                   placeholder="20"
+                  min={0}
                   label="Укажите количество выполнений упражнения"
                   value={exercises}
                   onChange={(e) => setExercises(e.target.value)}
-                />
-              </div>
-            )}
-            {requestState.category?.is_needed_blog && (
-              <div className={styles.secondsmer}>
-                <FlushedInput
-                  id="link"
-                  required
-                  name="link"
-                  type="text"
-                  placeholder="https://blog.ru"
-                  label="Вставьте ссылку на ваш блог"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
                 />
               </div>
             )}

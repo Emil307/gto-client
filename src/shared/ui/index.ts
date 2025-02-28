@@ -3,3 +3,4 @@ export * from "./Loader";
 export * from "./SearchInput";
 export * from "./Tabs";
 export * from "./FlushedSelect";
+export * from "./flushedInput";

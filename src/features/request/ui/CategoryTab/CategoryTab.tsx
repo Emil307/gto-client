@@ -8,6 +8,7 @@ import { observer } from "mobx-react-lite";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import { getMyCategories, ICategory } from "@/src/entities/categories";
 import { Category } from "./Category";
+import { FlushedInput } from "@/src/shared";
 
 interface IRule {
   id: number;
@@ -66,6 +67,20 @@ export const CategoryTab = observer(() => {
           />
         ))}
       </div>
+      {requestState.category?.is_needed_blog && (
+        <div className={styles.blog}>
+          <FlushedInput
+            id="link"
+            required
+            name="link"
+            type="text"
+            placeholder="https://blog.ru"
+            label="Вставьте ссылку на ваш блог"
+            value={requestState.blogLink}
+            onChange={(e) => requestState.setBlogLink(e.target.value)}
+          />
+        </div>
+      )}
       {!requestState.category && (
         <div style={{ height: "110px", width: "100%" }}></div>
       )}
@@ -117,7 +132,11 @@ export const CategoryTab = observer(() => {
       <div className={styles.creditsWrapper}>
         <ParallelogramButton
           onClick={() => requestState.setActiveTab("video")}
-          disabled={Boolean(!requestState.category)}
+          disabled={Boolean(
+            !requestState.category || requestState.category?.is_needed_blog
+              ? !requestState.blogLink
+              : false
+          )}
         >
           Далее
         </ParallelogramButton>
