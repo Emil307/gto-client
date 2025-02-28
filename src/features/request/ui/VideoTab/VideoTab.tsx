@@ -34,7 +34,6 @@ export const VideoTab = observer(() => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [seconds, setSeconds] = useState("00");
   const [minutes, setMinutes] = useState("00");
-  const [link, setLink] = useState("");
   const [exercises, setExercises] = useState("");
 
   const CHUNK_SIZE = 1024 * 1024 * 5;
@@ -115,7 +114,7 @@ export const VideoTab = observer(() => {
       result_minutes: Number(minutes),
       result_seconds: Number(seconds),
       result_exercise: Number(exercises),
-      blog_link: link ? link : null,
+      blog_link: requestState.blogLink ? requestState.blogLink : null,
     };
 
     sendRequest(newRequest)
@@ -363,20 +362,6 @@ export const VideoTab = observer(() => {
                   label="Укажите количество выполнений упражнения"
                   value={exercises}
                   onChange={(e) => setExercises(e.target.value)}
-                />
-              </div>
-            )}
-            {requestState.category?.is_needed_blog && (
-              <div className={styles.secondsmer}>
-                <FlushedInput
-                  id="link"
-                  required
-                  name="link"
-                  type="text"
-                  placeholder="https://blog.ru"
-                  label="Вставьте ссылку на ваш блог"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
                 />
               </div>
             )}
