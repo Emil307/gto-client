@@ -54,6 +54,8 @@ export const EditProfileForm: React.FC = observer(() => {
   );
   const [fileBin, setFileBin] = useState<any>("");
   const [files, setFiles] = useState<any>([]);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
+
   useEffect(() => {
     getMe()
       .then((res) => {
@@ -128,7 +130,10 @@ export const EditProfileForm: React.FC = observer(() => {
 
     reader.onload = function () {
       setFileBin(reader.result);
+      console.log(reader.result);
       console.log(fileBin);
+      const url = URL.createObjectURL(files[0]);
+      setFileUrl(url);
     };
 
     reader.onerror = function () {
@@ -184,7 +189,13 @@ export const EditProfileForm: React.FC = observer(() => {
           onChange={(event) => fileUploadHandler(event)}
           accept={".png, .jpg, .jpeg"}
         />
-        <label htmlFor="fileInput" className={styles.uploadAvatar}></label>
+        <label
+          style={{
+            backgroundImage: fileUrl ? `url(${fileUrl})` : "",
+          }}
+          htmlFor="fileInput"
+          className={styles.uploadAvatar}
+        ></label>
         <FlushedInput
           id="surname"
           register={register}
