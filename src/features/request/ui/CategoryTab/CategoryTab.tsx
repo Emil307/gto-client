@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/styles.module.scss";
 import requestState from "@/src/entities/request/store/requestState";
@@ -44,13 +43,6 @@ export const CategoryTab = observer(() => {
   return (
     <div className={styles.categoryTab}>
       <div className={styles.ageCategory}>
-        <Image
-          priority={true}
-          src="/icons/info.svg"
-          width={24}
-          height={24}
-          alt="info"
-        />
         <p>Ваша возрастная категория: {ageCategory}</p>
       </div>
       <div className={styles.categories}>
