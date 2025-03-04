@@ -160,18 +160,24 @@ export const EditProfileForm: React.FC = observer(() => {
     };
 
     editProfile(editedProfile)
-      .then(() => {
-        uploadAvatar(files[0])
-          .then((res) => {
-            userState.setUser(res.data.user);
-            router.push("/profile");
-          })
-          .catch((e: any) => {
-            console.log(e);
-          });
-        // .finally(() => {
-        //   setIsAwait(false);
-        // });
+      .then((res) => {
+        if (files.length > 0) {
+          uploadAvatar(files[0])
+            .then((res) => {
+              userState.setUser(res.data.user);
+              router.push("/profile");
+            })
+            .catch((e: any) => {
+              console.log(e);
+            });
+          // .finally(() => {
+          //   setIsAwait(false);
+          // });
+          return;
+        }
+
+        userState.setUser(res.data);
+        router.push("/profile");
       })
       .catch((e) => {
         console.log(e);
