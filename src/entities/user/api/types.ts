@@ -11,6 +11,7 @@ export interface IUser {
   createdAt: string;
   age: number;
   phone: string;
+  avatar_url: string;
 }
 
 export interface efitProfileDto {

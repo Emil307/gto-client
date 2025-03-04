@@ -49,7 +49,7 @@ export const ProfileInfo: React.FC = observer(() => {
       <div className={styles.params}>
         <Image
           priority={true}
-          src="/img/avatar.png"
+          src={user?.avatar_url ? user.avatar_url : "/img/avatar.png"}
           width={124}
           height={124}
           className={styles.avatar}
