@@ -100,7 +100,11 @@ export const CategoryTab = observer(() => {
             )}
             {document && (
               <a
-                style={{ textDecoration: "underline" }}
+                style={{
+                  textDecoration: "underline",
+                  color: "var(--main-blue)",
+                  fontWeight: "700",
+                }}
                 href={`${API}${document}`}
                 target="_blank"
               >
