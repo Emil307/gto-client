@@ -1,18 +1,17 @@
+"use client";
+
 import React from "react";
-import { IHistory } from "../../types";
 import { HistoryCard } from "../Card";
 import styles from "./styles.module.scss";
+import historyState from "../../store/historyState";
+import { observer } from "mobx-react-lite";
 
-interface IHistoryListProps {
-  historyList: IHistory[];
-}
-
-export const List: React.FC<IHistoryListProps> = ({ historyList }) => {
+export const List: React.FC = observer(() => {
   return (
     <div className={styles.container}>
-      {historyList.map((history) => (
+      {historyState.history.map((history) => (
         <HistoryCard history={history} key={history.id} />
       ))}
     </div>
   );
-};
+});

@@ -32,3 +32,7 @@ export async function sendChunk(
     file: blob,
   });
 }
+
+export async function deleteRequest(requestId: number): Promise<AxiosResponse> {
+  return await $api.delete(`/api/applications/delete?request_id=${requestId}`);
+}
