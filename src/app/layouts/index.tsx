@@ -12,7 +12,7 @@ import { DatesProvider } from "@mantine/dates";
 import "dayjs/locale/ru";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
-import { addToHomeScreen, requestFullscreen } from "@telegram-apps/sdk";
+import { addToHomeScreen } from "@telegram-apps/sdk";
 import { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
 
