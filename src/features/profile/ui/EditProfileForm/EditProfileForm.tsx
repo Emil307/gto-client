@@ -182,7 +182,7 @@ export const EditProfileForm: React.FC = observer(() => {
           id="fileInput"
           type="file"
           onChange={(event) => fileUploadHandler(event)}
-          accept={".png, .jpg, .jpeg, .webp"}
+          accept={".png, .jpg, .jpeg"}
         />
         <label htmlFor="fileInput" className={styles.uploadAvatar}></label>
         <FlushedInput
