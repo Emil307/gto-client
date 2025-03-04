@@ -6,10 +6,12 @@ export async function getCategories(): Promise<AxiosResponse> {
 }
 
 export async function getMyCategories(
-  birthDate: string | null
+  birthDate: string | null,
+  isChild: boolean
 ): Promise<AxiosResponse> {
   return await $api.post(`/api/applications/categories/me`, {
     birthDate: birthDate,
+    is_child: isChild,
   });
 }
 
