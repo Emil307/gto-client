@@ -13,6 +13,7 @@ import "dayjs/locale/ru";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { addToHomeScreen } from "@telegram-apps/sdk";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,6 +28,14 @@ export function RootLayout({
   if (addToHomeScreen.isAvailable()) {
     addToHomeScreen();
   }
+
+  useEffect(() => {
+    // Проверяем, доступен ли Telegram Web App
+    if (window.Telegram && window.Telegram.WebApp) {
+      // Расширяем приложение на весь экран
+      window.Telegram.WebApp.expand();
+    }
+  }, []);
 
   return (
     <html lang="ru" suppressHydrationWarning>
