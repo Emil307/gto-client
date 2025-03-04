@@ -200,6 +200,13 @@
 
 .backButton {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background-color: var(--main-bg);
   top: 1.25rem;
   left: 1.25rem;
   z-index: 100;
