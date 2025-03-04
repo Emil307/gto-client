@@ -73,9 +73,6 @@ export const CategoryTab = observer(() => {
           />
         </div>
       )}
-      {!requestState.category && (
-        <div style={{ height: "110px", width: "100%" }}></div>
-      )}
       {requestState.category && (
         <>
           <div className={styles.rules}>
@@ -119,7 +116,6 @@ export const CategoryTab = observer(() => {
               </>
             )}
           </div>
-          <div style={{ height: "90px", width: "100%" }}></div>
         </>
       )}
       <div className={styles.creditsWrapper}>
