@@ -158,7 +158,7 @@ export const EditProfileForm: React.FC = observer(() => {
       .then(() => {
         uploadAvatar(files[0])
           .then((res) => {
-            userState.setUser(res.data);
+            userState.setUser(res.data.user);
             router.push("/profile");
           })
           .catch((e: any) => {
