@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
 import styles from "../../styles/styles.module.scss";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import { useRouter } from "next/navigation";
@@ -47,11 +46,8 @@ export const ProfileInfo: React.FC = observer(() => {
   return (
     <div className={styles.container}>
       <div className={styles.params}>
-        <Image
-          priority={true}
+        <img
           src={user?.avatar_url ? user.avatar_url : "/img/avatar.png"}
-          width={124}
-          height={124}
           className={styles.avatar}
           alt="avatar"
         />
