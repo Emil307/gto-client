@@ -23,6 +23,7 @@ export const FlushedSelect: React.FC<IFlushedInputProps> = ({
       placeholder={props.placeholder}
       data={props.data}
       classNames={styles}
+      {...props}
       rightSection={
         <Image
           src={"/icons/arrow-down.svg"}
