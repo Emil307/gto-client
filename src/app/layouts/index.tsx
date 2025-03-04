@@ -14,6 +14,7 @@ import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { addToHomeScreen, requestFullscreen } from "@telegram-apps/sdk";
 import { useEffect } from "react";
+import WebApp from "@twa-dev/sdk";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,11 +31,12 @@ export function RootLayout({
   }
 
   useEffect(() => {
-    requestFullscreen();
-    // Проверяем, доступен ли Telegram Web App
-    if (window.Telegram && window.Telegram.WebApp) {
-      // Расширяем приложение на весь экран
-      window.Telegram.WebApp.expand();
+    if (typeof window !== "undefined") {
+      // Проверяем, доступен ли Telegram Web App
+      if (WebApp) {
+        // Расширяем приложение на весь экран
+        WebApp.expand();
+      }
     }
   }, []);
 
