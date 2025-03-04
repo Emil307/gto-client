@@ -147,12 +147,14 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
         placeholder="Категория"
         value={selectedCategory}
         onChange={setSelectedCategory}
+        searchable
       />
       <FlushedSelect
         data={districts}
         placeholder="Округ"
         value={selectedDistrict}
         onChange={setSelectedDistrict}
+        searchable
       />
       <FlushedSelect
         data={regions}
@@ -165,6 +167,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
         placeholder="Город"
         value={selectedCity}
         onChange={setSelectedCity}
+        searchable
       />
       <div className={styles.modalButtons}>
         <ParallelogramButton onClick={handleSave}>

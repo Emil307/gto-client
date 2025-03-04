@@ -270,6 +270,7 @@ export const InfoTab = observer(() => {
           value={selectedRegion}
           onChange={setSelectedRegion}
           placeholder="Выберите регион"
+          searchable
         />
         <div className={styles.documents}>
           <Checkbox
