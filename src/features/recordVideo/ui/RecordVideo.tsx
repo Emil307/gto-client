@@ -189,8 +189,8 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
           </div>
         )}
         <div className={styles.startLater}>
-          {status === "idle" && (
-            <button onClick={handleChangeTimer} disabled={status !== "idle"}>
+          {status === "recording" && (
+            <button onClick={handleChangeTimer}>
               <Image
                 src="/icons/timer.svg"
                 width={24}

@@ -54,3 +54,36 @@
 
   color: var(--main-white);
 }
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(16px);
+}
+
+.modalContent {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem;
+  background-color: var(--main-bg);
+}
+
+.modalText {
+  font-family: Rubik, Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 120%;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+}

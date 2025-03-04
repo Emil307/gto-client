@@ -1,6 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import { ICategory } from "../../categories";
 
+interface IRule {
+  id: number;
+  p: string;
+}
+
 type TTab = "info" | "category" | "video";
 type TVideoStatus = "record" | "recording" | "watch";
 
@@ -22,6 +27,10 @@ class RequestState {
   category: ICategory | null = null;
   videoStatus: TVideoStatus = "record";
   blogLink: string = "";
+  categoryDocument: string = "";
+  rules: IRule[] = [];
+  guideType: "video" | "iframe" | null = null;
+  guide: string = "";
 
   infoData: IInfoData | null = null;
 
@@ -51,6 +60,22 @@ class RequestState {
 
   setBlogLink(link: string) {
     this.blogLink = link;
+  }
+
+  setCategoryDocument(document: string) {
+    this.categoryDocument = document;
+  }
+
+  setRules(rules: IRule[]) {
+    this.rules = rules;
+  }
+
+  setGuideType(type: "video" | "iframe") {
+    this.guideType = type;
+  }
+
+  setGuide(guide: string) {
+    this.guide = guide;
   }
 }
 

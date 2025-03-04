@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import styles from "../../styles/styles.module.scss";
 import requestState from "@/src/entities/request/store/requestState";
@@ -10,18 +9,9 @@ import { getMyCategories, ICategory } from "@/src/entities/categories";
 import { Category } from "./Category";
 import { FlushedInput } from "@/src/shared";
 
-interface IRule {
-  id: number;
-  p: string;
-}
-
 export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [guide, setGuide] = useState("");
-  const [guideType, setGuideType] = useState<"video" | "iframe" | null>(null);
-  const [rules, setRules] = useState<IRule[]>([]);
-  const [document, setDocument] = useState("");
 
   const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -44,13 +34,6 @@ export const CategoryTab = observer(() => {
   return (
     <div className={styles.categoryTab}>
       <div className={styles.ageCategory}>
-        <Image
-          priority={true}
-          src="/icons/info.svg"
-          width={24}
-          height={24}
-          alt="info"
-        />
         <p>Ваша возрастная категория: {ageCategory}</p>
       </div>
       <div className={styles.categories}>
@@ -59,10 +42,6 @@ export const CategoryTab = observer(() => {
           <Category
             category={category}
             setAgeCategory={setAgeCategory}
-            setGuideType={setGuideType}
-            setGuide={setGuide}
-            setRules={setRules}
-            setDocument={setDocument}
             key={category.id}
           />
         ))}
@@ -81,28 +60,25 @@ export const CategoryTab = observer(() => {
           />
         </div>
       )}
-      {!requestState.category && (
-        <div style={{ height: "110px", width: "100%" }}></div>
-      )}
       {requestState.category && (
         <>
           <div className={styles.rules}>
-            {guide && (
+            {requestState.guide && (
               <>
                 <h3>Видеоинструкция для выполнения упражнений:</h3>
-                {guideType === "video" && (
+                {requestState.guideType === "video" && (
                   <video
-                    src={guide}
+                    src={requestState.guide}
                     width={"100%"}
                     autoPlay={false}
                     controls
                     preload="auto"
                   ></video>
                 )}
-                {guideType === "iframe" && (
+                {requestState.guideType === "iframe" && (
                   <iframe
                     width={"100%"}
-                    src={guide}
+                    src={requestState.guide}
                     allow="clipboard-write;autoplay;fullscreen;display-capture;encrypted-media;"
                     allowFullScreen
                   ></iframe>
@@ -111,23 +87,26 @@ export const CategoryTab = observer(() => {
             )}
             {document && (
               <a
-                style={{ textDecoration: "underline" }}
+                style={{
+                  textDecoration: "underline",
+                  color: "var(--main-blue)",
+                  fontWeight: "700",
+                }}
                 href={`${API}${document}`}
                 target="_blank"
               >
                 Подробная PDF-инструкция
               </a>
             )}
-            {rules && (
+            {requestState.rules && (
               <>
                 <h3>Правила участия в данной категории:</h3>
-                {rules.map((rule) => (
+                {requestState.rules.map((rule) => (
                   <p key={rule.id}>{rule.p}</p>
                 ))}
               </>
             )}
           </div>
-          <div style={{ height: "90px", width: "100%" }}></div>
         </>
       )}
       <div className={styles.creditsWrapper}>
