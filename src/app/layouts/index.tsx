@@ -12,7 +12,7 @@ import { DatesProvider } from "@mantine/dates";
 import "dayjs/locale/ru";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
-import { addToHomeScreen } from "@telegram-apps/sdk";
+import { addToHomeScreen, requestFullscreen } from "@telegram-apps/sdk";
 import { useEffect } from "react";
 
 export const metadata: Metadata = {
@@ -30,6 +30,7 @@ export function RootLayout({
   }
 
   useEffect(() => {
+    requestFullscreen();
     // Проверяем, доступен ли Telegram Web App
     if (window.Telegram && window.Telegram.WebApp) {
       // Расширяем приложение на весь экран
