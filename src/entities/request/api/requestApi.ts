@@ -34,5 +34,5 @@ export async function sendChunk(
 }
 
 export async function deleteRequest(requestId: number): Promise<AxiosResponse> {
-  return await $api.delete(`/api/applications/delete?request_id=${requestId}`);
+  return await $api.delete(`/api/applications/delete/?request_id=${requestId}`);
 }
