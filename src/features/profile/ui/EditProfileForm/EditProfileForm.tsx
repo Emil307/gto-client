@@ -12,6 +12,7 @@ import {
   getCities,
   getRegions,
   editProfile,
+  uploadAvatar,
 } from "@/src/entities/profile";
 import userState, { genders, IUser } from "@/src/entities/user";
 import { observer } from "mobx-react-lite";
@@ -51,9 +52,8 @@ export const EditProfileForm: React.FC = observer(() => {
   const [selectedCity, setSelectedCity] = useState<string | null>(
     userState.user?.city as string
   );
-
-  console.log(userState.user?.city);
-
+  const [fileBin, setFileBin] = useState<any>("");
+  const [files, setFiles] = useState<any>([]);
   useEffect(() => {
     getMe()
       .then((res) => {
@@ -117,6 +117,25 @@ export const EditProfileForm: React.FC = observer(() => {
     }
   }, [selectedRegion]);
 
+  function fileUploadHandler(event: any) {
+    const files = event.target.files;
+
+    setFiles([...event.target.files]);
+
+    const reader = new FileReader();
+
+    reader.readAsText(files[0]);
+
+    reader.onload = function () {
+      setFileBin(reader.result);
+      console.log(fileBin);
+    };
+
+    reader.onerror = function () {
+      console.log(reader.error);
+    };
+  }
+
   const onSubmit: SubmitHandler<IFormFileds> = async (data) => {
     data.region = String(selectedRegion);
     data.city = selectedCity;
@@ -135,6 +154,15 @@ export const EditProfileForm: React.FC = observer(() => {
       city: selectedCity ? String(selectedCity) : null,
     };
 
+    uploadAvatar(files[0])
+      .then(() => {})
+      .catch((e: any) => {
+        console.log(e);
+      });
+    // .finally(() => {
+    //   setIsAwait(false);
+    // });
+
     editProfile(editedProfile)
       .then((res) => {
         userState.setUser(res.data);
@@ -145,11 +173,18 @@ export const EditProfileForm: React.FC = observer(() => {
       });
   };
 
-  console.log(selectedCity);
-
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.inputs}>
+        <input
+          className={styles.fileInput}
+          multiple={false}
+          id="fileInput"
+          type="file"
+          onChange={(event) => fileUploadHandler(event)}
+          accept={".png,.jpg,.jpeg"}
+        />
+        <label htmlFor="fileInput" className={styles.uploadAvatar}></label>
         <FlushedInput
           id="surname"
           register={register}

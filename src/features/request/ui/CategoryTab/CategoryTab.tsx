@@ -21,7 +21,10 @@ export const CategoryTab = observer(() => {
 
   function handleGetCategories() {
     getMyCategories(
-      requestState.infoData?.birthDate ? requestState.infoData?.birthDate : null
+      requestState.infoData?.birthDate
+        ? requestState.infoData?.birthDate
+        : null,
+      requestState.isChild
     )
       .then((res) => {
         setCategories(res.data);

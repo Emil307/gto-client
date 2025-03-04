@@ -20,6 +20,21 @@
   border: 2px solid #001c84;
 }
 
+.fileInput {
+  display: none;
+}
+
+.uploadAvatar {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  border: 2px solid #001c84;
+  background-image: url("../../../../public/img/avatar.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
 .fullname {
   font-family: "ttsquare";
   font-size: 1.75rem;
