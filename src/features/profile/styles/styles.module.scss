@@ -20,6 +20,10 @@
   height: 124px;
   border-radius: 50%;
   border: 2px solid #001c84;
+  background-image: url("../../../../public/img/avatar.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
 }
 
 .fileInput {
@@ -33,6 +37,7 @@
   border: 2px solid #001c84;
   background-image: url("../../../../public/icons/upload.svg");
   background-repeat: no-repeat;
+  background-size: contain;
   background-position: center center;
 }
 
@@ -76,7 +81,7 @@
   align-items: center;
   gap: 2rem;
   margin-top: 1.25rem;
-  padding-bottom: 1.5rem;
+  padding-bottom: 3rem;
 }
 
 .inputs {
