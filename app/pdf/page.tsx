@@ -1,15 +1,12 @@
-"use client";
-
 import { PdfViewer } from "@/src/widgets/pdfViewer";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const Page = () => {
-  const searchParams = useSearchParams();
-
-  const url = searchParams.get("url");
-  const origin = searchParams.get("origin");
-
-  return <>{url && origin && <PdfViewer url={url} origin={origin} />}</>;
+  return (
+    <Suspense>
+      <PdfViewer />
+    </Suspense>
+  );
 };
 
 export default Page;
