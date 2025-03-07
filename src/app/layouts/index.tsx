@@ -15,6 +15,7 @@ import "@mantine/dates/styles.css";
 import { addToHomeScreen } from "@telegram-apps/sdk";
 import { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
+import { usePathname } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -26,6 +27,8 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
   if (addToHomeScreen.isAvailable()) {
     addToHomeScreen();
   }
@@ -36,9 +39,15 @@ export function RootLayout({
       if (WebApp) {
         // Расширяем приложение на весь экран
         WebApp.expand();
+
+        const isPDFPage = location.pathname.includes("pdf");
+
+        if (isPDFPage) {
+          WebApp.BackButton.show();
+        }
       }
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <html lang="ru" suppressHydrationWarning>

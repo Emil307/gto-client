@@ -5,7 +5,6 @@ import { Viewer, Worker } from "@react-pdf-viewer/core";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 export const PdfViewer: React.FC = () => {
@@ -13,17 +12,9 @@ export const PdfViewer: React.FC = () => {
   const searchParams = useSearchParams();
 
   const url = searchParams.get("url");
-  const origin = searchParams.get("origin");
 
   return (
     <div className="h-screen w-screen bg-white">
-      {origin && (
-        <div>
-          <Link href={origin} className="p-2">
-            Назад
-          </Link>
-        </div>
-      )}
       <div className="flex-1">
         <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.10.111/build/pdf.worker.min.js">
           {url && (

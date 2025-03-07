@@ -98,7 +98,7 @@ export const CategoryTab = observer(() => {
                   color: "#00b7f4",
                   fontWeight: "700",
                 }}
-                href={`/pdf?url=${API}${requestState.categoryDocument}&origin=/request`}
+                href={`/pdf?url=${API}${requestState.categoryDocument}`}
               >
                 Подробная PDF-инструкция
               </Link>

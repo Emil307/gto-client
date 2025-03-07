@@ -285,7 +285,7 @@ export const InfoTab = observer(() => {
           <Link
             href={`/pdf?url=${API}${
               requestState.isChild ? childDocument : document
-            }&origin=/request`}
+            }`}
           >
             Соглашаюсь с Правилами обработки персональных данных, фото- и
             видео-изображений {requestState.isChild && "несовершеннолетнего"}
