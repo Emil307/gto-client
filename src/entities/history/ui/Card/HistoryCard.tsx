@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { IHistory } from "../../types";
 import styles from "./styles.module.scss";
 import dayjs from "dayjs";
-import Video from "next-video";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import historyState from "../../store/historyState";
 import { observer } from "mobx-react-lite";
+import { VimeoEmbed } from "@/src/widgets/VimeoEmbed";
 
 interface IHistoryCardProps {
   history: IHistory;
@@ -18,14 +18,10 @@ export const HistoryCard: React.FC<IHistoryCardProps> = observer(
     const [isShowingVideo, setIsShowingVideo] = useState(false);
     const [isModalActive, setIsModalActive] = useState(false);
 
-    const API = process.env.NEXT_PUBLIC_API_URL;
-
     function handleDelete() {
       historyState.deleteHistory(history.id);
       setIsModalActive(false);
     }
-
-    console.log(history);
 
     return (
       <div className={styles.container}>
@@ -65,15 +61,20 @@ export const HistoryCard: React.FC<IHistoryCardProps> = observer(
           )}
         </div>
 
-        {isShowingVideo && <Video src={`${API}${history.video_file}`} />}
+        {isShowingVideo && <VimeoEmbed url={history.video_file} />}
 
-        <button
-          className={styles.button}
-          onClick={() => setIsShowingVideo(true)}
-          disabled={historyState.isDeleting}
-        >
-          Открыть видео заявки
-        </button>
+        {history.video_file && (
+          <button
+            className={styles.button}
+            onClick={() => setIsShowingVideo(true)}
+            disabled={historyState.isDeleting}
+          >
+            Открыть видео заявки
+          </button>
+        )}
+        {!history.video_file && (
+          <button className={styles.button}>Видео загружается...</button>
+        )}
         <button
           className={styles.button}
           onClick={() => setIsModalActive(true)}
