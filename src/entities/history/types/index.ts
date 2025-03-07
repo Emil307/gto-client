@@ -14,6 +14,7 @@ export interface IHistory {
   category: ICategory;
   result_minutes: number;
   result_seconds: number;
+  result_exercise: number;
   video_file: string;
   user: IUser;
   created_at: string;
