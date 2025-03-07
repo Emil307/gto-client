@@ -27,6 +27,7 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const router = useRouter();
   const pathname = usePathname();
 
   if (addToHomeScreen.isAvailable()) {
@@ -44,10 +45,29 @@ export function RootLayout({
 
         if (isPDFPage) {
           WebApp.BackButton.show();
+          return;
+        }
+
+        if (!isPDFPage) {
+          WebApp.BackButton.hide();
+          return;
         }
       }
     }
   }, [pathname]);
+
+  if (typeof window !== "undefined") {
+    const tg = WebApp;
+    tg.ready();
+
+    tg.headerColor = "#000430";
+    tg.backgroundColor = "#000430";
+
+    const BackButton = tg.BackButton;
+
+    BackButton.show();
+    BackButton.onClick(() => router.back());
+  }
 
   return (
     <html lang="ru" suppressHydrationWarning>
