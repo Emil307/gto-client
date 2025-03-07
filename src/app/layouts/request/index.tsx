@@ -8,7 +8,7 @@ export function RequestLayout({
 }>) {
   return (
     <div className={styles.page}>
-      <Header title="Новая заявка" />
+      <Header title="Новая заявка" backButtonLink="/lk" />
       {children}
     </div>
   );
