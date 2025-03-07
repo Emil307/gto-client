@@ -8,6 +8,7 @@ import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import { getMyCategories, ICategory } from "@/src/entities/categories";
 import { Category } from "./Category";
 import { FlushedInput } from "@/src/shared";
+import Link from "next/link";
 
 export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
@@ -33,6 +34,8 @@ export const CategoryTab = observer(() => {
         console.log(e);
       });
   }
+
+  console.log(requestState.guide);
 
   return (
     <div className={styles.categoryTab}>
@@ -88,18 +91,17 @@ export const CategoryTab = observer(() => {
                 )}
               </>
             )}
-            {document && (
-              <a
+            {requestState.categoryDocument && (
+              <Link
                 style={{
                   textDecoration: "underline",
                   color: "#00b7f4",
                   fontWeight: "700",
                 }}
-                href={`${API}${document}`}
-                target="_blank"
+                href={`/pdf?url=${API}${requestState.categoryDocument}&origin=/request`}
               >
                 Подробная PDF-инструкция
-              </a>
+              </Link>
             )}
             {requestState.rules && (
               <>

@@ -14,6 +14,7 @@ import datepickerStyles from "../../styles/datepicker/styles.module.scss";
 import dayjs from "dayjs";
 import { Checkbox } from "@mantine/core";
 import { getRegistrationDocument } from "@/src/entities/documnets";
+import Link from "next/link";
 
 interface IFormFileds {
   name: string;
@@ -155,9 +156,9 @@ export const SignUpForm = () => {
           style={{ color: "var(--main-white)" }}
         />
         <p>
-          <a target="_blank" href={`${API}${document}`}>
+          <Link href={`/pdf?url=${API}${document}&origin=/auth/signUp`}>
             Согласен с пользовательским соглашением
-          </a>
+          </Link>
         </p>
       </div>
       <ParallelogramButton type="submit" disabled={isCreateDisabled}>
