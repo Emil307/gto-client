@@ -16,11 +16,6 @@ export const ProfileInfo: React.FC = observer(() => {
   const router = useRouter();
 
   useEffect(() => {
-    // if (userState.user) {
-    //   setUser(userState.user);
-    //   return;
-    // }
-
     setIsLoading(true);
     getMe()
       .then((res) => {
@@ -42,8 +37,6 @@ export const ProfileInfo: React.FC = observer(() => {
   if (isLoading) {
     return <Loader />;
   }
-
-  console.log(user);
 
   return (
     <div className={styles.container}>
