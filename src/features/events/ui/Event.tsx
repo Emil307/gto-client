@@ -52,10 +52,10 @@ export const Event: React.FC = () => {
             <h3 className={styles.title}>Народные Игры ГТО. Сезон 2</h3>
           </div>
           <div className={styles.buttons}>
-            <Link href={`/pdf?url=${API}${positionDocument}&origin=/lk`}>
+            <Link href={`/pdf?url=${API}${positionDocument}`}>
               <Button>Положение</Button>
             </Link>
-            <Link href={`/pdf?url=${API}${categoriesDocument}&origin=/lk`}>
+            <Link href={`/pdf?url=${API}${categoriesDocument}`}>
               <Button>Категории</Button>
             </Link>
           </div>

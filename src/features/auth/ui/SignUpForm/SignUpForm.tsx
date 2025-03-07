@@ -156,7 +156,7 @@ export const SignUpForm = () => {
           style={{ color: "var(--main-white)" }}
         />
         <p>
-          <Link href={`/pdf?url=${API}${document}&origin=/auth/signUp`}>
+          <Link href={`/pdf?url=${API}${document}`}>
             Согласен с пользовательским соглашением
           </Link>
         </p>
