@@ -6,6 +6,7 @@ import {
   getCateriesDocument,
   getParticipationDocument,
 } from "@/src/entities/documnets";
+import Link from "next/link";
 
 export const Event: React.FC = () => {
   const [categoriesDocument, setCategoriesDocument] = useState("");
@@ -51,12 +52,12 @@ export const Event: React.FC = () => {
             <h3 className={styles.title}>Народные Игры ГТО. Сезон 2</h3>
           </div>
           <div className={styles.buttons}>
-            <a target="_blank" href={`${API}${positionDocument}`}>
+            <Link href={`/pdf?url=${API}${positionDocument}&origin=/lk`}>
               <Button>Положение</Button>
-            </a>
-            <a target="_blank" href={`${API}${categoriesDocument}`}>
+            </Link>
+            <Link href={`/pdf?url=${API}${categoriesDocument}&origin=/lk`}>
               <Button>Категории</Button>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

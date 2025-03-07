@@ -25,6 +25,8 @@ export const HistoryCard: React.FC<IHistoryCardProps> = observer(
       setIsModalActive(false);
     }
 
+    console.log(history);
+
     return (
       <div className={styles.container}>
         <div className={styles.infoWrapper}>
@@ -46,13 +48,21 @@ export const HistoryCard: React.FC<IHistoryCardProps> = observer(
             <p className={styles.p}>Категория: </p>
             <span className={styles.span}>{history.category.title}</span>
           </div>
-          <div className={styles.infoBlock}>
-            <p className={styles.p}>Результат: </p>
-            <span className={styles.span}>
-              {history.result_minutes && <>{history.result_minutes} мин</>}{" "}
-              {history.result_seconds} сек
-            </span>
-          </div>
+          {history.category.is_needed_time && (
+            <div className={styles.infoBlock}>
+              <p className={styles.p}>Время: </p>
+              <span className={styles.span}>
+                {String(history.result_minutes).padStart(2, "0")}:
+                {String(history.result_seconds).padStart(2, "0")}
+              </span>
+            </div>
+          )}
+          {history.category.is_needed_exercise && (
+            <div className={styles.infoBlock}>
+              <p className={styles.p}>Кол-во повторений: </p>
+              <span className={styles.span}>{history.result_exercise}</span>
+            </div>
+          )}
         </div>
 
         {isShowingVideo && <Video src={`${API}${history.video_file}`} />}

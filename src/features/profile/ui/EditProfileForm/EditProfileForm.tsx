@@ -249,7 +249,7 @@ export const EditProfileForm: React.FC = observer(() => {
           label="Регион"
           value={selectedRegion}
           onChange={setSelectedRegion}
-          searchable
+          // searchable
         />
         <FlushedSelect
           data={cities}
@@ -257,7 +257,7 @@ export const EditProfileForm: React.FC = observer(() => {
           value={selectedCity}
           onChange={setSelectedCity}
           placeholder="Не выбран"
-          searchable
+          // searchable
         />
       </div>
       <ParallelogramButton type="submit" disabled={isLoading}>

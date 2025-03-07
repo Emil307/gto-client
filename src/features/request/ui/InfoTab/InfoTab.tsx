@@ -20,6 +20,7 @@ import {
   getParticipationChildDocument,
   getPersonalTermsDocument,
 } from "@/src/entities/documnets";
+import Link from "next/link";
 
 export const InfoTab = observer(() => {
   const [dob, setDob] = useState<Date | null>(null);
@@ -281,13 +282,14 @@ export const InfoTab = observer(() => {
             label=""
             style={{ color: "var(--main-white)" }}
           />
-          <a
-            target="_blank"
-            href={`${API}${requestState.isChild ? childDocument : document}`}
+          <Link
+            href={`/pdf?url=${API}${
+              requestState.isChild ? childDocument : document
+            }&origin=/request`}
           >
             Соглашаюсь с Правилами обработки персональных данных, фото- и
             видео-изображений {requestState.isChild && "несовершеннолетнего"}
-          </a>
+          </Link>
         </div>
         <ParallelogramButton
           onClick={handleClickNext}
