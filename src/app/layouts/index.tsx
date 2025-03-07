@@ -15,7 +15,7 @@ import "@mantine/dates/styles.css";
 import { addToHomeScreen } from "@telegram-apps/sdk";
 import { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Create Next App",
