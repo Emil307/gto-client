@@ -16,10 +16,10 @@ export const ProfileInfo: React.FC = observer(() => {
   const router = useRouter();
 
   useEffect(() => {
-    if (userState.user) {
-      setUser(userState.user);
-      return;
-    }
+    // if (userState.user) {
+    //   setUser(userState.user);
+    //   return;
+    // }
 
     setIsLoading(true);
     getMe()
@@ -43,14 +43,17 @@ export const ProfileInfo: React.FC = observer(() => {
     return <Loader />;
   }
 
+  console.log(user);
+
   return (
     <div className={styles.container}>
       <div className={styles.params}>
-        <img
-          src={user?.avatar_url ? user.avatar_url : "/img/avatar.png"}
+        <div
+          style={{
+            backgroundImage: user?.avatar_url && `url(${user.avatar_url})`,
+          }}
           className={styles.avatar}
-          alt="avatar"
-        />
+        ></div>
         <h1 className={styles.fullname}>
           {user?.surname} {user?.name}{" "}
           {user?.name && user?.patronymic && user?.patronymic}

@@ -5,7 +5,6 @@ interface IVideoEmbedProps {
 }
 
 export const VimeoEmbed: React.FC<IVideoEmbedProps> = ({ url }) => {
-  console.log(url);
   return (
     <div>
       <iframe
