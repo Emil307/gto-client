@@ -214,10 +214,10 @@
 .horizanotalWrapper {
   position: absolute;
   top: 4rem;
-  left: 12.5%;
+  left: 5%;
   z-index: 100;
   background-color: #000430;
-  max-width: 80%;
+  max-width: 90%;
   padding: 0.5rem;
   margin: 0 auto;
 }
@@ -225,7 +225,7 @@
 .horizanotalWrapper > p {
   width: fit-content;
   text-align: left;
-  font-size: 14px;
+  font-size: 1rem;
 }
 
 .modal {
