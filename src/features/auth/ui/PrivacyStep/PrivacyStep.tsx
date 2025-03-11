@@ -1,16 +1,31 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import authState from "@/src/entities/auth/store/authState";
 import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 import styles from "../../styles/styles.module.scss";
 import { Checkbox } from "@mantine/core";
+import Link from "next/link";
+import { getRegistrationDocument } from "@/src/entities/documnets";
 
 export const PrivacyStep: React.FC = () => {
   const router = useRouter();
   const [firstChecked, setFirstChecked] = useState<boolean>(true);
   const [secondChecked, setSecondChecked] = useState<boolean>(true);
+  const [document, setDocument] = useState("");
+
+  const API = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    getRegistrationDocument()
+      .then((res) => {
+        setDocument(res.data.pdf);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   function handleConfirm() {
     if (!firstChecked || !secondChecked) {
@@ -37,7 +52,17 @@ export const PrivacyStep: React.FC = () => {
         <Checkbox
           checked={secondChecked}
           onChange={(event) => setSecondChecked(event.currentTarget.checked)}
-          label="Даю согласие на сбор и обработку персональных данных*"
+          label={
+            <>
+              Соглашаюсь с условиями{" "}
+              <Link
+                href={`/pdf?url=${API}${document}`}
+                style={{ textDecoration: "underline" }}
+              >
+                Пользовательского соглашения
+              </Link>
+            </>
+          }
           style={{ color: "var(--main-white)" }}
         />
       </div>
@@ -45,13 +70,6 @@ export const PrivacyStep: React.FC = () => {
         <ParallelogramButton onClick={handleConfirm}>
           Продолжить
         </ParallelogramButton>
-        <div>
-          <p className={styles.credits}>
-            Нажимая «Продолжить», вы соглашаетесь с условиями
-            <br />
-            <a>Пользовательского соглашения</a>
-          </p>
-        </div>
       </div>
     </form>
   );
