@@ -9,6 +9,7 @@ import userState, { IUser } from "@/src/entities/user";
 import { getMe } from "@/src/entities/profile";
 import { convertGender } from "@/src/entities/user";
 import { Loader } from "@/src/shared";
+import * as Sentry from "@sentry/nextjs";
 
 export const ProfileInfo: React.FC = observer(() => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -24,6 +25,7 @@ export const ProfileInfo: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         setIsLoading(false);

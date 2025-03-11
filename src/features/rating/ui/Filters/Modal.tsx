@@ -9,6 +9,7 @@ import ratingState from "@/src/entities/rating/store/ratingState";
 import { RatingRequestDTO } from "@/src/entities/rating";
 import { observer } from "mobx-react-lite";
 import { getCategories } from "@/src/entities/categories";
+import * as Sentry from "@sentry/nextjs";
 
 interface IModalProps {
   onClose: () => void;
@@ -56,6 +57,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
         })
         .catch((e) => {
           console.log(e);
+          Sentry.captureException(e);
         });
     }
   }, [selectedRegion]);
@@ -76,6 +78,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 
@@ -95,6 +98,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 
@@ -114,6 +118,7 @@ export const Modal: React.FC<IModalProps> = observer(({ onClose }) => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 

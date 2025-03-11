@@ -8,6 +8,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
 import { Loader } from "@/src/shared";
+import * as Sentry from "@sentry/nextjs";
 
 interface IFormFileds {
   email: string;
@@ -41,6 +42,8 @@ export const SignInForm = () => {
       .catch((error) => {
         if (error.status === 404) {
           setError("Пользователь с таким E-mail не найден");
+        } else {
+          Sentry.captureException(error);
         }
       })
       .finally(() => {

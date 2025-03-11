@@ -1,6 +1,7 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { tokenInterceptor } from "./interceptors/request";
+import * as Sentry from "@sentry/nextjs";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -44,6 +45,7 @@ $api.interceptors.response.use(
         return $api.request(originalRequest);
       } catch (e: any) {
         console.log(e?.response?.data?.message || "Неизвестная ошибка");
+        Sentry.captureException(e);
       }
     }
     throw error;
@@ -71,6 +73,7 @@ $apiFile.interceptors.response.use(
         return $api.request(originalRequest);
       } catch (e: any) {
         console.log(e?.response?.data?.message || "Неизвестная ошибка");
+        Sentry.captureException(e);
       }
     }
     throw error;

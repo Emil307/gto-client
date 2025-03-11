@@ -3,6 +3,7 @@ import requestState from "@/src/entities/request/store/requestState";
 import React, { useState } from "react";
 import styles from "../../styles/styles.module.scss";
 import Image from "next/image";
+import * as Sentry from "@sentry/nextjs";
 
 interface CategoryProps {
   category: ICategory;
@@ -32,6 +33,7 @@ export const Category: React.FC<CategoryProps> = ({
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 

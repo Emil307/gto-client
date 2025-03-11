@@ -8,6 +8,7 @@ import { observer } from "mobx-react-lite";
 import userState, { IUser } from "@/src/entities/user";
 import { getMe } from "@/src/entities/profile";
 import { HistoryButton } from "@/src/features/request";
+import * as Sentry from "@sentry/nextjs";
 
 export const Home: React.FC = observer(() => {
   const [user, setUser] = useState<IUser | null>(null);
@@ -25,6 +26,7 @@ export const Home: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }, []);
 

@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import { Checkbox } from "@mantine/core";
 import { getRegistrationDocument } from "@/src/entities/documnets";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 
 interface IFormFileds {
   name: string;
@@ -42,6 +43,7 @@ export const SignUpForm = () => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }, []);
 
@@ -89,6 +91,7 @@ export const SignUpForm = () => {
         } else {
           setError(error.response.data.message);
         }
+        Sentry.captureException(error);
       })
       .finally(() => {
         setIsLoading(false);
