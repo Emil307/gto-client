@@ -35,7 +35,13 @@ export function RootLayout({
       title: "Закрытие приложения",
       children: "Вы действительно хотите закрыть приложение?",
       labels: { confirm: "Да, закрыть", cancel: "Отмена" },
-      onConfirm: () => WebApp.close(),
+      onConfirm: () => {
+        if (typeof window !== "undefined") {
+          if (WebApp) {
+            WebApp.close();
+          }
+        }
+      },
       centered: true,
     });
   };
