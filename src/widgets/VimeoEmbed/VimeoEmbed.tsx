@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./styles.module.scss";
 
 interface IVideoEmbedProps {
   url: string;
@@ -6,14 +7,13 @@ interface IVideoEmbedProps {
 
 export const VimeoEmbed: React.FC<IVideoEmbedProps> = ({ url }) => {
   return (
-    <div>
+    <div className={styles.container}>
       <iframe
         src={url}
-        width="100%"
-        height="100%"
         frameBorder="0"
-        allow=""
+        allow="fullscreen"
         title="Vimeo Video"
+        allowFullScreen
       />
     </div>
   );

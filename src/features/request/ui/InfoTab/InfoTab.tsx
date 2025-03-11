@@ -70,7 +70,8 @@ export const InfoTab = observer(() => {
       phone &&
       selectedGender &&
       selectedRegion &&
-      acceptProccessing
+      acceptProccessing &&
+      ((requestState.isChild && dob) || !requestState.isChild)
     ) {
       setIsNextDisabled(false);
       return;
@@ -86,6 +87,7 @@ export const InfoTab = observer(() => {
     selectedGender,
     selectedRegion,
     acceptProccessing,
+    dob,
   ]);
 
   useEffect(() => {

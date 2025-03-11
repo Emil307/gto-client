@@ -7,7 +7,7 @@ import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import authState from "@/src/entities/auth/store/authState";
 import { validate } from "@/src/entities/auth";
-import { FlushedSelect } from "@/src/shared";
+import { FlushedSelect, Loader } from "@/src/shared";
 import { genders } from "@/src/entities/user";
 import { DatePickerInput } from "@mantine/dates";
 import datepickerStyles from "../../styles/datepicker/styles.module.scss";
@@ -31,6 +31,7 @@ export const SignUpForm = () => {
   const [acceptProccessing, setAcceptProccessing] = useState<boolean>(false);
   const [document, setDocument] = useState("");
   const [isCreateDisabled, setIsCreateDisabled] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -64,6 +65,8 @@ export const SignUpForm = () => {
       return;
     }
 
+    setIsLoading(true);
+
     const newUser = {
       name: data.name,
       surname: data.surname,
@@ -86,6 +89,9 @@ export const SignUpForm = () => {
         } else {
           setError(error.response.data.message);
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -161,8 +167,11 @@ export const SignUpForm = () => {
           </Link>
         </p>
       </div>
-      <ParallelogramButton type="submit" disabled={isCreateDisabled}>
-        Создать аккаунт
+      <ParallelogramButton
+        type="submit"
+        disabled={isCreateDisabled || isLoading}
+      >
+        {isLoading ? <Loader /> : <>Создать аккаунт</>}
       </ParallelogramButton>
     </form>
   );

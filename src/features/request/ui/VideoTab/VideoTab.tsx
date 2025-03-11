@@ -35,6 +35,8 @@ export const VideoTab = observer(() => {
   const [seconds, setSeconds] = useState("00");
   const [minutes, setMinutes] = useState("00");
   const [exercises, setExercises] = useState("");
+  const [timeError, setTimeError] = useState<string | null>(null);
+  const [exercisesError, setExercisesError] = useState<string | null>(null);
 
   const CHUNK_SIZE = 1024 * 1024 * 5;
 
@@ -87,12 +89,14 @@ export const VideoTab = observer(() => {
   function handleSendRequest() {
     if (requestState.category?.is_needed_time) {
       if (minutes === "00" && seconds === "00") {
+        setTimeError("Введите время выполнения упражнений");
         return;
       }
     }
 
     if (requestState.category?.is_needed_exercise) {
       if (!exercises) {
+        setExercisesError("Введите количество выполненных упражнений");
         return;
       }
     }
@@ -354,6 +358,7 @@ export const VideoTab = observer(() => {
                     max={59}
                   />
                 </div>
+                {timeError && <p className={styles.error}>{timeError}</p>}
               </div>
             )}
             {requestState.category?.is_needed_exercise && (
@@ -369,6 +374,9 @@ export const VideoTab = observer(() => {
                   value={exercises}
                   onChange={(e) => setExercises(e.target.value)}
                 />
+                {exercisesError && (
+                  <p className={styles.error}>{exercisesError}</p>
+                )}
               </div>
             )}
             <div className={styles.videoWatchingWrapper}>
