@@ -16,6 +16,7 @@ import { addToHomeScreen } from "@telegram-apps/sdk";
 import { useEffect } from "react";
 import WebApp from "@twa-dev/sdk";
 import { usePathname, useRouter } from "next/navigation";
+import * as Sentry from "@sentry/nextjs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -92,6 +93,31 @@ export function RootLayout({
     BackButton.show();
     BackButton.onClick(() => router.back());
   }
+
+  useEffect(() => {
+    if (process.env.NODE_ENV === "production") {
+      // Перехватываем все ошибки в консоли
+      const originalConsoleError = console.error;
+      console.error = (...args) => {
+        Sentry.captureMessage(args.join(" "), "error");
+        originalConsoleError(...args); // Выводим в консоль
+      };
+
+      const originalConsoleWarn = console.warn;
+      console.warn = (...args) => {
+        Sentry.captureMessage(args.join(" "), "warning");
+        originalConsoleWarn(...args); // Выводим в консоль
+      };
+
+      return () => {
+        // Восстанавливаем оригинальные функции при размонтировании компонента
+        console.error = originalConsoleError;
+        console.warn = originalConsoleWarn;
+      };
+    }
+  }, []);
+
+  console.log(process.env.NODE_ENV);
 
   return (
     <html lang="ru" suppressHydrationWarning>

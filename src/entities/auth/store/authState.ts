@@ -5,6 +5,7 @@ import axios from "axios";
 import userState from "@/src/entities/user";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import toast from "react-hot-toast";
+import * as Sentry from "@sentry/nextjs";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -50,6 +51,7 @@ class AuthState {
           e.response.data.detail ||
           "Неизвестная ошибка"
       );
+      Sentry.captureException(e);
     }
   }
 
