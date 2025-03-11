@@ -117,8 +117,6 @@ export function RootLayout({
     }
   }, []);
 
-  console.log(process.env.NODE_ENV);
-
   return (
     <html lang="ru" suppressHydrationWarning>
       <head>
