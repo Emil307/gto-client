@@ -8,12 +8,14 @@ import styles from "../../styles/styles.module.scss";
 import { Checkbox } from "@mantine/core";
 import Link from "next/link";
 import { getRegistrationDocument } from "@/src/entities/documnets";
+import { Loader } from "@/src/shared";
 
 export const PrivacyStep: React.FC = () => {
   const router = useRouter();
   const [firstChecked, setFirstChecked] = useState<boolean>(true);
   const [secondChecked, setSecondChecked] = useState<boolean>(true);
   const [document, setDocument] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -31,12 +33,19 @@ export const PrivacyStep: React.FC = () => {
     if (!firstChecked || !secondChecked) {
       return;
     }
+
     if (authState.registerDto) {
-      authState.registration(authState.registerDto).then(() => {
-        router.replace(
-          `/auth/signInConfirm?email=${authState.registerDto?.email.toLowerCase()}`
-        );
-      });
+      setIsLoading(true);
+      authState
+        .registration(authState.registerDto)
+        .then(() => {
+          router.replace(
+            `/auth/signInConfirm?email=${authState.registerDto?.email.toLowerCase()}`
+          );
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   }
 
@@ -67,8 +76,8 @@ export const PrivacyStep: React.FC = () => {
         />
       </div>
       <div className={styles.privacyBottom}>
-        <ParallelogramButton onClick={handleConfirm}>
-          Продолжить
+        <ParallelogramButton onClick={handleConfirm} disabled={isLoading}>
+          {isLoading ? <Loader /> : <>Продолжить</>}
         </ParallelogramButton>
       </div>
     </form>
