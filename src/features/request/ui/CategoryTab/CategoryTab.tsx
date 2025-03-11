@@ -37,8 +37,6 @@ export const CategoryTab = observer(() => {
       });
   }
 
-  console.log(requestState.guide);
-
   return (
     <div className={styles.categoryTab}>
       <div className={styles.ageCategory}>
