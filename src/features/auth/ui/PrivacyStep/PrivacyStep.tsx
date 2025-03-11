@@ -9,6 +9,7 @@ import { Checkbox } from "@mantine/core";
 import Link from "next/link";
 import { getRegistrationDocument } from "@/src/entities/documnets";
 import { Loader } from "@/src/shared";
+import * as Sentry from "@sentry/nextjs";
 
 export const PrivacyStep: React.FC = () => {
   const router = useRouter();
@@ -26,6 +27,7 @@ export const PrivacyStep: React.FC = () => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }, []);
 

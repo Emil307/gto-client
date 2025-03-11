@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { editProfileDto } from "@/src/entities/profile/api";
 import { DatePickerInput } from "@mantine/dates";
 import dayjs from "dayjs";
+import * as Sentry from "@sentry/nextjs";
 
 interface IFormFileds {
   name: string;
@@ -64,6 +65,7 @@ export const EditProfileForm: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }, []);
 
@@ -90,6 +92,7 @@ export const EditProfileForm: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         setIsLoading(false);
@@ -115,6 +118,7 @@ export const EditProfileForm: React.FC = observer(() => {
         })
         .catch((e) => {
           console.log(e);
+          Sentry.captureException(e);
         });
     }
   }, [selectedRegion]);
@@ -169,6 +173,7 @@ export const EditProfileForm: React.FC = observer(() => {
             })
             .catch((e: any) => {
               console.log(e);
+              Sentry.captureException(e);
             });
           // .finally(() => {
           //   setIsAwait(false);
@@ -181,6 +186,7 @@ export const EditProfileForm: React.FC = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   };
 

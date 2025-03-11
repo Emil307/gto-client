@@ -7,6 +7,7 @@ import {
   getParticipationDocument,
 } from "@/src/entities/documnets";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 
 export const Event: React.FC = () => {
   const [categoriesDocument, setCategoriesDocument] = useState("");
@@ -25,6 +26,7 @@ export const Event: React.FC = () => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
     getCateriesDocument()
       .then((res) => {
@@ -32,6 +34,7 @@ export const Event: React.FC = () => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 

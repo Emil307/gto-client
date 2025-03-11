@@ -2,6 +2,7 @@
 
 import { RefObject, useEffect, useRef, useState } from "react";
 import { saveAs } from "file-saver";
+import * as Sentry from "@sentry/nextjs";
 
 export type StatusType = "idle" | "recording" | "paused";
 export type FacingType = "user" | "environment";
@@ -48,6 +49,7 @@ export const useRecorder = () => {
         mediaRecorder.start();
       } catch (e: unknown) {
         setPreviewError(e);
+        Sentry.captureException(e);
       }
     }
   }
@@ -124,6 +126,7 @@ export const useRecorder = () => {
       setStatus("recording");
     } catch (error: unknown) {
       setError(error);
+      Sentry.captureException(error);
     }
   };
 

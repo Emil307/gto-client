@@ -12,6 +12,7 @@ import Image from "next/image";
 import { RequestDTO, sendChunk, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
+import * as Sentry from "@sentry/nextjs";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
@@ -81,6 +82,7 @@ export const VideoTab = observer(() => {
         markChunkAsUploaded(blobId, i);
       } catch (error) {
         console.error("Error uploading chunk:", error);
+        Sentry.captureException(error);
         break; // Можешь добавить логику повторной отправки
       }
     }
@@ -134,6 +136,7 @@ export const VideoTab = observer(() => {
           })
           .catch((e) => {
             console.log(e);
+            Sentry.captureException(e);
           })
           .finally(() => {
             setIsLoading(false);
@@ -142,6 +145,7 @@ export const VideoTab = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 

@@ -21,6 +21,7 @@ import {
   getPersonalTermsDocument,
 } from "@/src/entities/documnets";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 
 export const InfoTab = observer(() => {
   const [dob, setDob] = useState<Date | null>(null);
@@ -103,6 +104,7 @@ export const InfoTab = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
     getParticipationChildDocument()
       .then((res) => {
@@ -110,6 +112,7 @@ export const InfoTab = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 
@@ -129,6 +132,7 @@ export const InfoTab = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
 
@@ -150,6 +154,7 @@ export const InfoTab = observer(() => {
         })
         .catch((e) => {
           console.log(e);
+          Sentry.captureException(e);
         });
     }
   }
@@ -160,6 +165,7 @@ export const InfoTab = observer(() => {
       .then(() => {})
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         setIsLoading(false);

@@ -2,6 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { getHistory } from "../api";
 import { IHistory } from "../types";
 import { deleteRequest } from "../../request";
+import * as Sentry from "@sentry/nextjs";
 
 class HistoryState {
   history: IHistory[] = [];
@@ -21,6 +22,7 @@ class HistoryState {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         this.isLoading = false;
@@ -38,6 +40,7 @@ class HistoryState {
       })
       .catch((e: any) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         this.isDeleting = false;

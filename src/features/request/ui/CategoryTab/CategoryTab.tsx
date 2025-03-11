@@ -9,6 +9,7 @@ import { getMyCategories, ICategory } from "@/src/entities/categories";
 import { Category } from "./Category";
 import { FlushedInput } from "@/src/shared";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 
 export const CategoryTab = observer(() => {
   const [ageCategory, setAgeCategory] = useState("");
@@ -32,10 +33,9 @@ export const CategoryTab = observer(() => {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       });
   }
-
-  console.log(requestState.guide);
 
   return (
     <div className={styles.categoryTab}>

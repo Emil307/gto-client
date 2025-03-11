@@ -1,6 +1,7 @@
 import axios from "axios";
 import { $api } from "../../default";
 import { getCookie } from "cookies-next";
+import * as Sentry from "@sentry/nextjs";
 
 export const refreshRequest = async (error: any) => {
   const originalRequest = error.config;
@@ -17,6 +18,7 @@ export const refreshRequest = async (error: any) => {
       return $api.request(originalRequest);
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
+      Sentry.captureException(e);
     }
   }
   throw error;

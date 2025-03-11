@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import { IRating } from "../types";
 import { getRating, RatingFilters, RatingRequestDTO } from "../api";
+import * as Sentry from "@sentry/nextjs";
 
 type TGender = "male" | "female";
 
@@ -33,6 +34,7 @@ class RatingState {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         this.isLoading = false;
@@ -58,6 +60,7 @@ class RatingState {
       })
       .catch((e) => {
         console.log(e);
+        Sentry.captureException(e);
       })
       .finally(() => {
         this.isLoading = false;

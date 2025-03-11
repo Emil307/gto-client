@@ -69,6 +69,7 @@ class AuthState {
       userState.setUser(response.data.user);
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
+      Sentry.captureException(e);
     }
   }
 
@@ -84,6 +85,7 @@ class AuthState {
       router.replace("/");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
+      Sentry.captureException(e);
     }
   }
 
@@ -99,6 +101,7 @@ class AuthState {
       router.replace("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
+      Sentry.captureException(e);
       router.replace("/");
     }
   }

@@ -8,6 +8,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { requestEmailVerificationCode } from "@/src/entities/auth";
 import { PinInput } from "@mantine/core";
 import { Loader } from "@/src/shared";
+import * as Sentry from "@sentry/nextjs";
 
 export const SignInConfirmForm: React.FC = () => {
   const [code, setCode] = useState("");
@@ -33,6 +34,7 @@ export const SignInConfirmForm: React.FC = () => {
       })
       .catch((error) => {
         console.log(error);
+        Sentry.captureException(error);
       })
       .finally(() => {
         setIsLoading(false);
