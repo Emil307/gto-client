@@ -5,7 +5,7 @@ import "../styles";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "../../../theme";
 import { roboto, rubik, TTSquare } from "../styles/fonts";
-import { ModalsProvider } from "@mantine/modals";
+import { ModalsProvider, modals } from "@mantine/modals";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "../providers";
 import { DatesProvider } from "@mantine/dates";
@@ -30,6 +30,16 @@ export function RootLayout({
   const router = useRouter();
   const pathname = usePathname();
 
+  const handleClose = () => {
+    modals.openConfirmModal({
+      title: "Закрытие приложения",
+      children: "Вы действительно хотите закрыть приложение?",
+      labels: { confirm: "Да, закрыть", cancel: "Отмена" },
+      onConfirm: () => WebApp.close(),
+      centered: true,
+    });
+  };
+
   if (addToHomeScreen.isAvailable()) {
     addToHomeScreen();
   }
@@ -40,6 +50,14 @@ export function RootLayout({
       if (WebApp) {
         // Расширяем приложение на весь экран
         WebApp.expand();
+
+        // Добавляем обработчик закрытия WebApp
+        WebApp.onEvent("viewportChanged", () => {
+          if (!WebApp.isExpanded) {
+            handleClose();
+            WebApp.expand();
+          }
+        });
 
         const isPDFPage = location.pathname.includes("pdf");
 
