@@ -53,13 +53,8 @@ export function RootLayout({
         // Расширяем приложение на весь экран
         WebApp.expand();
 
-        // Добавляем обработчик закрытия WebApp
-        WebApp.onEvent("viewportChanged", () => {
-          if (!WebApp.isExpanded) {
-            setIsModalActive(true);
-            WebApp.expand();
-          }
-        });
+        // Включаем нативное подтверждение закрытия
+        WebApp.enableClosingConfirmation();
 
         const isPDFPage = location.pathname.includes("pdf");
 
