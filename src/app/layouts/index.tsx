@@ -5,7 +5,7 @@ import "../styles";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { theme } from "../../../theme";
 import { roboto, rubik, TTSquare } from "../styles/fonts";
-import { ModalsProvider, modals } from "@mantine/modals";
+import { ModalsProvider } from "@mantine/modals";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "../providers";
 import { DatesProvider } from "@mantine/dates";
@@ -13,10 +13,12 @@ import "dayjs/locale/ru";
 import "@mantine/core/styles.css";
 import "@mantine/dates/styles.css";
 import { addToHomeScreen } from "@telegram-apps/sdk";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import WebApp from "@twa-dev/sdk";
 import { usePathname, useRouter } from "next/navigation";
 import * as Sentry from "@sentry/nextjs";
+import styles from "./styles.module.scss";
+import { ParallelogramButton } from "@/src/shared/ui/parallelogramButton";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,23 +30,16 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isModalActive, setIsModalActive] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleClose = () => {
-    modals.openConfirmModal({
-      title: "Закрытие приложения",
-      children: "Вы действительно хотите закрыть приложение?",
-      labels: { confirm: "Да, закрыть", cancel: "Отмена" },
-      onConfirm: () => {
-        if (typeof window !== "undefined") {
-          if (WebApp) {
-            WebApp.close();
-          }
-        }
-      },
-      centered: true,
-    });
+  const handleConfirmClose = () => {
+    if (typeof window !== "undefined") {
+      if (WebApp) {
+        WebApp.close();
+      }
+    }
   };
 
   if (addToHomeScreen.isAvailable()) {
@@ -61,7 +56,7 @@ export function RootLayout({
         // Добавляем обработчик закрытия WebApp
         WebApp.onEvent("viewportChanged", () => {
           if (!WebApp.isExpanded) {
-            handleClose();
+            setIsModalActive(true);
             WebApp.expand();
           }
         });
@@ -139,6 +134,30 @@ export function RootLayout({
             }}
           >
             <ModalsProvider>{children}</ModalsProvider>
+            {isModalActive && (
+              <div
+                className={styles.modal}
+                onClick={() => setIsModalActive(false)}
+              >
+                <div
+                  className={styles.modalContent}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <p className={styles.modalText}>
+                    Вы действительно хотите закрыть приложение?
+                  </p>
+                  <ParallelogramButton onClick={handleConfirmClose}>
+                    Закрыть
+                  </ParallelogramButton>
+                  <ParallelogramButton
+                    style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                    onClick={() => setIsModalActive(false)}
+                  >
+                    Отмена
+                  </ParallelogramButton>
+                </div>
+              </div>
+            )}
           </DatesProvider>
           <AuthProvider />
           <Toaster position="top-right" />
