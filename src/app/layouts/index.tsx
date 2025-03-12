@@ -30,7 +30,7 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isModalActive, setIsModalActive] = useState(false);
+  const [isModalActive, setIsModalActive] = useState(true);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -146,15 +146,17 @@ export function RootLayout({
                   <p className={styles.modalText}>
                     Вы действительно хотите закрыть приложение?
                   </p>
-                  <ParallelogramButton onClick={handleConfirmClose}>
-                    Закрыть
-                  </ParallelogramButton>
-                  <ParallelogramButton
-                    style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
-                    onClick={() => setIsModalActive(false)}
-                  >
-                    Отмена
-                  </ParallelogramButton>
+                  <div className={styles.modalButtons}>
+                    <ParallelogramButton onClick={handleConfirmClose}>
+                      Закрыть
+                    </ParallelogramButton>
+                    <ParallelogramButton
+                      style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+                      onClick={() => setIsModalActive(false)}
+                    >
+                      Отмена
+                    </ParallelogramButton>
+                  </div>
                 </div>
               </div>
             )}
