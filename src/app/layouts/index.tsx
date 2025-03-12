@@ -30,7 +30,7 @@ export function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [isModalActive, setIsModalActive] = useState(true);
+  const [isModalActive, setIsModalActive] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
 
