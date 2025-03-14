@@ -44,7 +44,7 @@ class AuthState {
       });
 
       userState.setUser(response.data.user);
-      router.replace("/lk");
+      router.push("/lk");
     } catch (e: any) {
       toast.error(
         e?.response?.data?.message ||
@@ -98,7 +98,7 @@ class AuthState {
       this.setIsAuth(true);
       userState.setUser(response.data.user);
 
-      router.replace("/lk");
+      router.push("/lk");
     } catch (e: any) {
       console.log(e?.response?.data?.message || "Неизвестная ошибка");
       Sentry.captureException(e);
