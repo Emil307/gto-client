@@ -51,7 +51,7 @@ export const PrivacyStep: React.FC = () => {
       authState
         .registration(authState.registerDto)
         .then(() => {
-          router.replace(
+          router.push(
             `/auth/signInConfirm?email=${authState.registerDto?.email.toLowerCase()}`
           );
         })
