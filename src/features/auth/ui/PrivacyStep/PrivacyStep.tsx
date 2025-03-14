@@ -17,8 +17,18 @@ export const PrivacyStep: React.FC = () => {
   const [secondChecked, setSecondChecked] = useState<boolean>(true);
   const [document, setDocument] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
   const API = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    if (firstChecked && secondChecked) {
+      setIsNextDisabled(false);
+      return;
+    }
+    setIsNextDisabled(true);
+    return;
+  }, [firstChecked, secondChecked]);
 
   useEffect(() => {
     getRegistrationDocument()
@@ -78,7 +88,10 @@ export const PrivacyStep: React.FC = () => {
         />
       </div>
       <div className={styles.privacyBottom}>
-        <ParallelogramButton onClick={handleConfirm} disabled={isLoading}>
+        <ParallelogramButton
+          onClick={handleConfirm}
+          disabled={isLoading || isNextDisabled}
+        >
           {isLoading ? <Loader /> : <>Продолжить</>}
         </ParallelogramButton>
       </div>
