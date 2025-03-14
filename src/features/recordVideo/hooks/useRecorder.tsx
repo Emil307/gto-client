@@ -56,7 +56,7 @@ export const useRecorder = () => {
 
   useEffect(() => {
     be();
-  }, [previewVideoRef.current, facing]);
+  }, [previewVideoRef.current, facing, be]);
 
   const startRecording = async () => {
     try {
