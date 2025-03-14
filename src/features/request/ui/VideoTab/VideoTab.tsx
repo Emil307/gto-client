@@ -13,6 +13,7 @@ import { RequestDTO, sendChunk, sendRequest } from "@/src/entities/request";
 import { Loader } from "@/src/shared";
 import { FlushedInput } from "@/src/shared/ui/flushedInput";
 import * as Sentry from "@sentry/nextjs";
+import { VideoTimer } from "./VideoTimer";
 
 export const VideoTab = observer(() => {
   const router = useRouter();
@@ -150,6 +151,7 @@ export const VideoTab = observer(() => {
   }
 
   function toggleFacing() {
+    setFacing("user");
     setError(null);
     setPreviewError(null);
   }
@@ -394,6 +396,7 @@ export const VideoTab = observer(() => {
                 onError={(e) => console.error("Ошибка видео:", e)}
                 onAbort={(e) => console.error("Видео прервано:", e)}
               />
+              <VideoTimer videoRef={videoRef} />
             </div>
             <div className={styles.deleteVideo}>
               <button onClick={() => requestState.setVideoStatus("record")}>

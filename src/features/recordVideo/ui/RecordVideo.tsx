@@ -5,6 +5,7 @@ import { FacingType, StatusType } from "../hooks/useRecorder";
 import styles from "../styles/styles.module.scss";
 import Image from "next/image";
 import requestState from "@/src/entities/request/store/requestState";
+import timerState from "../../request/ui/VideoTab/store/timerState";
 // import { useRouter } from "next/navigation";
 // import requestState from "@/src/entities/request/store/requestState";
 
@@ -31,6 +32,8 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   const [mins, setMins] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [isRecordingIntro, setIsRecordingIntro] = useState<boolean>(true);
+  const [startIntroTime, setStartIntroTime] = useState<number>(0);
+  const [endIntroTime, setEndIntroTime] = useState<number>(0);
 
   function handleRotate() {
     setFacing(facing === "user" ? "environment" : "user");
@@ -55,10 +58,12 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   };
 
   function handleStartRecording() {
+    setStartIntroTime(Date.now());
     startRecording();
   }
 
   function handleStartTimer() {
+    setEndIntroTime(Date.now());
     setIsRecordingIntro(false);
 
     playSound(currentTimer);
@@ -69,14 +74,17 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   function handleChangeTimer() {
     if (currentTimer === 3) {
       setCurrentTimer(5);
+      timerState.setTimeToStart(5000);
       return;
     }
     if (currentTimer === 5) {
       setCurrentTimer(10);
+      timerState.setTimeToStart(10000);
       return;
     }
     if (currentTimer === 10) {
       setCurrentTimer(3);
+      timerState.setTimeToStart(3000);
       return;
     }
   }
@@ -115,6 +123,7 @@ export const RecordVideo: React.FC<IRecordVideoProps> = ({
   }, [status, isRecordingIntro, timeToStartRecording, seconds]);
 
   function handleStopRecording() {
+    timerState.setIntroTime(endIntroTime - startIntroTime);
     stopRecording();
     requestState.setVideoStatus("watch");
     // router.replace("/request");
