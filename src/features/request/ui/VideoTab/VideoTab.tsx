@@ -150,6 +150,7 @@ export const VideoTab = observer(() => {
   }
 
   function toggleFacing() {
+    setFacing("user");
     setError(null);
     setPreviewError(null);
   }
