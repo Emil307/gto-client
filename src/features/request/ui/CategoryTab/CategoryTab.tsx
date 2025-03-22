@@ -22,12 +22,17 @@ export const CategoryTab = observer(() => {
   }, []);
 
   function handleGetCategories() {
-    getMyCategories(
-      requestState.infoData?.birthDate
+    getMyCategories({
+      birthDate: requestState.infoData?.birthDate
         ? requestState.infoData?.birthDate
         : null,
-      requestState.isChild
-    )
+      isChild: requestState.isChild,
+      surname: requestState.isChild ? requestState.infoData?.surname || "" : "",
+      name: requestState.isChild ? requestState.infoData?.name || "" : "",
+      patronymic: requestState.isChild
+        ? requestState.infoData?.patronymic || ""
+        : "",
+    })
       .then((res) => {
         setCategories(res.data);
       })

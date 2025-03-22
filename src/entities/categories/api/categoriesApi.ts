@@ -1,18 +1,15 @@
 import { $api } from "@/src/shared";
 import { AxiosResponse } from "axios";
+import { GetMyCategoriesRequestDTO } from "./types";
 
 export async function getCategories(): Promise<AxiosResponse> {
   return await $api.get(`/api/applications/categories`);
 }
 
 export async function getMyCategories(
-  birthDate: string | null,
-  isChild: boolean
+  data: GetMyCategoriesRequestDTO
 ): Promise<AxiosResponse> {
-  return await $api.post(`/api/applications/categories/me`, {
-    birthDate: birthDate,
-    is_child: isChild,
-  });
+  return await $api.post(`/api/applications/categories/me`, data);
 }
 
 export async function getCategoryInfo(
