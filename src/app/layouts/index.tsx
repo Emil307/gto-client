@@ -43,9 +43,14 @@ export function RootLayout({
         WebApp.expand();
 
         // Включаем нативное подтверждение закрытия
-        WebApp.enableClosingConfirmation();
 
         const isPDFPage = location.pathname.includes("pdf");
+        const isRequestPage = location.pathname === "/request";
+        const isEditProfilePage = location.pathname === "/profile/edit";
+
+        if (isEditProfilePage || isRequestPage) {
+          WebApp.enableClosingConfirmation();
+        }
 
         if (isPDFPage) {
           WebApp.BackButton.show();
